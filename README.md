@@ -2,39 +2,11 @@
 
 Sistema de Gestão de Processos e Dashboard
 
-## Descrição
+## Tecnologias
 
-GPS 2.0 é uma aplicação web para gerenciamento de processos e visualização de dados através de dashboards interativos.
-
-## Stack Tecnológica
-
-- **Frontend:** React + TypeScript
-- **Estilização:** (a definir)
-- **Gerenciamento de Estado:** (a definir)
-- **Testes:** (a definir)
-
-## Estrutura do Projeto
-
-```
-gps-2.0/
-├── src/
-│   ├── components/       # Componentes React
-│   │   ├── common/       # Componentes reutilizáveis
-│   │   ├── dashboard/    # Componentes do dashboard
-│   │   ├── processes/    # Componentes de gestão de processos
-│   │   └── layout/       # Componentes de layout (Header, Sidebar, etc)
-│   ├── pages/            # Páginas da aplicação
-│   ├── hooks/            # Custom hooks
-│   ├── services/         # Serviços e chamadas de API
-│   ├── utils/            # Funções utilitárias
-│   ├── types/            # Tipos TypeScript
-│   ├── styles/           # Estilos globais
-│   ├── assets/           # Imagens, ícones e outros assets
-│   └── context/          # Contextos React
-├── docs/                 # Documentação do projeto
-├── public/               # Arquivos públicos estáticos
-└── README.md
-```
+- **React 19** + **TypeScript**
+- **Vite** - Build tool
+- **Design System Cogna** - Tokens de cores e tipografia
 
 ## Instalação
 
@@ -56,8 +28,60 @@ npm run dev
 
 - `npm run dev` - Inicia o servidor de desenvolvimento
 - `npm run build` - Gera a build de produção
-- `npm run test` - Executa os testes
+- `npm run preview` - Preview da build de produção
 - `npm run lint` - Executa o linter
+
+## Estrutura do Projeto
+
+```
+gps-2.0/
+├── src/
+│   ├── assets/           # Imagens e assets estáticos
+│   ├── styles/
+│   │   ├── tokens/       # Design tokens (cores, tipografia, spacing)
+│   │   │   ├── colors.ts
+│   │   │   ├── typography.ts
+│   │   │   └── index.ts
+│   │   └── global.css    # Estilos globais
+│   ├── App.tsx
+│   └── main.tsx
+├── docs/                 # Documentação
+├── public/               # Arquivos públicos
+└── index.html
+```
+
+## Design Tokens
+
+O projeto utiliza os tokens de design da Cogna, incluindo:
+
+### Cores (Primary)
+| Token | Valor | Uso |
+|-------|-------|-----|
+| `--color-primary-20` | #003491 | Cor principal do brandbook |
+| `--color-primary-40` | #004ECC | Links e ações |
+| `--color-primary-50` | #3969EB | Hover states |
+
+### Tipografia
+- **Font Family:** Poppins (principal), Roboto Slab (secundária)
+- **Tamanho base:** 16px (`--font-size-xs3`)
+- **Pesos:** Light (300), Regular (400), Medium (500), Semibold (600), Bold (700)
+
+### Uso dos Tokens
+
+```tsx
+// Via CSS Variables
+.button {
+  background-color: var(--color-primary-40);
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+// Via TypeScript
+import { colors, typography } from './styles/tokens';
+
+const primaryColor = colors.primary[40]; // #004ECC
+const fontFamily = typography.fontFamily.primary; // 'Poppins', sans-serif
+```
 
 ## Contribuição
 
@@ -65,7 +89,3 @@ npm run dev
 2. Commit suas mudanças (`git commit -m 'Adiciona nova feature'`)
 3. Push para a branch (`git push origin feature/nova-feature`)
 4. Abra um Pull Request
-
-## Licença
-
-Este projeto é privado e de uso interno.

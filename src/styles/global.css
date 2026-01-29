@@ -1,0 +1,287 @@
+/**
+ * GPS 2.0 - Estilos Globais
+ * Design System Cogna
+ */
+
+/* Google Fonts - Poppins e Roboto Slab */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&family=Roboto+Slab:wght@300;400;500;600;700;900&family=Roboto+Mono:wght@400;500;700&display=swap');
+
+/* ===== CSS Variables (Design Tokens) ===== */
+:root {
+  /* Primary Colors */
+  --color-primary-0: #000000;
+  --color-primary-5: #0A0F2B;
+  --color-primary-10: #001F50;
+  --color-primary-15: #002871;
+  --color-primary-20: #003491;
+  --color-primary-30: #0041AF;
+  --color-primary-40: #004ECC;
+  --color-primary-50: #3969EB;
+  --color-primary-60: #7A8BF0;
+  --color-primary-70: #9FA7F4;
+  --color-primary-80: #C1C3F6;
+  --color-primary-85: #D1D2F7;
+  --color-primary-90: #E1E1F8;
+  --color-primary-95: #F0F0FA;
+  --color-primary-99: #FCFCFE;
+  --color-primary-100: #FFFFFF;
+
+  /* Secondary Colors */
+  --color-secondary-0: #000000;
+  --color-secondary-5: #0D1117;
+  --color-secondary-10: #161B22;
+  --color-secondary-15: #16375C;
+  --color-secondary-20: #16375C;
+  --color-secondary-30: #1E4976;
+  --color-secondary-40: #265B90;
+  --color-secondary-50: #2E6DAA;
+  --color-secondary-60: #5A8DC0;
+  --color-secondary-70: #86ADD6;
+  --color-secondary-80: #B2CDEC;
+  --color-secondary-85: #C8DCF2;
+  --color-secondary-90: #DEEBF8;
+  --color-secondary-95: #EEF5FC;
+  --color-secondary-99: #FAFCFE;
+  --color-secondary-100: #FFFFFF;
+
+  /* Neutral Colors */
+  --color-neutral-0: #000000;
+  --color-neutral-5: #111111;
+  --color-neutral-10: #1B1B1B;
+  --color-neutral-15: #262626;
+  --color-neutral-20: #303030;
+  --color-neutral-30: #474747;
+  --color-neutral-40: #5E5E5E;
+  --color-neutral-50: #707070;
+  --color-neutral-60: #8B8B8B;
+  --color-neutral-70: #ABABAB;
+  --color-neutral-80: #C6C6C6;
+  --color-neutral-85: #D4D4D4;
+  --color-neutral-90: #E2E2E2;
+  --color-neutral-95: #F1F1F1;
+  --color-neutral-99: #FCFCFC;
+  --color-neutral-100: #FFFFFF;
+
+  /* Semantic Colors */
+  --color-success-light: #E6F4EA;
+  --color-success-main: #34A853;
+  --color-success-dark: #1E7E34;
+  --color-warning-light: #FFF3E0;
+  --color-warning-main: #FBBC05;
+  --color-warning-dark: #F57C00;
+  --color-error-light: #FFEBEE;
+  --color-error-main: #EA4335;
+  --color-error-dark: #C62828;
+  --color-info-light: #E3F2FD;
+  --color-info-main: #4285F4;
+  --color-info-dark: #1565C0;
+
+  /* Background Colors */
+  --color-bg-default: #FFFFFF;
+  --color-bg-paper: #F5F5F5;
+  --color-bg-dark: #1B1B1B;
+
+  /* Text Colors */
+  --color-text-primary: #1B1B1B;
+  --color-text-secondary: #5E5E5E;
+  --color-text-disabled: #ABABAB;
+  --color-text-inverse: #FFFFFF;
+
+  /* Font Families */
+  --font-family-primary: 'Poppins', sans-serif;
+  --font-family-secondary: 'Roboto Slab', serif;
+  --font-family-mono: 'Roboto Mono', monospace;
+
+  /* Font Sizes */
+  --font-size-xs: 12px;
+  --font-size-xs2: 14px;
+  --font-size-xs3: 16px;
+  --font-size-sm: 20px;
+  --font-size-md: 24px;
+  --font-size-lg: 32px;
+  --font-size-xl: 40px;
+  --font-size-xl2: 48px;
+  --font-size-xl3: 64px;
+  --font-size-ul1: 72px;
+  --font-size-ul2: 80px;
+  --font-size-ul3: 96px;
+  --font-size-ul4: 112px;
+
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-black: 900;
+
+  /* Line Heights */
+  --line-height-xs: 115%;
+  --line-height-sm: 120%;
+  --line-height-md: 140%;
+  --line-height-lg: 148%;
+  --line-height-xl: 168%;
+
+  /* Spacing */
+  --spacing-0: 0;
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-7: 28px;
+  --spacing-8: 32px;
+  --spacing-9: 36px;
+  --spacing-10: 40px;
+  --spacing-12: 48px;
+  --spacing-14: 56px;
+  --spacing-16: 64px;
+  --spacing-20: 80px;
+  --spacing-24: 96px;
+
+  /* Border Radius */
+  --radius-none: 0;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  /* Transitions */
+  --transition-fast: 150ms ease-in-out;
+  --transition-normal: 250ms ease-in-out;
+  --transition-slow: 350ms ease-in-out;
+}
+
+/* ===== Reset & Base Styles ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-xs3);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-md);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-default);
+}
+
+/* ===== Typography ===== */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-sm);
+  color: var(--color-text-primary);
+}
+
+h1 {
+  font-size: var(--font-size-xl3);
+  line-height: var(--line-height-xs);
+}
+
+h2 {
+  font-size: var(--font-size-xl2);
+  line-height: var(--line-height-xs);
+}
+
+h3 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+}
+
+h4 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+}
+
+h5 {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+}
+
+h6 {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+p {
+  margin-bottom: var(--spacing-4);
+}
+
+a {
+  color: var(--color-primary-40);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-primary-30);
+  text-decoration: underline;
+}
+
+/* ===== Utility Classes ===== */
+.text-primary { color: var(--color-text-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-disabled { color: var(--color-text-disabled); }
+.text-inverse { color: var(--color-text-inverse); }
+
+.bg-default { background-color: var(--color-bg-default); }
+.bg-paper { background-color: var(--color-bg-paper); }
+.bg-dark { background-color: var(--color-bg-dark); }
+
+.font-light { font-weight: var(--font-weight-light); }
+.font-regular { font-weight: var(--font-weight-regular); }
+.font-medium { font-weight: var(--font-weight-medium); }
+.font-semibold { font-weight: var(--font-weight-semibold); }
+.font-bold { font-weight: var(--font-weight-bold); }
+.font-black { font-weight: var(--font-weight-black); }
+
+/* ===== Focus Styles ===== */
+:focus-visible {
+  outline: 2px solid var(--color-primary-40);
+  outline-offset: 2px;
+}
+
+/* ===== Selection ===== */
+::selection {
+  background-color: var(--color-primary-80);
+  color: var(--color-primary-10);
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-neutral-95);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-neutral-70);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-neutral-60);
+}
