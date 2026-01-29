@@ -91,6 +91,7 @@
   /* Text Colors */
   --color-text-primary: #1B1B1B;
   --color-text-secondary: #5E5E5E;
+  --color-text-tertiary: #8B8B8B;
   --color-text-disabled: #ABABAB;
   --color-text-inverse: #FFFFFF;
 
@@ -99,20 +100,22 @@
   --font-family-secondary: 'Roboto Slab', serif;
   --font-family-mono: 'Roboto Mono', monospace;
 
-  /* Font Sizes */
-  --font-size-xs: 12px;
-  --font-size-xs2: 14px;
-  --font-size-xs3: 16px;
-  --font-size-sm: 20px;
-  --font-size-md: 24px;
-  --font-size-lg: 32px;
-  --font-size-xl: 40px;
-  --font-size-xl2: 48px;
-  --font-size-xl3: 64px;
-  --font-size-ul1: 72px;
-  --font-size-ul2: 80px;
-  --font-size-ul3: 96px;
-  --font-size-ul4: 112px;
+  /* Font Sizes - UI Text */
+  --font-size-xs2: 10px;
+  --font-size-xs: 11px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 30px;
+
+  /* Font Sizes - Display/Headings */
+  --font-size-display-sm: 36px;
+  --font-size-display-md: 48px;
+  --font-size-display-lg: 60px;
+  --font-size-display-xl: 72px;
 
   /* Font Weights */
   --font-weight-light: 300;

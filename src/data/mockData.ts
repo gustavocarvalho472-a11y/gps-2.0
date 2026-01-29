@@ -14,41 +14,87 @@ import type {
   Processo,
 } from '../types';
 
-// Processos de exemplo para drill-down
-const processosGestaoOperacao: Processo[] = [
+// ============================================
+// PROCESSOS - 5 processos por macroprocesso
+// ============================================
+
+// MP01 - Gestão Acadêmica (5 processos)
+const processosGestaoAcademica: Processo[] = [
   { id: 'p1', codigo: 'P001', nome: 'Gestão de Matrículas', status: 'ativo', complexidade: 'alta', automatizacao: 75, fte: 3.5 },
   { id: 'p2', codigo: 'P002', nome: 'Atendimento ao Aluno', status: 'ativo', complexidade: 'media', automatizacao: 60, fte: 8.0 },
-  { id: 'p3', codigo: 'P003', nome: 'Gestão de Documentos', status: 'ativo', complexidade: 'baixa', automatizacao: 85, fte: 2.0 },
-  { id: 'p4', codigo: 'P004', nome: 'Controle de Frequência', status: 'em_revisao', complexidade: 'media', automatizacao: 40, fte: 1.5 },
-  { id: 'p5', codigo: 'P005', nome: 'Gestão de Notas', status: 'ativo', complexidade: 'alta', automatizacao: 90, fte: 1.0 },
+  { id: 'p3', codigo: 'P003', nome: 'Gestão de Documentos Acadêmicos', status: 'ativo', complexidade: 'baixa', automatizacao: 85, fte: 2.0 },
+  { id: 'p4', codigo: 'P004', nome: 'Emissão de Certificados', status: 'ativo', complexidade: 'baixa', automatizacao: 92, fte: 1.0 },
+  { id: 'p5', codigo: 'P005', nome: 'Gestão de Grade Curricular', status: 'em_revisao', complexidade: 'alta', automatizacao: 45, fte: 2.5 },
 ];
 
+// MP02 - Controle Acadêmico (5 processos)
+const processosControleAcademico: Processo[] = [
+  { id: 'p6', codigo: 'P006', nome: 'Controle de Frequência', status: 'ativo', complexidade: 'media', automatizacao: 88, fte: 1.5 },
+  { id: 'p7', codigo: 'P007', nome: 'Gestão de Notas', status: 'ativo', complexidade: 'alta', automatizacao: 90, fte: 1.0 },
+  { id: 'p8', codigo: 'P008', nome: 'Gestão de Avaliações', status: 'ativo', complexidade: 'media', automatizacao: 72, fte: 3.0 },
+  { id: 'p9', codigo: 'P009', nome: 'Controle de TCC/Monografias', status: 'em_revisao', complexidade: 'alta', automatizacao: 35, fte: 2.0 },
+  { id: 'p10', codigo: 'P010', nome: 'Gestão de Estágios', status: 'ativo', complexidade: 'media', automatizacao: 55, fte: 4.0 },
+];
+
+// MP03 - Gestão de Professores (5 processos)
+const processosGestaoProfessores: Processo[] = [
+  { id: 'p11', codigo: 'P011', nome: 'Alocação de Docentes', status: 'ativo', complexidade: 'alta', automatizacao: 40, fte: 5.0 },
+  { id: 'p12', codigo: 'P012', nome: 'Controle de Carga Horária', status: 'ativo', complexidade: 'media', automatizacao: 65, fte: 2.0 },
+  { id: 'p13', codigo: 'P013', nome: 'Avaliação de Desempenho Docente', status: 'ativo', complexidade: 'media', automatizacao: 78, fte: 1.5 },
+  { id: 'p14', codigo: 'P014', nome: 'Capacitação e Treinamento', status: 'em_revisao', complexidade: 'baixa', automatizacao: 50, fte: 3.0 },
+  { id: 'p15', codigo: 'P015', nome: 'Gestão de Contratos Docentes', status: 'ativo', complexidade: 'alta', automatizacao: 30, fte: 2.5 },
+];
+
+// MP04 - Infraestrutura e Recursos (5 processos)
+const processosInfraestrutura: Processo[] = [
+  { id: 'p16', codigo: 'P016', nome: 'Gestão de Salas e Laboratórios', status: 'ativo', complexidade: 'media', automatizacao: 82, fte: 2.0 },
+  { id: 'p17', codigo: 'P017', nome: 'Controle de Equipamentos', status: 'ativo', complexidade: 'baixa', automatizacao: 70, fte: 1.5 },
+  { id: 'p18', codigo: 'P018', nome: 'Gestão de Biblioteca', status: 'ativo', complexidade: 'media', automatizacao: 95, fte: 3.0 },
+  { id: 'p19', codigo: 'P019', nome: 'Manutenção Predial', status: 'ativo', complexidade: 'baixa', automatizacao: 25, fte: 6.0 },
+  { id: 'p20', codigo: 'P020', nome: 'Gestão de Materiais Didáticos', status: 'em_revisao', complexidade: 'media', automatizacao: 60, fte: 2.0 },
+];
+
+// MP05 - Relacionamento e Comunicação (5 processos)
+const processosRelacionamento: Processo[] = [
+  { id: 'p21', codigo: 'P021', nome: 'Central de Atendimento', status: 'ativo', complexidade: 'alta', automatizacao: 68, fte: 12.0 },
+  { id: 'p22', codigo: 'P022', nome: 'Gestão de Ouvidoria', status: 'ativo', complexidade: 'media', automatizacao: 75, fte: 2.0 },
+  { id: 'p23', codigo: 'P023', nome: 'Comunicação Institucional', status: 'ativo', complexidade: 'baixa', automatizacao: 85, fte: 1.5 },
+  { id: 'p24', codigo: 'P024', nome: 'Pesquisa de Satisfação', status: 'ativo', complexidade: 'baixa', automatizacao: 95, fte: 0.5 },
+  { id: 'p25', codigo: 'P025', nome: 'Gestão de Eventos Acadêmicos', status: 'em_revisao', complexidade: 'media', automatizacao: 40, fte: 3.5 },
+];
+
+// ============================================
+// MACROPROCESSOS - 5 macroprocessos para J01
+// ============================================
+const macroprocessosGestaoOperacao: Macroprocesso[] = [
+  { id: 'mp1', codigo: 'MP01', nome: 'Gestão Acadêmica', processos: processosGestaoAcademica },
+  { id: 'mp2', codigo: 'MP02', nome: 'Controle Acadêmico', processos: processosControleAcademico },
+  { id: 'mp3', codigo: 'MP03', nome: 'Gestão de Professores', processos: processosGestaoProfessores },
+  { id: 'mp4', codigo: 'MP04', nome: 'Infraestrutura e Recursos', processos: processosInfraestrutura },
+  { id: 'mp5', codigo: 'MP05', nome: 'Relacionamento e Comunicação', processos: processosRelacionamento },
+];
+
+// Processos para outras jornadas
 const processosCrescimento: Processo[] = [
-  { id: 'p6', codigo: 'P006', nome: 'Captação de Leads', status: 'ativo', complexidade: 'alta', automatizacao: 80, fte: 5.0 },
-  { id: 'p7', codigo: 'P007', nome: 'Conversão de Matrículas', status: 'ativo', complexidade: 'alta', automatizacao: 65, fte: 12.0 },
-  { id: 'p8', codigo: 'P008', nome: 'Retenção de Alunos', status: 'ativo', complexidade: 'media', automatizacao: 55, fte: 4.0 },
-  { id: 'p9', codigo: 'P009', nome: 'Análise de Mercado', status: 'ativo', complexidade: 'media', automatizacao: 30, fte: 2.0 },
+  { id: 'pc1', codigo: 'PC01', nome: 'Captação de Leads', status: 'ativo', complexidade: 'alta', automatizacao: 80, fte: 5.0 },
+  { id: 'pc2', codigo: 'PC02', nome: 'Conversão de Matrículas', status: 'ativo', complexidade: 'alta', automatizacao: 65, fte: 12.0 },
+  { id: 'pc3', codigo: 'PC03', nome: 'Retenção de Alunos', status: 'ativo', complexidade: 'media', automatizacao: 55, fte: 4.0 },
+  { id: 'pc4', codigo: 'PC04', nome: 'Análise de Mercado', status: 'ativo', complexidade: 'media', automatizacao: 30, fte: 2.0 },
 ];
 
 const processosExperiencia: Processo[] = [
-  { id: 'p10', codigo: 'P010', nome: 'Pesquisa de Satisfação', status: 'ativo', complexidade: 'baixa', automatizacao: 95, fte: 0.5 },
-  { id: 'p11', codigo: 'P011', nome: 'Gestão de Reclamações', status: 'ativo', complexidade: 'media', automatizacao: 70, fte: 3.0 },
-  { id: 'p12', codigo: 'P012', nome: 'NPS e Métricas', status: 'ativo', complexidade: 'baixa', automatizacao: 90, fte: 1.0 },
-];
-
-// Macroprocessos de exemplo
-const macroprocessosGestaoOperacao: Macroprocesso[] = [
-  { id: 'mp1', codigo: 'MP01', nome: 'Gestão Acadêmica', processos: processosGestaoOperacao.slice(0, 3) },
-  { id: 'mp2', codigo: 'MP02', nome: 'Controle Acadêmico', processos: processosGestaoOperacao.slice(3) },
+  { id: 'pe1', codigo: 'PE01', nome: 'NPS e Métricas CX', status: 'ativo', complexidade: 'baixa', automatizacao: 90, fte: 1.0 },
+  { id: 'pe2', codigo: 'PE02', nome: 'Jornada do Aluno', status: 'ativo', complexidade: 'media', automatizacao: 70, fte: 3.0 },
+  { id: 'pe3', codigo: 'PE03', nome: 'Voice of Customer', status: 'ativo', complexidade: 'baixa', automatizacao: 85, fte: 1.5 },
 ];
 
 const macroprocessosCrescimento: Macroprocesso[] = [
-  { id: 'mp3', codigo: 'MP03', nome: 'Aquisição', processos: processosCrescimento.slice(0, 2) },
-  { id: 'mp4', codigo: 'MP04', nome: 'Fidelização', processos: processosCrescimento.slice(2) },
+  { id: 'mpc1', codigo: 'MPC1', nome: 'Aquisição', processos: processosCrescimento.slice(0, 2) },
+  { id: 'mpc2', codigo: 'MPC2', nome: 'Fidelização', processos: processosCrescimento.slice(2) },
 ];
 
 const macroprocessosExperiencia: Macroprocesso[] = [
-  { id: 'mp5', codigo: 'MP05', nome: 'Voz do Cliente', processos: processosExperiencia },
+  { id: 'mpe1', codigo: 'MPE1', nome: 'Voz do Cliente', processos: processosExperiencia },
 ];
 
 // Jornadas do Core - Propostas de Valor
