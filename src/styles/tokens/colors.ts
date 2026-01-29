@@ -4,43 +4,43 @@
  */
 
 export const colors = {
-  // Primary Palette (Azul/Roxo)
+  // Primary Palette (Roxo/Violeta)
   primary: {
     0: '#000000',
-    5: '#0A0F2B',
-    10: '#001F50',
-    15: '#002871',
-    20: '#003491', // Cor do brandbook
-    30: '#0041AF',
-    40: '#004ECC',
-    50: '#3969EB',
-    60: '#7A8BF0',
-    70: '#9FA7F4',
-    80: '#C1C3F6',
-    85: '#D1D2F7',
-    90: '#E1E1F8',
-    95: '#F0F0FA',
-    99: '#FCFCFE',
+    5: '#14082E',
+    10: '#1E1045',
+    15: '#2D1B55',
+    20: '#3D2366',
+    30: '#5B21B6',
+    40: '#7C3AED',
+    50: '#8B5CF6',
+    60: '#A78BFA',
+    70: '#C4B5FD',
+    80: '#DDD6FE',
+    85: '#E9E5FF',
+    90: '#F3F0FF',
+    95: '#FAF5FF',
+    99: '#FDFCFF',
     100: '#FFFFFF',
   },
 
-  // Secondary Palette (usar os valores definidos pelo design)
+  // Secondary Palette (Roxo/Violeta - mesma escala do primary)
   secondary: {
     0: '#000000',
-    5: '#0D1117',
-    10: '#161B22',
-    15: '#16375C', // Cor do brandbook
-    20: '#16375C',
-    30: '#1E4976',
-    40: '#265B90',
-    50: '#2E6DAA',
-    60: '#5A8DC0',
-    70: '#86ADD6',
-    80: '#B2CDEC',
-    85: '#C8DCF2',
-    90: '#DEEBF8',
-    95: '#EEF5FC',
-    99: '#FAFCFE',
+    5: '#14082E',
+    10: '#1E1045',
+    15: '#2D1B55',
+    20: '#3D2366',
+    30: '#5B21B6',
+    40: '#7C3AED',
+    50: '#8B5CF6',
+    60: '#A78BFA',
+    70: '#C4B5FD',
+    80: '#DDD6FE',
+    85: '#E9E5FF',
+    90: '#F3F0FF',
+    95: '#FAF5FF',
+    99: '#FDFCFF',
     100: '#FFFFFF',
   },
 
@@ -82,9 +82,9 @@ export const colors = {
       dark: '#C62828',
     },
     info: {
-      light: '#E3F2FD',
-      main: '#4285F4',
-      dark: '#1565C0',
+      light: '#FAF5FF',
+      main: '#8B5CF6',
+      dark: '#5B21B6',
     },
   },
 

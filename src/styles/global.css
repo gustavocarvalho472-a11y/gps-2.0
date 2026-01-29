@@ -3,45 +3,52 @@
  * Design System Cogna
  */
 
+/* Tailwind CSS v4 */
+@import "tailwindcss";
+
 /* Google Fonts - Poppins e Roboto Slab */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&family=Roboto+Slab:wght@300;400;500;600;700;900&family=Roboto+Mono:wght@400;500;700&display=swap');
+@import "tw-animate-css";
+/*---break---
+ */
+@custom-variant dark (&:is(.dark *));
 
 /* ===== CSS Variables (Design Tokens) ===== */
 :root {
-  /* Primary Colors */
+  /* Primary Colors - Escala Roxa/Violeta (Cogna Design Tokens) */
   --color-primary-0: #000000;
-  --color-primary-5: #0A0F2B;
-  --color-primary-10: #001F50;
-  --color-primary-15: #002871;
-  --color-primary-20: #003491;
-  --color-primary-30: #0041AF;
-  --color-primary-40: #004ECC;
-  --color-primary-50: #3969EB;
-  --color-primary-60: #7A8BF0;
-  --color-primary-70: #9FA7F4;
-  --color-primary-80: #C1C3F6;
-  --color-primary-85: #D1D2F7;
-  --color-primary-90: #E1E1F8;
-  --color-primary-95: #F0F0FA;
-  --color-primary-99: #FCFCFE;
+  --color-primary-5: #14082E;
+  --color-primary-10: #1E1045;
+  --color-primary-15: #2D1B55;
+  --color-primary-20: #3D2366;
+  --color-primary-30: #5B21B6;
+  --color-primary-40: #7C3AED;
+  --color-primary-50: #8B5CF6;
+  --color-primary-60: #A78BFA;
+  --color-primary-70: #C4B5FD;
+  --color-primary-80: #DDD6FE;
+  --color-primary-85: #E9E5FF;
+  --color-primary-90: #F3F0FF;
+  --color-primary-95: #FAF5FF;
+  --color-primary-99: #FDFCFF;
   --color-primary-100: #FFFFFF;
 
-  /* Secondary Colors */
+  /* Secondary Colors - Escala Roxa/Violeta (Cogna Design Tokens) */
   --color-secondary-0: #000000;
-  --color-secondary-5: #0D1117;
-  --color-secondary-10: #161B22;
-  --color-secondary-15: #16375C;
-  --color-secondary-20: #16375C;
-  --color-secondary-30: #1E4976;
-  --color-secondary-40: #265B90;
-  --color-secondary-50: #2E6DAA;
-  --color-secondary-60: #5A8DC0;
-  --color-secondary-70: #86ADD6;
-  --color-secondary-80: #B2CDEC;
-  --color-secondary-85: #C8DCF2;
-  --color-secondary-90: #DEEBF8;
-  --color-secondary-95: #EEF5FC;
-  --color-secondary-99: #FAFCFE;
+  --color-secondary-5: #14082E;
+  --color-secondary-10: #1E1045;
+  --color-secondary-15: #2D1B55;
+  --color-secondary-20: #3D2366;
+  --color-secondary-30: #5B21B6;
+  --color-secondary-40: #7C3AED;
+  --color-secondary-50: #8B5CF6;
+  --color-secondary-60: #A78BFA;
+  --color-secondary-70: #C4B5FD;
+  --color-secondary-80: #DDD6FE;
+  --color-secondary-85: #E9E5FF;
+  --color-secondary-90: #F3F0FF;
+  --color-secondary-95: #FAF5FF;
+  --color-secondary-99: #FDFCFF;
   --color-secondary-100: #FFFFFF;
 
   /* Neutral Colors */
@@ -72,9 +79,9 @@
   --color-error-light: #FFEBEE;
   --color-error-main: #EA4335;
   --color-error-dark: #C62828;
-  --color-info-light: #E3F2FD;
-  --color-info-main: #4285F4;
-  --color-info-dark: #1565C0;
+  --color-info-light: #FAF5FF;
+  --color-info-main: #8B5CF6;
+  --color-info-dark: #5B21B6;
 
   /* Background Colors */
   --color-bg-default: #FFFFFF;
@@ -159,6 +166,63 @@
   --transition-fast: 150ms ease-in-out;
   --transition-normal: 250ms ease-in-out;
   --transition-slow: 350ms ease-in-out;
+
+  /* shadcn/ui CSS Variables - Cogna Purple Theme */
+  --radius: 0.625rem;
+  --background: #FFFFFF;
+  --foreground: #1B1B1B;
+  --card: #FFFFFF;
+  --card-foreground: #1B1B1B;
+  --popover: #FFFFFF;
+  --popover-foreground: #1B1B1B;
+  --primary: #7C3AED;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F3F0FF;
+  --secondary-foreground: #5B21B6;
+  --muted: #F3F0FF;
+  --muted-foreground: #5E5E5E;
+  --accent: #E9E5FF;
+  --accent-foreground: #5B21B6;
+  --destructive: #EA4335;
+  --destructive-foreground: #FFFFFF;
+  --border: #E2E2E2;
+  --input: #E2E2E2;
+  --ring: #7C3AED;
+  --chart-1: #7C3AED;
+  --chart-2: #8B5CF6;
+  --chart-3: #A78BFA;
+  --chart-4: #C4B5FD;
+  --chart-5: #DDD6FE;
+  --sidebar: #FAF5FF;
+  --sidebar-foreground: #1B1B1B;
+  --sidebar-primary: #7C3AED;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #E9E5FF;
+  --sidebar-accent-foreground: #5B21B6;
+  --sidebar-border: #E9E5FF;
+  --sidebar-ring: #7C3AED;
+
+  /* Status Colors - WCAG AA Compliant */
+  --status-ativo-bg: #E6F4EA;
+  --status-ativo-text: #1E7E34;
+  --status-ativo-border: #34A853;
+  --status-revisao-bg: #FFF3E0;
+  --status-revisao-text: #E65100;
+  --status-revisao-border: #FB8C00;
+  --status-inativo-bg: #F5F5F5;
+  --status-inativo-text: #616161;
+  --status-inativo-border: #9E9E9E;
+
+  /* Interactive States */
+  --interactive-hover: rgba(124, 58, 237, 0.08);
+  --interactive-active: rgba(124, 58, 237, 0.12);
+  --interactive-focus-ring: rgba(124, 58, 237, 0.5);
+
+  /* Card Elevation */
+  --card-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --card-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --card-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --card-shadow-hover: 0 8px 16px -4px rgba(124, 58, 237, 0.15);
 }
 
 /* ===== Reset & Base Styles ===== */
@@ -284,4 +348,98 @@ a:hover {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-neutral-60);
+}
+
+/*---break---
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/*---break---
+ */
+
+.dark {
+  --background: #14082E;
+  --foreground: #FDFCFF;
+  --card: #1E1045;
+  --card-foreground: #FDFCFF;
+  --popover: #1E1045;
+  --popover-foreground: #FDFCFF;
+  --primary: #8B5CF6;
+  --primary-foreground: #FFFFFF;
+  --secondary: #2D1B55;
+  --secondary-foreground: #DDD6FE;
+  --muted: #2D1B55;
+  --muted-foreground: #ABABAB;
+  --accent: #3D2366;
+  --accent-foreground: #DDD6FE;
+  --destructive: #EA4335;
+  --destructive-foreground: #FFFFFF;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #8B5CF6;
+  --chart-1: #8B5CF6;
+  --chart-2: #A78BFA;
+  --chart-3: #C4B5FD;
+  --chart-4: #DDD6FE;
+  --chart-5: #E9E5FF;
+  --sidebar: #1E1045;
+  --sidebar-foreground: #FDFCFF;
+  --sidebar-primary: #8B5CF6;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #3D2366;
+  --sidebar-accent-foreground: #DDD6FE;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #8B5CF6;
+}
+
+/*---break---
+ */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }

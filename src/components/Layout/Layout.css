@@ -1,0 +1,60 @@
+/**
+ * GPS 2.0 - Layout Styles
+ * Layout com Sidebar + FilterSidebar + Conteúdo
+ */
+
+.layout {
+  min-height: 100vh;
+  display: flex;
+  background-color: var(--color-bg-paper);
+}
+
+.layout-content {
+  flex: 1;
+  margin-left: 220px; /* sidebar width */
+  display: flex;
+  flex-direction: column;
+  transition: margin-left var(--transition-normal);
+}
+
+.layout.sidebar-collapsed .layout-content {
+  margin-left: 68px; /* collapsed sidebar width */
+}
+
+.layout-body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.layout-main {
+  flex: 1;
+  padding: var(--spacing-5);
+  overflow-y: auto;
+  background-color: var(--color-bg-paper);
+}
+
+.layout-main.full-width {
+  max-width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .layout-main {
+    padding: var(--spacing-4);
+  }
+}
+
+@media (max-width: 768px) {
+  .layout-content {
+    margin-left: 0;
+  }
+
+  .layout.sidebar-collapsed .layout-content {
+    margin-left: 0;
+  }
+
+  .layout-main {
+    padding: var(--spacing-3);
+  }
+}

@@ -1,0 +1,196 @@
+/**
+ * GPS 2.0 - Filter Bar Styles
+ */
+
+.filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--spacing-4);
+  padding: var(--spacing-4);
+  background-color: var(--color-bg-default);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+}
+
+.filter-bar-left {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  flex-wrap: wrap;
+}
+
+.filter-label {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-xs2);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+}
+
+/* Filter Dropdown */
+.filter-dropdown {
+  position: relative;
+}
+
+.filter-button {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-3);
+  border: 1px solid var(--color-neutral-85);
+  background-color: var(--color-bg-default);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-xs2);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.filter-button:hover {
+  border-color: var(--color-primary-40);
+}
+
+.filter-button.active {
+  background-color: var(--color-primary-95);
+  border-color: var(--color-primary-40);
+  color: var(--color-primary-20);
+}
+
+.filter-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  min-width: 180px;
+  max-height: 240px;
+  overflow-y: auto;
+  background-color: var(--color-bg-default);
+  border: 1px solid var(--color-neutral-90);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-index-dropdown, 1000);
+  padding: var(--spacing-1);
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--spacing-2) var(--spacing-3);
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-xs2);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  text-align: left;
+  transition: background-color var(--transition-fast);
+}
+
+.filter-option:hover {
+  background-color: var(--color-neutral-95);
+}
+
+.filter-option.selected {
+  background-color: var(--color-primary-95);
+  color: var(--color-primary-20);
+}
+
+/* More filters button */
+.filter-more {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding: var(--spacing-2) var(--spacing-3);
+  border: 1px dashed var(--color-neutral-80);
+  background-color: transparent;
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-xs2);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.filter-more:hover {
+  border-color: var(--color-primary-40);
+  color: var(--color-primary-40);
+}
+
+/* Right side - Active filters */
+.filter-bar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.active-filters {
+  display: flex;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+}
+
+.filter-chip {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding: var(--spacing-1) var(--spacing-2);
+  background-color: var(--color-primary-95);
+  border-radius: var(--radius-full);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-xs);
+  color: var(--color-primary-20);
+}
+
+.chip-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  border-radius: var(--radius-full);
+  color: var(--color-primary-40);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.chip-remove:hover {
+  background-color: var(--color-primary-80);
+}
+
+.clear-filters {
+  padding: var(--spacing-2) var(--spacing-3);
+  border: none;
+  background-color: transparent;
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-xs2);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-error-main);
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.clear-filters:hover {
+  color: var(--color-error-dark);
+}
+
+@media (max-width: 768px) {
+  .filter-bar {
+    padding: var(--spacing-3);
+  }
+
+  .filter-bar-left {
+    width: 100%;
+  }
+
+  .filter-bar-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

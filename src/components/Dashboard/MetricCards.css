@@ -1,0 +1,109 @@
+/**
+ * GPS 2.0 - Metric Cards Styles
+ */
+
+.metric-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-4);
+}
+
+.metric-card {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  padding: var(--spacing-5);
+  background-color: var(--color-bg-default);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background-color: var(--metric-color);
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Color variants */
+.metric-primary { --metric-color: var(--color-primary-40); }
+.metric-secondary { --metric-color: var(--color-secondary-50); }
+.metric-success { --metric-color: var(--color-success-main); }
+.metric-warning { --metric-color: var(--color-warning-main); }
+
+.metric-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-neutral-95);
+  color: var(--metric-color);
+}
+
+.metric-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.metric-value {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  line-height: 1;
+}
+
+.metric-label {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-xs2);
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-1);
+}
+
+.metric-trend {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--radius-full);
+}
+
+.metric-trend.up {
+  background-color: var(--color-success-light);
+  color: var(--color-success-dark);
+}
+
+.metric-trend.down {
+  background-color: var(--color-error-light);
+  color: var(--color-error-dark);
+}
+
+@media (max-width: 1024px) {
+  .metric-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .metric-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .metric-card {
+    padding: var(--spacing-4);
+  }
+}

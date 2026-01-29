@@ -1,0 +1,167 @@
+/**
+ * GPS 2.0 - Header Styles
+ * Header com navegação por tabs
+ */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-3) var(--spacing-5);
+  background-color: var(--color-bg-default);
+  border-bottom: 1px solid var(--color-neutral-90);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  gap: var(--spacing-4);
+}
+
+/* Logo */
+.header-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Navigation Tabs */
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  flex: 1;
+  justify-content: center;
+}
+
+.nav-tab {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-3) var(--spacing-4);
+  border: none;
+  background-color: transparent;
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  letter-spacing: 0.02em;
+}
+
+.nav-tab:hover {
+  background-color: var(--color-neutral-95);
+  color: var(--color-text-primary);
+}
+
+.nav-tab.active {
+  background-color: var(--color-primary-95);
+  color: var(--color-primary-40);
+}
+
+.nav-tab-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.nav-tab-label {
+  white-space: nowrap;
+}
+
+/* Right Section */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  flex-shrink: 0;
+}
+
+/* Cogna Logo */
+.cogna-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1;
+}
+
+.cogna-text {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-neutral-30);
+  letter-spacing: -0.02em;
+}
+
+.cogna-subtitle {
+  font-family: var(--font-family-primary);
+  font-size: 8px;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-neutral-50);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+/* Filters Toggle */
+.filters-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-3);
+  border: 1px solid var(--color-neutral-85);
+  background-color: var(--color-bg-default);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-xs2);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.filters-toggle:hover {
+  border-color: var(--color-primary-40);
+  color: var(--color-primary-40);
+}
+
+.filters-toggle.active {
+  background-color: var(--color-primary-95);
+  border-color: var(--color-primary-40);
+  color: var(--color-primary-40);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .nav-tab-label {
+    display: none;
+  }
+
+  .nav-tab {
+    padding: var(--spacing-3);
+  }
+
+  .cogna-logo {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: var(--spacing-2) var(--spacing-3);
+  }
+
+  .header-nav {
+    gap: var(--spacing-1);
+  }
+
+  .nav-tab {
+    padding: var(--spacing-2);
+  }
+
+  .filters-toggle span {
+    display: none;
+  }
+}
