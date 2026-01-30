@@ -2,7 +2,7 @@
  * GPS 2.0 - Dashboard Principal
  */
 
-import type { ViewType } from '../../types';
+import type { ViewType, Macroprocesso } from '../../types';
 import { dominios } from '../../data/mockData';
 import { ArquiteturaView } from './ArquiteturaView';
 import { PlaceholderPage } from '../PlaceholderPage';
@@ -11,13 +11,14 @@ import './Dashboard.css';
 
 interface DashboardProps {
   activeView: ViewType;
+  onOpenCadeia?: (macro: Macroprocesso) => void;
 }
 
-export function Dashboard({ activeView }: DashboardProps) {
+export function Dashboard({ activeView, onOpenCadeia }: DashboardProps) {
   const renderView = () => {
     switch (activeView) {
       case 'arquitetura':
-        return <ArquiteturaView dominios={dominios} />;
+        return <ArquiteturaView dominios={dominios} onOpenCadeia={onOpenCadeia} />;
       case 'arvore':
         return (
           <PlaceholderPage

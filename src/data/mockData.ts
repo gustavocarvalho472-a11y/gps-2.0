@@ -15,133 +15,126 @@ import type {
 } from '../types';
 
 // ============================================
-// PROCESSOS - 5 processos por macroprocesso
+// PROCESSOS - Nomenclaturas reais Cogna
 // ============================================
 
-// MP01 - Gestão Acadêmica (5 processos)
-const processosGestaoAcademica: Processo[] = [
-  { id: 'p1', codigo: 'P001', nome: 'Gestão de Matrículas', status: 'ativo', complexidade: 'alta', automatizacao: 75, fte: 3.5 },
-  { id: 'p2', codigo: 'P002', nome: 'Atendimento ao Aluno', status: 'ativo', complexidade: 'media', automatizacao: 60, fte: 8.0 },
-  { id: 'p3', codigo: 'P003', nome: 'Gestão de Documentos Acadêmicos', status: 'ativo', complexidade: 'baixa', automatizacao: 85, fte: 2.0 },
-  { id: 'p4', codigo: 'P004', nome: 'Emissão de Certificados', status: 'ativo', complexidade: 'baixa', automatizacao: 92, fte: 1.0 },
-  { id: 'p5', codigo: 'P005', nome: 'Gestão de Grade Curricular', status: 'em_revisao', complexidade: 'alta', automatizacao: 45, fte: 2.5 },
+// MP01 - Operacionalizar Cobrança
+const processosOperacionalizarCobranca: Processo[] = [
+  { id: 'p1', codigo: 'P001', nome: 'Planejar metas de fornecedores de cobrança', status: 'ativo', complexidade: 'alta', automatizacao: 65, fte: 3.5 },
+  { id: 'p2', codigo: 'P002', nome: 'Realizar cobrança (canais humanos)', status: 'ativo', complexidade: 'alta', automatizacao: 45, fte: 12.0 },
+  { id: 'p3', codigo: 'P003', nome: 'Administrar carteira de acordos', status: 'ativo', complexidade: 'media', automatizacao: 72, fte: 4.0 },
+  { id: 'p4', codigo: 'P004', nome: 'Encontrar o devedor', status: 'em_revisao', complexidade: 'media', automatizacao: 55, fte: 2.5 },
+  { id: 'p5', codigo: 'P005', nome: 'Realizar o acordo', status: 'ativo', complexidade: 'baixa', automatizacao: 80, fte: 1.5 },
 ];
 
-// MP02 - Controle Acadêmico (5 processos)
-const processosControleAcademico: Processo[] = [
-  { id: 'p6', codigo: 'P006', nome: 'Controle de Frequência', status: 'ativo', complexidade: 'media', automatizacao: 88, fte: 1.5 },
-  { id: 'p7', codigo: 'P007', nome: 'Gestão de Notas', status: 'ativo', complexidade: 'alta', automatizacao: 90, fte: 1.0 },
-  { id: 'p8', codigo: 'P008', nome: 'Gestão de Avaliações', status: 'ativo', complexidade: 'media', automatizacao: 72, fte: 3.0 },
-  { id: 'p9', codigo: 'P009', nome: 'Controle de TCC/Monografias', status: 'em_revisao', complexidade: 'alta', automatizacao: 35, fte: 2.0 },
-  { id: 'p10', codigo: 'P010', nome: 'Gestão de Estágios', status: 'ativo', complexidade: 'media', automatizacao: 55, fte: 4.0 },
+// MP02 - Gerir Produtos Financeiros
+const processosGerirProdutosFinanceiros: Processo[] = [
+  { id: 'p6', codigo: 'P006', nome: 'Elaborar e monitorar orçamento de geração de caixa', status: 'ativo', complexidade: 'alta', automatizacao: 60, fte: 2.0 },
+  { id: 'p7', codigo: 'P007', nome: 'Definir estratégia de cobrança', status: 'ativo', complexidade: 'alta', automatizacao: 35, fte: 1.5 },
+  { id: 'p8', codigo: 'P008', nome: 'Gerir campanhas motivacionais', status: 'ativo', complexidade: 'media', automatizacao: 70, fte: 2.0 },
+  { id: 'p9', codigo: 'P009', nome: 'Analisar indicadores financeiros', status: 'ativo', complexidade: 'media', automatizacao: 85, fte: 1.0 },
+  { id: 'p10', codigo: 'P010', nome: 'Gerir políticas de negociação', status: 'em_revisao', complexidade: 'alta', automatizacao: 40, fte: 2.5 },
 ];
 
-// MP03 - Gestão de Professores (5 processos)
-const processosGestaoProfessores: Processo[] = [
-  { id: 'p11', codigo: 'P011', nome: 'Alocação de Docentes', status: 'ativo', complexidade: 'alta', automatizacao: 40, fte: 5.0 },
-  { id: 'p12', codigo: 'P012', nome: 'Controle de Carga Horária', status: 'ativo', complexidade: 'media', automatizacao: 65, fte: 2.0 },
-  { id: 'p13', codigo: 'P013', nome: 'Avaliação de Desempenho Docente', status: 'ativo', complexidade: 'media', automatizacao: 78, fte: 1.5 },
-  { id: 'p14', codigo: 'P014', nome: 'Capacitação e Treinamento', status: 'em_revisao', complexidade: 'baixa', automatizacao: 50, fte: 3.0 },
-  { id: 'p15', codigo: 'P015', nome: 'Gestão de Contratos Docentes', status: 'ativo', complexidade: 'alta', automatizacao: 30, fte: 2.5 },
+// MP03 - Captar Alunos
+const processosCaptarAlunos: Processo[] = [
+  { id: 'p11', codigo: 'P011', nome: 'Gerar leads qualificados', status: 'ativo', complexidade: 'alta', automatizacao: 78, fte: 5.0 },
+  { id: 'p12', codigo: 'P012', nome: 'Nutrir base de prospects', status: 'ativo', complexidade: 'media', automatizacao: 82, fte: 3.0 },
+  { id: 'p13', codigo: 'P013', nome: 'Realizar inscrição', status: 'ativo', complexidade: 'baixa', automatizacao: 95, fte: 1.0 },
+  { id: 'p14', codigo: 'P014', nome: 'Converter inscritos em matriculados', status: 'ativo', complexidade: 'alta', automatizacao: 62, fte: 8.0 },
+  { id: 'p15', codigo: 'P015', nome: 'Acompanhar funil de conversão', status: 'ativo', complexidade: 'media', automatizacao: 88, fte: 1.5 },
 ];
 
-// MP04 - Infraestrutura e Recursos (5 processos)
-const processosInfraestrutura: Processo[] = [
-  { id: 'p16', codigo: 'P016', nome: 'Gestão de Salas e Laboratórios', status: 'ativo', complexidade: 'media', automatizacao: 82, fte: 2.0 },
-  { id: 'p17', codigo: 'P017', nome: 'Controle de Equipamentos', status: 'ativo', complexidade: 'baixa', automatizacao: 70, fte: 1.5 },
-  { id: 'p18', codigo: 'P018', nome: 'Gestão de Biblioteca', status: 'ativo', complexidade: 'media', automatizacao: 95, fte: 3.0 },
-  { id: 'p19', codigo: 'P019', nome: 'Manutenção Predial', status: 'ativo', complexidade: 'baixa', automatizacao: 25, fte: 6.0 },
-  { id: 'p20', codigo: 'P020', nome: 'Gestão de Materiais Didáticos', status: 'em_revisao', complexidade: 'media', automatizacao: 60, fte: 2.0 },
+// MP04 - Reter Alunos
+const processosReterAlunos: Processo[] = [
+  { id: 'p16', codigo: 'P016', nome: 'Identificar alunos em risco de evasão', status: 'ativo', complexidade: 'alta', automatizacao: 75, fte: 2.0 },
+  { id: 'p17', codigo: 'P017', nome: 'Executar ações de retenção', status: 'ativo', complexidade: 'media', automatizacao: 55, fte: 6.0 },
+  { id: 'p18', codigo: 'P018', nome: 'Gerir programas de fidelização', status: 'em_revisao', complexidade: 'media', automatizacao: 45, fte: 2.5 },
+  { id: 'p19', codigo: 'P019', nome: 'Analisar motivos de cancelamento', status: 'ativo', complexidade: 'baixa', automatizacao: 90, fte: 1.0 },
+  { id: 'p20', codigo: 'P020', nome: 'Realizar rematrícula', status: 'ativo', complexidade: 'baixa', automatizacao: 92, fte: 1.5 },
 ];
 
-// MP05 - Relacionamento e Comunicação (5 processos)
-const processosRelacionamento: Processo[] = [
-  { id: 'p21', codigo: 'P021', nome: 'Central de Atendimento', status: 'ativo', complexidade: 'alta', automatizacao: 68, fte: 12.0 },
-  { id: 'p22', codigo: 'P022', nome: 'Gestão de Ouvidoria', status: 'ativo', complexidade: 'media', automatizacao: 75, fte: 2.0 },
-  { id: 'p23', codigo: 'P023', nome: 'Comunicação Institucional', status: 'ativo', complexidade: 'baixa', automatizacao: 85, fte: 1.5 },
-  { id: 'p24', codigo: 'P024', nome: 'Pesquisa de Satisfação', status: 'ativo', complexidade: 'baixa', automatizacao: 95, fte: 0.5 },
-  { id: 'p25', codigo: 'P025', nome: 'Gestão de Eventos Acadêmicos', status: 'em_revisao', complexidade: 'media', automatizacao: 40, fte: 3.5 },
+// MP05 - Entregar Experiência Acadêmica
+const processosEntregarExperiencia: Processo[] = [
+  { id: 'p21', codigo: 'P021', nome: 'Disponibilizar conteúdo didático', status: 'ativo', complexidade: 'media', automatizacao: 88, fte: 3.0 },
+  { id: 'p22', codigo: 'P022', nome: 'Realizar atendimento ao aluno', status: 'ativo', complexidade: 'alta', automatizacao: 52, fte: 15.0 },
+  { id: 'p23', codigo: 'P023', nome: 'Gerir avaliações e notas', status: 'ativo', complexidade: 'media', automatizacao: 85, fte: 2.0 },
+  { id: 'p24', codigo: 'P024', nome: 'Emitir documentos acadêmicos', status: 'ativo', complexidade: 'baixa', automatizacao: 95, fte: 1.0 },
+  { id: 'p25', codigo: 'P025', nome: 'Medir satisfação do aluno (NPS)', status: 'ativo', complexidade: 'baixa', automatizacao: 92, fte: 0.5 },
 ];
 
 // ============================================
-// MACROPROCESSOS - 5 macroprocessos para J01
+// MACROPROCESSOS
 // ============================================
-const macroprocessosGestaoOperacao: Macroprocesso[] = [
-  { id: 'mp1', codigo: 'MP01', nome: 'Gestão Acadêmica', processos: processosGestaoAcademica },
-  { id: 'mp2', codigo: 'MP02', nome: 'Controle Acadêmico', processos: processosControleAcademico },
-  { id: 'mp3', codigo: 'MP03', nome: 'Gestão de Professores', processos: processosGestaoProfessores },
-  { id: 'mp4', codigo: 'MP04', nome: 'Infraestrutura e Recursos', processos: processosInfraestrutura },
-  { id: 'mp5', codigo: 'MP05', nome: 'Relacionamento e Comunicação', processos: processosRelacionamento },
+const macroprocessosCobranca: Macroprocesso[] = [
+  { id: 'mp1', codigo: 'MP01', nome: 'Operacionalizar Cobrança', processos: processosOperacionalizarCobranca },
+  { id: 'mp2', codigo: 'MP02', nome: 'Gerir Produtos Financeiros', processos: processosGerirProdutosFinanceiros },
+  { id: 'mp3', codigo: 'MP03', nome: 'Captar Alunos', processos: processosCaptarAlunos },
+  { id: 'mp4', codigo: 'MP04', nome: 'Reter Alunos', processos: processosReterAlunos },
+  { id: 'mp5', codigo: 'MP05', nome: 'Entregar Experiência Acadêmica', processos: processosEntregarExperiencia },
 ];
 
-// Processos para outras jornadas
-const processosCrescimento: Processo[] = [
-  { id: 'pc1', codigo: 'PC01', nome: 'Captação de Leads', status: 'ativo', complexidade: 'alta', automatizacao: 80, fte: 5.0 },
-  { id: 'pc2', codigo: 'PC02', nome: 'Conversão de Matrículas', status: 'ativo', complexidade: 'alta', automatizacao: 65, fte: 12.0 },
-  { id: 'pc3', codigo: 'PC03', nome: 'Retenção de Alunos', status: 'ativo', complexidade: 'media', automatizacao: 55, fte: 4.0 },
-  { id: 'pc4', codigo: 'PC04', nome: 'Análise de Mercado', status: 'ativo', complexidade: 'media', automatizacao: 30, fte: 2.0 },
+// Macroprocessos vazios para outras jornadas
+const macroprocessosEditorial: Macroprocesso[] = [
+  { id: 'mpe1', codigo: 'MPE1', nome: 'Desenvolver Conteúdo Didático', processos: [] },
+  { id: 'mpe2', codigo: 'MPE2', nome: 'Curar Conteúdo Externo', processos: [] },
+  { id: 'mpe3', codigo: 'MPE3', nome: 'Publicar Material', processos: [] },
 ];
 
-const processosExperiencia: Processo[] = [
-  { id: 'pe1', codigo: 'PE01', nome: 'NPS e Métricas CX', status: 'ativo', complexidade: 'baixa', automatizacao: 90, fte: 1.0 },
-  { id: 'pe2', codigo: 'PE02', nome: 'Jornada do Aluno', status: 'ativo', complexidade: 'media', automatizacao: 70, fte: 3.0 },
-  { id: 'pe3', codigo: 'PE03', nome: 'Voice of Customer', status: 'ativo', complexidade: 'baixa', automatizacao: 85, fte: 1.5 },
+const macroprocessosPlataforma: Macroprocesso[] = [
+  { id: 'mpp1', codigo: 'MPP1', nome: 'Evoluir Plataforma Digital', processos: [] },
+  { id: 'mpp2', codigo: 'MPP2', nome: 'Integrar Sistemas', processos: [] },
 ];
 
-const macroprocessosCrescimento: Macroprocesso[] = [
-  { id: 'mpc1', codigo: 'MPC1', nome: 'Aquisição', processos: processosCrescimento.slice(0, 2) },
-  { id: 'mpc2', codigo: 'MPC2', nome: 'Fidelização', processos: processosCrescimento.slice(2) },
-];
+// ============================================
+// JORNADAS POR PROPOSTA DE VALOR
+// ============================================
 
-const macroprocessosExperiencia: Macroprocesso[] = [
-  { id: 'mpe1', codigo: 'MPE1', nome: 'Voz do Cliente', processos: processosExperiencia },
-];
-
-// Jornadas do Core - Propostas de Valor
+// PV1 - Jornadas
 const jornadasPV1: Jornada[] = [
   {
     id: 'j1',
     codigo: 'J01',
-    nome: 'Gestão e Suporte à Operação',
+    nome: 'Jornada de Cobrança e Produtos Financeiros',
     dono: 'Maria Silva',
     dominioId: 'core',
-    dominioNome: 'Core: Propostas de Valor',
+    dominioNome: 'Experiência (Plataforma)',
     dominioTipo: 'core',
     propostasValorIds: ['pv1'],
-    macroprocessos: macroprocessosGestaoOperacao,
-    totalProcessos: 26,
+    macroprocessos: macroprocessosCobranca,
+    totalProcessos: 25,
   },
   {
     id: 'j2',
     codigo: 'J02',
-    nome: 'Crescimento',
+    nome: 'Jornada de Captação e Matrícula',
     dono: 'João Santos',
     dominioId: 'core',
-    dominioNome: 'Core: Propostas de Valor',
+    dominioNome: 'Experiência (Plataforma)',
     dominioTipo: 'core',
     propostasValorIds: ['pv1'],
-    macroprocessos: macroprocessosCrescimento,
+    macroprocessos: [],
     totalProcessos: 18,
   },
   {
     id: 'j3',
     codigo: 'J03',
-    nome: 'Experiência',
+    nome: 'Jornada de Experiência do Aluno',
     dono: 'Ana Costa',
     dominioId: 'core',
-    dominioNome: 'Core: Propostas de Valor',
+    dominioNome: 'Experiência (Plataforma)',
     dominioTipo: 'core',
     propostasValorIds: ['pv1', 'pv2'],
-    macroprocessos: macroprocessosExperiencia,
+    macroprocessos: [],
     totalProcessos: 22,
   },
   {
     id: 'j4',
     codigo: 'J04',
-    nome: 'Planejamento e Gestão de Carga Horária',
+    nome: 'Jornada de Retenção e Fidelização',
     dono: 'Carlos Oliveira',
     dominioId: 'core',
-    dominioNome: 'Core: Propostas de Valor',
+    dominioNome: 'Experiência (Plataforma)',
     dominioTipo: 'core',
     propostasValorIds: ['pv1'],
     macroprocessos: [],
@@ -149,26 +142,27 @@ const jornadasPV1: Jornada[] = [
   },
 ];
 
+// PV2 - Jornadas
 const jornadasPV2: Jornada[] = [
   {
     id: 'j5',
     codigo: 'J05',
-    nome: 'Editorial',
+    nome: 'Jornada Editorial e Produção de Conteúdo',
     dono: 'Paula Mendes',
     dominioId: 'core',
-    dominioNome: 'Core: Propostas de Valor',
+    dominioNome: 'Experiência (Plataforma)',
     dominioTipo: 'core',
     propostasValorIds: ['pv2'],
-    macroprocessos: [],
+    macroprocessos: macroprocessosEditorial,
     totalProcessos: 12,
   },
   {
     id: 'j6',
     codigo: 'J06',
-    nome: 'Crescimento',
+    nome: 'Jornada de Curadoria de Conteúdo',
     dono: 'Roberto Lima',
     dominioId: 'core',
-    dominioNome: 'Core: Propostas de Valor',
+    dominioNome: 'Experiência (Plataforma)',
     dominioTipo: 'core',
     propostasValorIds: ['pv2', 'pv3'],
     macroprocessos: [],
@@ -176,26 +170,27 @@ const jornadasPV2: Jornada[] = [
   },
 ];
 
+// PV3 - Jornadas
 const jornadasPV3: Jornada[] = [
   {
     id: 'j7',
     codigo: 'J07',
-    nome: 'Crescimento',
+    nome: 'Jornada de Evolução da Plataforma',
     dono: 'Fernanda Dias',
     dominioId: 'core',
-    dominioNome: 'Core: Propostas de Valor',
+    dominioNome: 'Experiência (Plataforma)',
     dominioTipo: 'core',
     propostasValorIds: ['pv3'],
-    macroprocessos: [],
+    macroprocessos: macroprocessosPlataforma,
     totalProcessos: 14,
   },
   {
     id: 'j8',
     codigo: 'J08',
-    nome: 'Design Plataforma',
+    nome: 'Jornada de Integração de Sistemas',
     dono: 'Lucas Ferreira',
     dominioId: 'core',
-    dominioNome: 'Core: Propostas de Valor',
+    dominioNome: 'Experiência (Plataforma)',
     dominioTipo: 'core',
     propostasValorIds: ['pv3', 'pv4'],
     macroprocessos: [],
@@ -203,14 +198,15 @@ const jornadasPV3: Jornada[] = [
   },
 ];
 
+// PV4 - Jornadas
 const jornadasPV4: Jornada[] = [
   {
     id: 'j9',
     codigo: 'J09',
-    nome: 'Crescimento',
+    nome: 'Jornada de Serviços B2B',
     dono: 'Mariana Rocha',
     dominioId: 'core',
-    dominioNome: 'Core: Propostas de Valor',
+    dominioNome: 'Experiência (Plataforma)',
     dominioTipo: 'core',
     propostasValorIds: ['pv4'],
     macroprocessos: [],
@@ -219,10 +215,10 @@ const jornadasPV4: Jornada[] = [
   {
     id: 'j10',
     codigo: 'J10',
-    nome: 'Design de Soluções',
+    nome: 'Jornada de Soluções em Gestão Educacional',
     dono: 'Pedro Alves',
     dominioId: 'core',
-    dominioNome: 'Core: Propostas de Valor',
+    dominioNome: 'Experiência (Plataforma)',
     dominioTipo: 'core',
     propostasValorIds: ['pv4'],
     macroprocessos: [],
@@ -230,7 +226,9 @@ const jornadasPV4: Jornada[] = [
   },
 ];
 
-// Propostas de Valor
+// ============================================
+// PROPOSTAS DE VALOR
+// ============================================
 const propostasValor: PropostaValor[] = [
   {
     id: 'pv1',
@@ -266,12 +264,16 @@ const propostasValor: PropostaValor[] = [
   },
 ];
 
+// ============================================
+// JORNADAS OUTROS DOMÍNIOS
+// ============================================
+
 // Jornadas Estratégicas
 const jornadasEstrategico: Jornada[] = [
   {
     id: 'je1',
     codigo: 'JE01',
-    nome: 'Estratégia',
+    nome: 'Jornada de Planejamento Estratégico',
     dono: 'Ricardo Mendonça',
     dominioId: 'estrategico',
     dominioNome: 'Estratégico',
@@ -282,7 +284,7 @@ const jornadasEstrategico: Jornada[] = [
   {
     id: 'je2',
     codigo: 'JE02',
-    nome: 'Governança',
+    nome: 'Jornada de Governança Corporativa',
     dono: 'Claudia Ramos',
     dominioId: 'estrategico',
     dominioNome: 'Estratégico',
@@ -293,7 +295,7 @@ const jornadasEstrategico: Jornada[] = [
   {
     id: 'je3',
     codigo: 'JE03',
-    nome: 'Relacionamento Institucional',
+    nome: 'Jornada de Relacionamento Institucional',
     dono: 'André Pinto',
     dominioId: 'estrategico',
     dominioNome: 'Estratégico',
@@ -308,7 +310,7 @@ const jornadasPlataforma: Jornada[] = [
   {
     id: 'jp1',
     codigo: 'JP01',
-    nome: 'Arquitetura e Capacidades',
+    nome: 'Jornada de Arquitetura e Capacidades',
     dono: 'Thiago Nascimento',
     dominioId: 'plataforma',
     dominioNome: 'Plataforma',
@@ -319,7 +321,7 @@ const jornadasPlataforma: Jornada[] = [
   {
     id: 'jp2',
     codigo: 'JP02',
-    nome: 'Desenvolvimento de Soluções',
+    nome: 'Jornada de Desenvolvimento de Soluções',
     dono: 'Camila Souza',
     dominioId: 'plataforma',
     dominioNome: 'Plataforma',
@@ -330,7 +332,7 @@ const jornadasPlataforma: Jornada[] = [
   {
     id: 'jp3',
     codigo: 'JP03',
-    nome: 'Governança e Engenharia de Dados',
+    nome: 'Jornada de Governança e Engenharia de Dados',
     dono: 'Bruno Carvalho',
     dominioId: 'plataforma',
     dominioNome: 'Plataforma',
@@ -341,7 +343,7 @@ const jornadasPlataforma: Jornada[] = [
   {
     id: 'jp4',
     codigo: 'JP04',
-    nome: 'Segurança da Informação',
+    nome: 'Jornada de Segurança da Informação',
     dono: 'Renata Farias',
     dominioId: 'plataforma',
     dominioNome: 'Plataforma',
@@ -356,7 +358,7 @@ const jornadasCorporativo: Jornada[] = [
   {
     id: 'jc1',
     codigo: 'JC01',
-    nome: 'Gestão de Pessoas',
+    nome: 'Jornada de Gestão de Pessoas',
     dono: 'Juliana Martins',
     dominioId: 'corporativo',
     dominioNome: 'Corporativo',
@@ -367,7 +369,7 @@ const jornadasCorporativo: Jornada[] = [
   {
     id: 'jc2',
     codigo: 'JC02',
-    nome: 'Finanças',
+    nome: 'Jornada de Finanças e Controladoria',
     dono: 'Marcos Pereira',
     dominioId: 'corporativo',
     dominioNome: 'Corporativo',
@@ -378,7 +380,7 @@ const jornadasCorporativo: Jornada[] = [
   {
     id: 'jc3',
     codigo: 'JC03',
-    nome: 'Jurídico',
+    nome: 'Jornada Jurídica e Compliance',
     dono: 'Patrícia Gomes',
     dominioId: 'corporativo',
     dominioNome: 'Corporativo',
@@ -389,7 +391,7 @@ const jornadasCorporativo: Jornada[] = [
   {
     id: 'jc4',
     codigo: 'JC04',
-    nome: 'Suprimentos',
+    nome: 'Jornada de Suprimentos e Compras',
     dono: 'Eduardo Santos',
     dominioId: 'corporativo',
     dominioNome: 'Corporativo',
@@ -400,7 +402,7 @@ const jornadasCorporativo: Jornada[] = [
   {
     id: 'jc5',
     codigo: 'JC05',
-    nome: 'Comunicação e Marketing',
+    nome: 'Jornada de Marketing Institucional',
     dono: 'Daniela Costa',
     dominioId: 'corporativo',
     dominioNome: 'Corporativo',
@@ -410,7 +412,9 @@ const jornadasCorporativo: Jornada[] = [
   },
 ];
 
-// Domínios
+// ============================================
+// DOMÍNIOS
+// ============================================
 export const dominios: Dominio[] = [
   {
     id: 'estrategico',
@@ -421,7 +425,7 @@ export const dominios: Dominio[] = [
   },
   {
     id: 'core',
-    nome: 'Core: Propostas de Valor',
+    nome: 'Experiência (Plataforma)',
     tipo: 'core',
     propostasValor: propostasValor,
     totalProcessos: propostasValor.reduce(
@@ -585,7 +589,8 @@ export const jornadasCompletas: JornadaCompleta[] = todasJornadas.map(createJorn
 
 // Business Units para filtros
 export const businessUnits = [
-  'Somos',
+  'Graduação e Pós-graduação',
+  'Ensino Básico',
   'Saber',
   'Aliança 2',
   'Aliança 3',

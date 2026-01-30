@@ -1,20 +1,27 @@
 /**
  * GPS 2.0 - Arquitetura View
- * Visualização com jornada selecionada e drill-down: Macroprocessos > Processos
+ * Layout clean estilo shadcn/ui com CSS customizado
  */
 
 import { useState } from 'react';
 import type { Dominio, Jornada, Macroprocesso, Processo } from '../../types';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import './ArquiteturaView.css';
 
 interface ArquiteturaViewProps {
   dominios: Dominio[];
+  onOpenCadeia?: (macro: Macroprocesso) => void;
 }
 
-export function ArquiteturaView({ dominios }: ArquiteturaViewProps) {
+export function ArquiteturaView({ dominios, onOpenCadeia }: ArquiteturaViewProps) {
   const coreDominio = dominios.find((d) => d.tipo === 'core');
 
-  // Extrair todas as jornadas do Core com seus PVs
+  // Todas as Propostas de Valor do domínio Core
+  const allPVs = coreDominio?.propostasValor || [];
+
   const jornadasCore = coreDominio?.propostasValor?.flatMap((pv) =>
     pv.jornadas.map((j) => ({
       ...j,
@@ -22,7 +29,6 @@ export function ArquiteturaView({ dominios }: ArquiteturaViewProps) {
     }))
   ) || [];
 
-  // Agrupar jornadas que aparecem em múltiplas PVs (mesmo código)
   const jornadasAgrupadas = jornadasCore.reduce((acc, jornada) => {
     const existing = acc.find((j) => j.codigo === jornada.codigo);
     if (existing) {
@@ -37,10 +43,7 @@ export function ArquiteturaView({ dominios }: ArquiteturaViewProps) {
     return acc;
   }, [] as (Jornada & { pvs: { id: string; codigo: string; nome: string; cor: string }[] })[]);
 
-  // Jornada selecionada (J01 - Gestão e Suporte à Operação)
   const selectedJornada = jornadasAgrupadas[0];
-
-  // Calcular totais
   const totalMacroprocessos = selectedJornada?.macroprocessos?.length || 0;
   const totalProcessos = selectedJornada?.macroprocessos?.reduce(
     (acc, mp) => acc + mp.processos.length, 0
@@ -67,17 +70,12 @@ export function ArquiteturaView({ dominios }: ArquiteturaViewProps) {
     }
   };
 
-  const getComplexidadeLabel = (complexidade: string | undefined) => {
-    switch (complexidade) {
-      case 'alta': return 'Alta';
-      case 'media': return 'Média';
-      case 'baixa': return 'Baixa';
-      default: return complexidade || '-';
-    }
-  };
-
   if (!selectedJornada) {
-    return <div className="arquitetura-view">Nenhuma jornada encontrada</div>;
+    return (
+      <div className="arquitetura-view" style={{ alignItems: 'center', justifyContent: 'center', height: 256 }}>
+        Nenhuma jornada encontrada
+      </div>
+    );
   }
 
   return (
@@ -85,52 +83,72 @@ export function ArquiteturaView({ dominios }: ArquiteturaViewProps) {
       {/* Header do Domínio */}
       <div className="dominio-header">
         <div className="dominio-header-left">
-          <span className="dominio-label">DOMÍNIO</span>
-          <span className="dominio-name">Core: Propostas de Valor</span>
+          <span className="dominio-label">Domínio</span>
+          <span className="dominio-name">{coreDominio?.nome || 'Experiência (Plataforma)'}</span>
         </div>
         <div className="dominio-badges">
-          <span className="dominio-badge">{jornadasAgrupadas.length} jornadas</span>
-          <span className="dominio-badge">{totalMacroprocessos} macroprocessos</span>
-          <span className="dominio-badge">{totalProcessos} processos</span>
+          <Badge variant="secondary" style={{ background: 'rgba(255,255,255,0.2)', color: 'white', border: 'none', padding: '6px 14px' }}>
+            {jornadasAgrupadas.length} jornadas
+          </Badge>
+          <Badge variant="secondary" style={{ background: 'rgba(255,255,255,0.2)', color: 'white', border: 'none', padding: '6px 14px' }}>
+            {totalMacroprocessos} macroprocessos
+          </Badge>
+          <Badge variant="secondary" style={{ background: 'rgba(255,255,255,0.2)', color: 'white', border: 'none', padding: '6px 14px' }}>
+            {totalProcessos} processos
+          </Badge>
         </div>
       </div>
 
-      {/* Jornada Selecionada - Card Destacado */}
-      <div className="jornada-selected-card">
-        <div className="jornada-selected-header">
-          <div className="jornada-selected-info">
-            <span className="jornada-selected-label">JORNADA SELECIONADA</span>
-            <div className="jornada-selected-title">
-              <span className="jornada-code-large">{selectedJornada.codigo}</span>
-              <h2 className="jornada-nome-large">{selectedJornada.nome}</h2>
+      {/* Propostas de Valor */}
+      <div className="pv-section">
+        <div className="pv-section-header">
+          <span className="pv-section-label">Propostas de Valor</span>
+          <span className="pv-section-subtitle">Core Business</span>
+        </div>
+        <div className="pv-grid">
+          {allPVs.map((pv) => (
+            <div
+              key={pv.id}
+              className="pv-card"
+              style={{ borderLeftColor: pv.cor }}
+            >
+              <div className="pv-card-header">
+                <span className="pv-code" style={{ color: pv.cor }}>{pv.codigo}</span>
+                <span className="pv-jornadas-count">{pv.jornadas.length} jornadas</span>
+              </div>
+              <p className="pv-nome">{pv.nome}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Jornada Selecionada */}
+      <div className="jornada-card">
+        <div className="jornada-header">
+          <div className="jornada-info">
+            <span className="jornada-label">Jornada Selecionada</span>
+            <div className="jornada-title">
+              <span className="jornada-code">{selectedJornada.codigo}</span>
+              <h2 className="jornada-nome">{selectedJornada.nome}</h2>
             </div>
           </div>
-          <div className="jornada-selected-meta">
-            <div className="jornada-dono-card">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.5" />
-                <path d="M4 20c0-4 4-6 8-6s8 2 8 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
+          <div className="jornada-meta">
+            <div className="jornada-dono">
+              <img
+                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face"
+                alt={selectedJornada.dono}
+                className="dono-avatar"
+              />
               <div className="dono-info">
                 <span className="dono-label">Dono da Jornada</span>
                 <span className="dono-name">{selectedJornada.dono}</span>
+                <span className="dono-cargo">Gerente de Operações</span>
+                <span className="dono-area">Área: Operações Financeiras</span>
               </div>
-            </div>
-            <div className="jornada-pvs-card">
-              {selectedJornada.pvs.map((pv) => (
-                <span
-                  key={pv.id}
-                  className="pv-badge-large"
-                  style={{ backgroundColor: `${pv.cor}20`, color: pv.cor, borderColor: pv.cor }}
-                  title={pv.nome}
-                >
-                  {pv.codigo}
-                </span>
-              ))}
             </div>
           </div>
         </div>
-        <div className="jornada-selected-stats">
+        <div className="jornada-stats">
           <div className="stat-item">
             <span className="stat-value">{selectedJornada.macroprocessos?.length || 0}</span>
             <span className="stat-label">Macroprocessos</span>
@@ -152,40 +170,52 @@ export function ArquiteturaView({ dominios }: ArquiteturaViewProps) {
       <div className="macros-section">
         <div className="section-header">
           <div className="section-title">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1.5" />
-              <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1.5" />
-              <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1.5" />
-              <rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1.5" />
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+              <rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+              <rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+              <rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
             </svg>
             <span>Macroprocessos</span>
           </div>
-          <span className="section-count">{selectedJornada.macroprocessos?.length || 0} macroprocessos</span>
+          <Badge variant="secondary" style={{ padding: '4px 10px' }}>
+            {selectedJornada.macroprocessos?.length || 0} itens
+          </Badge>
         </div>
-
         <div className="macros-grid">
           {selectedJornada.macroprocessos?.map((macro) => {
             const isSelected = selectedMacro?.id === macro.id;
-
             return (
               <div
                 key={macro.id}
-                className={`macro-card ${isSelected ? 'selected' : ''}`}
-                onClick={() => handleMacroClick(macro)}
+                className={cn('macro-card', isSelected && 'selected')}
               >
-                {isSelected && <div className="macro-selected-bar" />}
-                <div className="macro-header">
-                  <span className="macro-code">{macro.codigo}</span>
-                  <span className="macro-count">{macro.processos.length} processos</span>
-                </div>
-                <span className="macro-nome">{macro.nome}</span>
-                {isSelected && (
-                  <div className="macro-chevron">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                      <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
+                <button
+                  onClick={() => handleMacroClick(macro)}
+                  className="macro-card-content"
+                >
+                  <div className="macro-header">
+                    <Badge variant="secondary" style={{ fontFamily: 'var(--font-family-mono, monospace)', fontWeight: 600, color: 'var(--primary)', padding: '4px 10px' }}>
+                      {macro.codigo}
+                    </Badge>
+                    <span className="macro-count">{macro.processos.length} proc.</span>
                   </div>
-                )}
+                  <span className="macro-nome">{macro.nome}</span>
+                </button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="macro-chain-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onOpenCadeia?.(macro);
+                  }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style={{ marginRight: 4 }}>
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  Visualização detalhada
+                </Button>
               </div>
             );
           })}
@@ -197,79 +227,102 @@ export function ArquiteturaView({ dominios }: ArquiteturaViewProps) {
         <div className="processos-section">
           <div className="section-header">
             <div className="section-title">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                 <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 <rect x="9" y="3" width="6" height="4" rx="1" stroke="currentColor" strokeWidth="1.5" />
                 <path d="M9 12h6M9 16h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
               <span>Processos</span>
             </div>
-            <span className="section-context">
+            <Badge variant="default" style={{ padding: '4px 12px' }}>
               {selectedMacro.codigo} - {selectedMacro.nome}
-            </span>
+            </Badge>
           </div>
 
-          <div className="processos-table">
-            <div className="processos-header-row">
-              <span className="col-codigo">Código</span>
-              <span className="col-nome">Nome do Processo</span>
-              <span className="col-status">Status</span>
-              <span className="col-automacao">Automação</span>
-              <span className="col-complexidade">Complexidade</span>
-              <span className="col-fte">FTE</span>
-            </div>
-            {selectedMacro.processos.map((processo) => {
-              const isSelected = selectedProcesso?.id === processo.id;
+          <table className="processos-table">
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Nome do Processo</th>
+                <th>Status</th>
+                <th>Automação</th>
+                <th>Complexidade</th>
+                <th>FTE</th>
+              </tr>
+            </thead>
+            <tbody>
+              {selectedMacro.processos.map((processo) => {
+                const isSelected = selectedProcesso?.id === processo.id;
+                return (
+                  <tr
+                    key={processo.id}
+                    onClick={() => handleProcessoClick(processo)}
+                    className={isSelected ? 'selected' : ''}
+                  >
+                    <td>{processo.codigo}</td>
+                    <td style={{ fontWeight: 500 }}>{processo.nome}</td>
+                    <td>
+                      <Badge
+                        variant="outline"
+                        style={{
+                          fontSize: 11,
+                          padding: '4px 10px',
+                          backgroundColor: processo.status === 'ativo' ? 'var(--status-ativo-bg)' : processo.status === 'em_revisao' ? 'var(--status-revisao-bg)' : 'var(--status-inativo-bg)',
+                          color: processo.status === 'ativo' ? 'var(--status-ativo-text)' : processo.status === 'em_revisao' ? 'var(--status-revisao-text)' : 'var(--status-inativo-text)',
+                          borderColor: processo.status === 'ativo' ? 'var(--status-ativo-border)' : processo.status === 'em_revisao' ? 'var(--status-revisao-border)' : 'var(--status-inativo-border)'
+                        }}
+                      >
+                        {processo.status === 'ativo' ? 'Ativo' : processo.status === 'em_revisao' ? 'Em Revisão' : 'Inativo'}
+                      </Badge>
+                    </td>
+                    <td>
+                      <div className="automacao-cell">
+                        <Progress value={processo.automatizacao} className="h-1.5 w-16" />
+                        <span className="automacao-value">{processo.automatizacao}%</span>
+                      </div>
+                    </td>
+                    <td className={`complexidade-${processo.complexidade}`} style={{ fontWeight: 500 }}>
+                      {processo.complexidade === 'alta' ? 'Alta' : processo.complexidade === 'media' ? 'Média' : 'Baixa'}
+                    </td>
+                    <td>{processo.fte}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
 
-              return (
-                <div
-                  key={processo.id}
-                  className={`processo-row ${isSelected ? 'selected' : ''}`}
-                  onClick={() => handleProcessoClick(processo)}
-                >
-                  <span className="col-codigo">{processo.codigo}</span>
-                  <span className="col-nome">{processo.nome}</span>
-                  <span className={`col-status status-${processo.status}`}>
-                    {processo.status === 'ativo' ? 'Ativo' : processo.status === 'em_revisao' ? 'Em Revisão' : 'Inativo'}
-                  </span>
-                  <span className="col-automacao">
-                    <div className="automacao-bar">
-                      <div
-                        className="automacao-fill"
-                        style={{ width: `${processo.automatizacao}%` }}
-                      />
-                    </div>
-                    <span className="automacao-value">{processo.automatizacao}%</span>
-                  </span>
-                  <span className={`col-complexidade complexidade-${processo.complexidade}`}>
-                    {getComplexidadeLabel(processo.complexidade)}
-                  </span>
-                  <span className="col-fte">{processo.fte}</span>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Detalhes do Processo Selecionado */}
+          {/* Detalhes do Processo */}
           {selectedProcesso && (
             <div className="processo-detail">
               <div className="processo-detail-header">
                 <h4>{selectedProcesso.codigo} - {selectedProcesso.nome}</h4>
-                <button
-                  className="processo-detail-close"
-                  onClick={() => setSelectedProcesso(null)}
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedProcesso(null);
+                  }}
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                     <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                   </svg>
-                </button>
+                </Button>
               </div>
               <div className="processo-detail-grid">
                 <div className="detail-item">
                   <span className="detail-label">Status</span>
-                  <span className={`detail-value status-badge status-${selectedProcesso.status}`}>
+                  <Badge
+                    variant="outline"
+                    style={{
+                      padding: '4px 10px',
+                      backgroundColor: selectedProcesso.status === 'ativo' ? 'var(--status-ativo-bg)' : selectedProcesso.status === 'em_revisao' ? 'var(--status-revisao-bg)' : 'var(--status-inativo-bg)',
+                      color: selectedProcesso.status === 'ativo' ? 'var(--status-ativo-text)' : selectedProcesso.status === 'em_revisao' ? 'var(--status-revisao-text)' : 'var(--status-inativo-text)',
+                      borderColor: selectedProcesso.status === 'ativo' ? 'var(--status-ativo-border)' : selectedProcesso.status === 'em_revisao' ? 'var(--status-revisao-border)' : 'var(--status-inativo-border)'
+                    }}
+                  >
                     {selectedProcesso.status === 'ativo' ? 'Ativo' : selectedProcesso.status === 'em_revisao' ? 'Em Revisão' : 'Inativo'}
-                  </span>
+                  </Badge>
                 </div>
                 <div className="detail-item">
                   <span className="detail-label">Automação</span>
@@ -277,8 +330,8 @@ export function ArquiteturaView({ dominios }: ArquiteturaViewProps) {
                 </div>
                 <div className="detail-item">
                   <span className="detail-label">Complexidade</span>
-                  <span className={`detail-value complexidade-${selectedProcesso.complexidade}`}>
-                    {getComplexidadeLabel(selectedProcesso.complexidade)}
+                  <span className={cn('detail-value', `complexidade-${selectedProcesso.complexidade}`)}>
+                    {selectedProcesso.complexidade === 'alta' ? 'Alta' : selectedProcesso.complexidade === 'media' ? 'Média' : 'Baixa'}
                   </span>
                 </div>
                 <div className="detail-item">
@@ -290,6 +343,7 @@ export function ArquiteturaView({ dominios }: ArquiteturaViewProps) {
           )}
         </div>
       )}
+
     </div>
   );
 }
