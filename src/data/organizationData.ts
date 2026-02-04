@@ -1,86 +1,92 @@
 /**
  * GPS 2.0 - Dados da Estrutura Organizacional
- * Mock data com BUs, Domínios, Jornadas, Macroprocessos e Processos
+ * Mock data com VPs, BUs, Domínios, Jornadas, Macroprocessos e Processos
  */
 
-import type { BusinessUnit, Responsavel, DominioCompleto, JornadaCompleta, MacroprocessoCompleto, Processo } from '../types';
+import type { VP, BusinessUnit, Responsavel, DominioCompleto, JornadaCompleta, MacroprocessoCompleto, Processo } from '../types';
+
+// ============================================
+// VPs (Vice-Presidentes) - 10 no total
+// ============================================
+
+export const vps: VP[] = [
+  {
+    id: 'vp-1',
+    nome: 'Roberto Valério',
+    cargo: 'CEO',
+    foto: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face',
+    cor: '#7C3AED', // violet
+  },
+  {
+    id: 'vp-2',
+    nome: 'Mario Ghio',
+    cargo: 'VP Alianças Educacionais',
+    foto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face',
+    cor: '#8B5CF6', // purple
+  },
+  {
+    id: 'vp-3',
+    nome: 'Fernando Sasaki',
+    cargo: 'VP Ensino Superior',
+    foto: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face',
+    cor: '#6366F1', // indigo
+  },
+  {
+    id: 'vp-4',
+    nome: 'Patricia Volpi',
+    cargo: 'VP Educação Continuada',
+    foto: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face',
+    cor: '#EC4899', // pink
+  },
+  {
+    id: 'vp-5',
+    nome: 'Carlos Mendes',
+    cargo: 'VP Revenue & Growth',
+    foto: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=80&h=80&fit=crop&crop=face',
+    cor: '#F59E0B', // amber
+  },
+  {
+    id: 'vp-6',
+    nome: 'Amanda Ribeiro',
+    cargo: 'VP Experiência & Produto',
+    foto: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face',
+    cor: '#14B8A6', // teal
+  },
+  {
+    id: 'vp-7',
+    nome: 'Ricardo Torres',
+    cargo: 'VP Transformação Digital',
+    foto: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=80&h=80&fit=crop&crop=face',
+    cor: '#0EA5E9', // sky
+  },
+  {
+    id: 'vp-8',
+    nome: 'Juliana Costa',
+    cargo: 'VP Pessoas & Cultura',
+    foto: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=80&h=80&fit=crop&crop=face',
+    cor: '#22C55E', // green
+  },
+  {
+    id: 'vp-9',
+    nome: 'Eduardo Lima',
+    cargo: 'CFO',
+    foto: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=80&h=80&fit=crop&crop=face',
+    cor: '#EF4444', // red
+  },
+  {
+    id: 'vp-10',
+    nome: 'Marcelo Oliveira',
+    cargo: 'CTO',
+    foto: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=80&h=80&fit=crop&crop=face',
+    cor: '#3B82F6', // blue
+  },
+];
 
 // ============================================
 // RESPONSÁVEIS (Donos)
 // ============================================
 
 const responsaveis: Record<string, Responsavel> = {
-  // BU Leaders
-  'r-somos': {
-    id: 'r-somos',
-    nome: 'Mario Ghio',
-    cargo: 'CEO',
-    area: 'SOMOS Educação',
-    foto: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face',
-  },
-  'r-saber': {
-    id: 'r-saber',
-    nome: 'Rodrigo Galindo',
-    cargo: 'CEO',
-    area: 'Saber',
-    foto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face',
-  },
-  'r-alianca-ja': {
-    id: 'r-alianca-ja',
-    nome: 'Fernando Sasaki',
-    cargo: 'Diretor Executivo',
-    area: 'Aliança Jovens e Adultos',
-    foto: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face',
-  },
-  'r-lifelong': {
-    id: 'r-lifelong',
-    nome: 'Patricia Volpi',
-    cargo: 'Diretora Executiva',
-    area: 'Lifelong Learning',
-    foto: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face',
-  },
-  'r-revenue': {
-    id: 'r-revenue',
-    nome: 'Carlos Mendes',
-    cargo: 'VP Revenue',
-    area: 'Revenue Office',
-    foto: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=80&h=80&fit=crop&crop=face',
-  },
-  'r-learning': {
-    id: 'r-learning',
-    nome: 'Amanda Ribeiro',
-    cargo: 'VP Learning Experience',
-    area: 'Learning Experience',
-    foto: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face',
-  },
-  'r-transform': {
-    id: 'r-transform',
-    nome: 'Ricardo Torres',
-    cargo: 'VP Transformação',
-    area: 'Transformation Office',
-    foto: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=80&h=80&fit=crop&crop=face',
-  },
-  'r-gcc': {
-    id: 'r-gcc',
-    nome: 'Juliana Costa',
-    cargo: 'VP Gente & Cultura',
-    area: 'G&CC',
-    foto: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=80&h=80&fit=crop&crop=face',
-  },
-  'r-financas': {
-    id: 'r-financas',
-    nome: 'Eduardo Lima',
-    cargo: 'CFO',
-    area: 'Finanças',
-    foto: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=80&h=80&fit=crop&crop=face',
-  },
-  'r-tech': {
-    id: 'r-tech',
-    nome: 'Marcelo Oliveira',
-    cargo: 'CTO',
-    area: 'Tecnologia',
-    foto: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=80&h=80&fit=crop&crop=face',
-  },
   // Domain owners
   'r-dom-1': {
     id: 'r-dom-1',
@@ -135,15 +141,20 @@ const responsaveis: Record<string, Responsavel> = {
 function gerarProcessos(macroId: string, quantidade: number): Processo[] {
   const statuses: Array<'ativo' | 'inativo' | 'em_revisao'> = ['ativo', 'ativo', 'ativo', 'em_revisao', 'inativo'];
   const complexidades: Array<'baixa' | 'media' | 'alta'> = ['baixa', 'media', 'alta'];
+  const nomesProcessos = [
+    'Receber solicitação', 'Validar dados', 'Processar informações', 'Aprovar requisição',
+    'Enviar notificação', 'Atualizar cadastro', 'Gerar relatório', 'Arquivar documentos',
+    'Revisar pendências', 'Finalizar atendimento', 'Registrar ocorrência', 'Encaminhar área'
+  ];
 
   return Array.from({ length: quantidade }, (_, i) => ({
     id: `${macroId}-p-${i + 1}`,
     codigo: `P${String(i + 1).padStart(3, '0')}`,
-    nome: `Processo ${i + 1}`,
+    nome: nomesProcessos[i % nomesProcessos.length],
     status: statuses[Math.floor(Math.random() * statuses.length)],
     complexidade: complexidades[Math.floor(Math.random() * complexidades.length)],
     automatizacao: Math.floor(Math.random() * 100),
-    fte: Math.floor(Math.random() * 10) + 1,
+    fte: +(Math.random() * 5 + 0.5).toFixed(1),
   }));
 }
 
@@ -176,7 +187,7 @@ function gerarJornadas(dominioId: string, nomesJornadas: string[]): JornadaCompl
   ];
 
   return nomesJornadas.map((nome, i) => {
-    const macros = gerarMacroprocessos(`${dominioId}-j-${i + 1}`, Math.floor(Math.random() * 5) + 2, macroNomes);
+    const macros = gerarMacroprocessos(`${dominioId}-j-${i + 1}`, Math.floor(Math.random() * 4) + 2, macroNomes);
     const totalProcessos = macros.reduce((acc, m) => acc + m.totalProcessos, 0);
 
     return {
@@ -215,190 +226,164 @@ function gerarDominios(buId: string, configDominios: { nome: string; jornadas: s
 }
 
 // ============================================
-// BUSINESS UNITS DATA
+// Função para criar BU com totais calculados
+// ============================================
+
+function criarBU(
+  id: string,
+  codigo: string,
+  nome: string,
+  categoria: 'alianca' | 'plataforma' | 'corporativo',
+  cor: string,
+  vpId: string,
+  responsavel: Responsavel,
+  configDominios: { nome: string; jornadas: string[] }[]
+): BusinessUnit {
+  const dominios = gerarDominios(id, configDominios);
+  return {
+    id,
+    codigo,
+    nome,
+    categoria,
+    cor,
+    vpId,
+    responsavel,
+    dominios,
+    totalDominios: dominios.length,
+    totalJornadas: dominios.reduce((acc, d) => acc + d.totalJornadas, 0),
+    totalMacroprocessos: dominios.reduce((acc, d) => acc + d.totalMacroprocessos, 0),
+    totalProcessos: dominios.reduce((acc, d) => acc + d.totalProcessos, 0),
+  };
+}
+
+// ============================================
+// BUSINESS UNITS DATA - 10 BUs Cogna
 // ============================================
 
 export const businessUnits: BusinessUnit[] = [
-  // ==================== ALIANÇAS ====================
-  {
-    id: 'bu-somos',
-    codigo: 'SOMOS',
-    nome: 'SOMOS',
-    categoria: 'alianca',
-    cor: '#8B5CF6', // violet
-    responsavel: responsaveis['r-somos'],
-    dominios: gerarDominios('bu-somos', [
-      { nome: 'Gestão Escolar', jornadas: ['Matrícula', 'Rematrícula', 'Transferência', 'Cancelamento'] },
-      { nome: 'Conteúdo Didático', jornadas: ['Produção Editorial', 'Revisão', 'Publicação'] },
-      { nome: 'Plataforma Digital', jornadas: ['Acesso Aluno', 'Gestão Conteúdo', 'Avaliações Online'] },
-      { nome: 'Comercial', jornadas: ['Captação Escolas', 'Negociação', 'Contrato', 'Renovação'] },
-      { nome: 'Suporte Pedagógico', jornadas: ['Formação Professores', 'Consultoria', 'Eventos'] },
-    ]),
-    get totalDominios() { return this.dominios.length; },
-    get totalJornadas() { return this.dominios.reduce((acc, d) => acc + d.totalJornadas, 0); },
-    get totalMacroprocessos() { return this.dominios.reduce((acc, d) => acc + d.totalMacroprocessos, 0); },
-    get totalProcessos() { return this.dominios.reduce((acc, d) => acc + d.totalProcessos, 0); },
-  },
-  {
-    id: 'bu-saber',
-    codigo: 'SABER',
-    nome: 'Saber',
-    categoria: 'alianca',
-    cor: '#8B5CF6',
-    responsavel: responsaveis['r-saber'],
-    dominios: gerarDominios('bu-saber', [
-      { nome: 'Graduação', jornadas: ['Vestibular', 'Matrícula', 'Gestão Acadêmica', 'Formatura'] },
-      { nome: 'Pós-Graduação', jornadas: ['Inscrição', 'Orientação', 'TCC/Dissertação'] },
-      { nome: 'EAD', jornadas: ['Produção Conteúdo', 'Tutoria', 'Avaliação'] },
-      { nome: 'Extensão', jornadas: ['Cursos Livres', 'Workshops', 'Certificação'] },
-    ]),
-    get totalDominios() { return this.dominios.length; },
-    get totalJornadas() { return this.dominios.reduce((acc, d) => acc + d.totalJornadas, 0); },
-    get totalMacroprocessos() { return this.dominios.reduce((acc, d) => acc + d.totalMacroprocessos, 0); },
-    get totalProcessos() { return this.dominios.reduce((acc, d) => acc + d.totalProcessos, 0); },
-  },
-  {
-    id: 'bu-alianca-ja',
-    codigo: 'AJA',
-    nome: 'Aliança Jovens e Adultos',
-    categoria: 'alianca',
-    cor: '#8B5CF6',
-    responsavel: responsaveis['r-alianca-ja'],
-    dominios: gerarDominios('bu-alianca-ja', [
-      { nome: 'Captação', jornadas: ['Lead Generation', 'Qualificação', 'Conversão'] },
-      { nome: 'Experiência do Aluno', jornadas: ['Onboarding', 'Acompanhamento', 'Retenção'] },
-      { nome: 'Financeiro Aluno', jornadas: ['Cobrança', 'Negociação', 'Bolsas'] },
-    ]),
-    get totalDominios() { return this.dominios.length; },
-    get totalJornadas() { return this.dominios.reduce((acc, d) => acc + d.totalJornadas, 0); },
-    get totalMacroprocessos() { return this.dominios.reduce((acc, d) => acc + d.totalMacroprocessos, 0); },
-    get totalProcessos() { return this.dominios.reduce((acc, d) => acc + d.totalProcessos, 0); },
-  },
-  {
-    id: 'bu-lifelong',
-    codigo: 'LIFE',
-    nome: 'Lifelong Learning',
-    categoria: 'alianca',
-    cor: '#8B5CF6',
-    responsavel: responsaveis['r-lifelong'],
-    dominios: gerarDominios('bu-lifelong', [
-      { nome: 'Cursos Corporativos', jornadas: ['Diagnóstico', 'Customização', 'Entrega', 'Avaliação'] },
-      { nome: 'Plataforma B2B', jornadas: ['Onboarding Empresa', 'Gestão Usuários', 'Relatórios'] },
-    ]),
-    get totalDominios() { return this.dominios.length; },
-    get totalJornadas() { return this.dominios.reduce((acc, d) => acc + d.totalJornadas, 0); },
-    get totalMacroprocessos() { return this.dominios.reduce((acc, d) => acc + d.totalMacroprocessos, 0); },
-    get totalProcessos() { return this.dominios.reduce((acc, d) => acc + d.totalProcessos, 0); },
-  },
+  // ==================== ALIANÇAS (Unidades de Negócio Educacionais) ====================
 
-  // ==================== PLATAFORMAS ====================
-  {
-    id: 'bu-revenue',
-    codigo: 'REV',
-    nome: 'Revenue Office',
-    categoria: 'plataforma',
-    cor: '#14B8A6', // teal
-    responsavel: responsaveis['r-revenue'],
-    dominios: gerarDominios('bu-revenue', [
-      { nome: 'Pricing', jornadas: ['Análise Mercado', 'Precificação', 'Aprovação'] },
-      { nome: 'Cobrança', jornadas: ['Faturamento', 'Cobrança', 'Inadimplência', 'Recuperação'] },
-    ]),
-    get totalDominios() { return this.dominios.length; },
-    get totalJornadas() { return this.dominios.reduce((acc, d) => acc + d.totalJornadas, 0); },
-    get totalMacroprocessos() { return this.dominios.reduce((acc, d) => acc + d.totalMacroprocessos, 0); },
-    get totalProcessos() { return this.dominios.reduce((acc, d) => acc + d.totalProcessos, 0); },
-  },
-  {
-    id: 'bu-learning',
-    codigo: 'LEX',
-    nome: 'Learning Experience',
-    categoria: 'plataforma',
-    cor: '#14B8A6',
-    responsavel: responsaveis['r-learning'],
-    dominios: gerarDominios('bu-learning', [
-      { nome: 'Design Instrucional', jornadas: ['Concepção', 'Desenvolvimento', 'Revisão'] },
-      { nome: 'Produção Multimídia', jornadas: ['Roteirização', 'Gravação', 'Edição', 'Publicação'] },
-      { nome: 'Learning Analytics', jornadas: ['Coleta Dados', 'Análise', 'Insights'] },
-    ]),
-    get totalDominios() { return this.dominios.length; },
-    get totalJornadas() { return this.dominios.reduce((acc, d) => acc + d.totalJornadas, 0); },
-    get totalMacroprocessos() { return this.dominios.reduce((acc, d) => acc + d.totalMacroprocessos, 0); },
-    get totalProcessos() { return this.dominios.reduce((acc, d) => acc + d.totalProcessos, 0); },
-  },
-  {
-    id: 'bu-transform',
-    codigo: 'TRX',
-    nome: 'Transformation Office',
-    categoria: 'plataforma',
-    cor: '#14B8A6',
-    responsavel: responsaveis['r-transform'],
-    dominios: gerarDominios('bu-transform', [
-      { nome: 'Processos', jornadas: ['Mapeamento', 'Otimização', 'Automação'] },
-      { nome: 'Projetos', jornadas: ['Intake', 'Planejamento', 'Execução', 'Encerramento'] },
-    ]),
-    get totalDominios() { return this.dominios.length; },
-    get totalJornadas() { return this.dominios.reduce((acc, d) => acc + d.totalJornadas, 0); },
-    get totalMacroprocessos() { return this.dominios.reduce((acc, d) => acc + d.totalMacroprocessos, 0); },
-    get totalProcessos() { return this.dominios.reduce((acc, d) => acc + d.totalProcessos, 0); },
-  },
+  // 1. Somos
+  criarBU('bu-somos', 'SOMOS', 'Somos', 'alianca', '#8B5CF6', 'vp-2',
+    { id: 'r-somos', nome: 'Rodrigo Galindo', cargo: 'CEO SOMOS', area: 'SOMOS', foto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face' },
+    [
+      { nome: 'Gestão Escolar', jornadas: ['Matrícula', 'Rematrícula', 'Transferência', 'Secretaria'] },
+      { nome: 'Conteúdo Didático', jornadas: ['Produção Editorial', 'Revisão Pedagógica', 'Publicação'] },
+      { nome: 'Plataforma Digital', jornadas: ['Acesso Aluno', 'Gestão Conteúdo', 'Suporte Técnico'] },
+      { nome: 'Comercial B2B', jornadas: ['Prospecção', 'Negociação', 'Implantação'] },
+    ]
+  ),
 
-  // ==================== CORPORATIVOS ====================
-  {
-    id: 'bu-gcc',
-    codigo: 'GCC',
-    nome: 'G&CC',
-    categoria: 'corporativo',
-    cor: '#22C55E', // green
-    responsavel: responsaveis['r-gcc'],
-    dominios: gerarDominios('bu-gcc', [
-      { nome: 'Recrutamento', jornadas: ['Requisição', 'Seleção', 'Contratação', 'Onboarding'] },
-      { nome: 'Desenvolvimento', jornadas: ['Avaliação', 'PDI', 'Treinamento', 'Carreira'] },
-      { nome: 'Folha', jornadas: ['Processamento', 'Benefícios', 'Férias', 'Rescisão'] },
-    ]),
-    get totalDominios() { return this.dominios.length; },
-    get totalJornadas() { return this.dominios.reduce((acc, d) => acc + d.totalJornadas, 0); },
-    get totalMacroprocessos() { return this.dominios.reduce((acc, d) => acc + d.totalMacroprocessos, 0); },
-    get totalProcessos() { return this.dominios.reduce((acc, d) => acc + d.totalProcessos, 0); },
-  },
-  {
-    id: 'bu-financas',
-    codigo: 'FIN',
-    nome: 'Finanças',
-    categoria: 'corporativo',
-    cor: '#22C55E',
-    responsavel: responsaveis['r-financas'],
-    dominios: gerarDominios('bu-financas', [
-      { nome: 'Contabilidade', jornadas: ['Lançamentos', 'Conciliação', 'Fechamento'] },
-      { nome: 'Tesouraria', jornadas: ['Contas a Pagar', 'Contas a Receber', 'Caixa'] },
-      { nome: 'Controladoria', jornadas: ['Orçamento', 'Forecast', 'Reporting'] },
-    ]),
-    get totalDominios() { return this.dominios.length; },
-    get totalJornadas() { return this.dominios.reduce((acc, d) => acc + d.totalJornadas, 0); },
-    get totalMacroprocessos() { return this.dominios.reduce((acc, d) => acc + d.totalMacroprocessos, 0); },
-    get totalProcessos() { return this.dominios.reduce((acc, d) => acc + d.totalProcessos, 0); },
-  },
-  {
-    id: 'bu-tech',
-    codigo: 'TECH',
-    nome: 'Tecnologia',
-    categoria: 'corporativo',
-    cor: '#22C55E',
-    responsavel: responsaveis['r-tech'],
-    dominios: gerarDominios('bu-tech', [
-      { nome: 'Desenvolvimento', jornadas: ['Discovery', 'Build', 'Deploy', 'Sustentação'] },
-      { nome: 'Infraestrutura', jornadas: ['Provisionamento', 'Monitoramento', 'Incidentes'] },
-      { nome: 'Dados', jornadas: ['Ingestão', 'Processamento', 'Visualização'] },
-    ]),
-    get totalDominios() { return this.dominios.length; },
-    get totalJornadas() { return this.dominios.reduce((acc, d) => acc + d.totalJornadas, 0); },
-    get totalMacroprocessos() { return this.dominios.reduce((acc, d) => acc + d.totalMacroprocessos, 0); },
-    get totalProcessos() { return this.dominios.reduce((acc, d) => acc + d.totalProcessos, 0); },
-  },
+  // 2. Saber
+  criarBU('bu-saber', 'SABER', 'Saber', 'alianca', '#6366F1', 'vp-3',
+    { id: 'r-saber', nome: 'Ana Martins', cargo: 'CEO Saber', area: 'Saber', foto: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face' },
+    [
+      { nome: 'Graduação Presencial', jornadas: ['Vestibular', 'Matrícula', 'Vida Acadêmica', 'Formatura'] },
+      { nome: 'Graduação EAD', jornadas: ['Inscrição Online', 'Tutoria', 'Avaliação', 'Certificação'] },
+      { nome: 'Pós-Graduação', jornadas: ['Seleção', 'Orientação', 'Defesa TCC'] },
+      { nome: 'Relacionamento Aluno', jornadas: ['Atendimento', 'Ouvidoria', 'Fidelização'] },
+    ]
+  ),
+
+  // 3. Aliança 2 - Jovens e Adultos
+  criarBU('bu-alianca2', 'AL2', 'Aliança 2 - Jovens e Adultos', 'alianca', '#EC4899', 'vp-4',
+    { id: 'r-alianca2', nome: 'Pedro Costa', cargo: 'Diretor Aliança 2', area: 'Aliança 2', foto: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face' },
+    [
+      { nome: 'EJA - Educação de Jovens e Adultos', jornadas: ['Captação', 'Matrícula', 'Acompanhamento', 'Conclusão'] },
+      { nome: 'Cursos Técnicos', jornadas: ['Oferta', 'Inscrição', 'Estágio', 'Certificação'] },
+      { nome: 'Preparatórios', jornadas: ['ENEM', 'Concursos', 'Vestibulares'] },
+    ]
+  ),
+
+  // 4. Aliança 3 - Lifelong Learning
+  criarBU('bu-alianca3', 'AL3', 'Aliança 3 - Lifelong Learning', 'alianca', '#F97316', 'vp-4',
+    { id: 'r-alianca3', nome: 'Renata Lima', cargo: 'Diretora Aliança 3', area: 'Aliança 3', foto: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=80&h=80&fit=crop&crop=face' },
+    [
+      { nome: 'Educação Corporativa', jornadas: ['Diagnóstico', 'Customização', 'Entrega', 'Mensuração'] },
+      { nome: 'Cursos Livres', jornadas: ['Catálogo', 'Inscrição', 'Consumo', 'Certificação'] },
+      { nome: 'Bootcamps', jornadas: ['Lançamento', 'Seleção', 'Imersão', 'Empregabilidade'] },
+    ]
+  ),
+
+  // ==================== PLATAFORMAS (Áreas de Suporte ao Negócio) ====================
+
+  // 5. Revenue Office
+  criarBU('bu-revenue', 'REV', 'Revenue Office', 'plataforma', '#F59E0B', 'vp-5',
+    { id: 'r-revenue', nome: 'Carlos Mendes', cargo: 'VP Revenue', area: 'Revenue', foto: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=80&h=80&fit=crop&crop=face' },
+    [
+      { nome: 'Pricing & Revenue Management', jornadas: ['Análise Mercado', 'Precificação', 'Aprovação', 'Monitoramento'] },
+      { nome: 'Cobrança', jornadas: ['Faturamento', 'Régua de Cobrança', 'Inadimplência', 'Recuperação'] },
+      { nome: 'CRM & Vendas', jornadas: ['Leads', 'Qualificação', 'Conversão', 'Retenção'] },
+    ]
+  ),
+
+  // 6. Learning Experience
+  criarBU('bu-lex', 'LEX', 'Learning Experience', 'plataforma', '#14B8A6', 'vp-6',
+    { id: 'r-lex', nome: 'Amanda Ribeiro', cargo: 'VP Learning Experience', area: 'LEx', foto: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face' },
+    [
+      { nome: 'Design Instrucional', jornadas: ['Concepção', 'Roteirização', 'Desenvolvimento', 'Revisão'] },
+      { nome: 'Produção Multimídia', jornadas: ['Gravação', 'Edição', 'Pós-produção', 'Publicação'] },
+      { nome: 'Plataforma LMS', jornadas: ['Configuração', 'Curadoria', 'Analytics', 'Suporte'] },
+    ]
+  ),
+
+  // 7. Transformation Office
+  criarBU('bu-trx', 'TRX', 'Transformation Office', 'plataforma', '#0EA5E9', 'vp-7',
+    { id: 'r-trx', nome: 'Ricardo Torres', cargo: 'VP Transformação', area: 'TrX', foto: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=80&h=80&fit=crop&crop=face' },
+    [
+      { nome: 'Processos', jornadas: ['Mapeamento', 'Análise', 'Otimização', 'Automação'] },
+      { nome: 'Projetos Estratégicos', jornadas: ['Intake', 'Planejamento', 'Execução', 'Encerramento'] },
+      { nome: 'Change Management', jornadas: ['Diagnóstico', 'Comunicação', 'Treinamento', 'Adoção'] },
+    ]
+  ),
+
+  // ==================== CORPORATIVO (Funções Corporativas) ====================
+
+  // 8. G&CC - Gente, Cultura e Comunicação
+  criarBU('bu-gcc', 'GCC', 'G&CC', 'corporativo', '#22C55E', 'vp-8',
+    { id: 'r-gcc', nome: 'Juliana Costa', cargo: 'VP Gente & Cultura', area: 'G&CC', foto: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=80&h=80&fit=crop&crop=face' },
+    [
+      { nome: 'Talent Acquisition', jornadas: ['Requisição', 'Seleção', 'Contratação', 'Onboarding'] },
+      { nome: 'Desenvolvimento', jornadas: ['Avaliação Desempenho', 'PDI', 'Treinamento', 'Sucessão'] },
+      { nome: 'Operações RH', jornadas: ['Folha de Pagamento', 'Benefícios', 'Férias', 'Desligamento'] },
+      { nome: 'Comunicação Interna', jornadas: ['Campanhas', 'Endomarketing', 'Eventos'] },
+    ]
+  ),
+
+  // 9. Finanças
+  criarBU('bu-fin', 'FIN', 'Finanças', 'corporativo', '#EF4444', 'vp-9',
+    { id: 'r-fin', nome: 'Eduardo Lima', cargo: 'CFO', area: 'Finanças', foto: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=80&h=80&fit=crop&crop=face' },
+    [
+      { nome: 'Contabilidade', jornadas: ['Lançamentos', 'Conciliação', 'Fechamento Mensal', 'Balanço'] },
+      { nome: 'Tesouraria', jornadas: ['Contas a Pagar', 'Contas a Receber', 'Gestão de Caixa'] },
+      { nome: 'Controladoria', jornadas: ['Orçamento', 'Forecast', 'Reporting', 'Análise Variância'] },
+      { nome: 'Fiscal & Tributário', jornadas: ['Apuração', 'Obrigações Acessórias', 'Planejamento Tributário'] },
+    ]
+  ),
+
+  // 10. Tecnologia
+  criarBU('bu-tech', 'TECH', 'Tecnologia', 'corporativo', '#3B82F6', 'vp-10',
+    { id: 'r-tech', nome: 'Marcelo Oliveira', cargo: 'CTO', area: 'Tech', foto: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=80&h=80&fit=crop&crop=face' },
+    [
+      { nome: 'Desenvolvimento', jornadas: ['Discovery', 'Build', 'Test', 'Deploy'] },
+      { nome: 'Infraestrutura & Cloud', jornadas: ['Provisionamento', 'Monitoramento', 'Incidentes', 'Capacity'] },
+      { nome: 'Data & Analytics', jornadas: ['Ingestão', 'Processamento', 'Modelagem', 'Visualização'] },
+      { nome: 'Segurança', jornadas: ['Governança', 'Compliance', 'Resposta Incidentes'] },
+    ]
+  ),
 ];
 
 // ============================================
 // HELPERS para busca
 // ============================================
+
+export function getVPById(id: string): VP | undefined {
+  return vps.find(vp => vp.id === id);
+}
+
+export function getBUsByVP(vpId: string): BusinessUnit[] {
+  return businessUnits.filter(bu => bu.vpId === vpId);
+}
 
 export function getBUById(id: string): BusinessUnit | undefined {
   return businessUnits.find(bu => bu.id === id);
@@ -421,6 +406,7 @@ export function getMacroById(buId: string, dominioId: string, jornadaId: string,
 
 // Totais globais
 export const totaisGlobais = {
+  get totalVPs() { return vps.length; },
   get totalBUs() { return businessUnits.length; },
   get totalDominios() { return businessUnits.reduce((acc, bu) => acc + bu.totalDominios, 0); },
   get totalJornadas() { return businessUnits.reduce((acc, bu) => acc + bu.totalJornadas, 0); },
