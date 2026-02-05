@@ -49,7 +49,7 @@ function JornadaCard({
         <div className="detail-card-stats">
           <div className="detail-card-stat">
             <span className="detail-card-stat-value">{jornada.totalMacroprocessos}</span>
-            <span className="detail-card-stat-label">Macros</span>
+            <span className="detail-card-stat-label">Macroprocessos</span>
           </div>
           <div className="detail-card-stat">
             <span className="detail-card-stat-value">{jornada.totalProcessos}</span>
@@ -87,9 +87,9 @@ export function DominioDetailPage({ bu, dominio, onBack, onSelectJornada }: Domi
               <Layers />
             </div>
             <div className="detail-hero-text">
-              <span className="detail-hero-code">{dominio.codigo}</span>
+              <span className="detail-hero-type">Domínio</span>
               <h1 className="detail-hero-title">{dominio.nome}</h1>
-              <p className="detail-hero-subtitle">{bu.nome}</p>
+              <p className="detail-hero-subtitle">{bu.nome} · {dominio.codigo}</p>
             </div>
           </div>
 
@@ -118,7 +118,7 @@ export function DominioDetailPage({ bu, dominio, onBack, onSelectJornada }: Domi
           <div className="detail-hero-metric">
             <Boxes />
             <span className="detail-hero-metric-value">{dominio.totalMacroprocessos}</span>
-            <span className="detail-hero-metric-label">Macros</span>
+            <span className="detail-hero-metric-label">Macroprocessos</span>
           </div>
           <div className="detail-hero-metric-divider" />
           <div className="detail-hero-metric">
@@ -137,15 +137,25 @@ export function DominioDetailPage({ bu, dominio, onBack, onSelectJornada }: Domi
           <span className="detail-section-badge">{dominio.jornadas.length}</span>
         </header>
 
-        <div className="detail-grid">
-          {dominio.jornadas.map((jornada) => (
-            <JornadaCard
-              key={jornada.id}
-              jornada={jornada}
-              onClick={() => onSelectJornada(jornada)}
-            />
-          ))}
-        </div>
+        {dominio.jornadas.length > 0 ? (
+          <div className="detail-grid">
+            {dominio.jornadas.map((jornada) => (
+              <JornadaCard
+                key={jornada.id}
+                jornada={jornada}
+                onClick={() => onSelectJornada(jornada)}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="detail-empty">
+            <GitBranch className="detail-empty-icon" />
+            <h3 className="detail-empty-title">Nenhuma jornada cadastrada</h3>
+            <p className="detail-empty-desc">
+              Este domínio ainda não possui jornadas vinculadas.
+            </p>
+          </div>
+        )}
       </section>
     </div>
   );

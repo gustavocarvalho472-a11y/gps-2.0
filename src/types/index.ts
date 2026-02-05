@@ -2,7 +2,7 @@
  * GPS 2.0 - Type Definitions
  */
 
-// Hierarchy: BU → Domínio → Jornada → Macroprocesso → Processo
+// Hierarchy: VP → BU → Domínio → Jornada → Macroprocesso → Processo
 
 // Owner info - usado em todos os níveis
 export interface Responsavel {
@@ -13,10 +13,19 @@ export interface Responsavel {
   foto?: string;
 }
 
+// Vice-Presidente - Nível mais alto
+export interface VP {
+  id: string;
+  nome: string;
+  cargo: string;
+  foto?: string;
+  cor: string; // Cor do VP para identificação visual
+}
+
 // Categoria de BU
 export type BUCategoria = 'alianca' | 'plataforma' | 'corporativo';
 
-// Business Unit - Nível mais alto
+// Business Unit - Vinculada a um VP
 export interface BusinessUnit {
   id: string;
   codigo: string;
@@ -24,6 +33,7 @@ export interface BusinessUnit {
   categoria: BUCategoria;
   cor: string;
   icone?: string;
+  vpId: string; // ID do VP responsável
   responsavel: Responsavel;
   dominios: DominioCompleto[];
   // Métricas agregadas
@@ -85,16 +95,13 @@ export interface Processo {
   fte?: number;
 }
 
-// ============================================
-// Tipos legados (mantidos para compatibilidade)
-// ============================================
+// Legacy types for ArquiteturaView
+export type DominioTipo = 'estrategico' | 'core' | 'plataforma' | 'corporativo';
 
 export interface Macroprocesso {
   id: string;
   codigo: string;
   nome: string;
-  descricao?: string;
-  dono?: string;
   processos: Processo[];
 }
 
@@ -102,46 +109,20 @@ export interface Jornada {
   id: string;
   codigo: string;
   nome: string;
-  descricao?: string;
   dono?: string;
   dominioId?: string;
   dominioNome?: string;
-  dominioTipo?: 'estrategico' | 'core' | 'plataforma' | 'corporativo';
+  dominioTipo?: DominioTipo;
   propostasValorIds?: string[];
   macroprocessos: Macroprocesso[];
   totalProcessos: number;
 }
 
-// Visão centrada no Dono da Jornada
-export interface DonoJornada {
-  id: string;
-  nome: string;
-  cargo?: string;
-  area?: string;
-  foto?: string;
-  jornadas: JornadaCompleta[];
-  totalProcessos: number;
-}
-
-export interface JornadaCompleta extends Jornada {
-  dominio: {
-    id: string;
-    nome: string;
-    tipo: 'estrategico' | 'core' | 'plataforma' | 'corporativo';
-  };
-  propostasValor: {
-    id: string;
-    codigo: string;
-    nome: string;
-    cor: string;
-  }[];
-}
-
 export interface PropostaValor {
   id: string;
-  codigo: string; // PV1, PV2, PV3, PV4
+  codigo: string;
   nome: string;
-  descricao: string;
+  descricao?: string;
   cor: string;
   jornadas: Jornada[];
 }
@@ -149,9 +130,9 @@ export interface PropostaValor {
 export interface Dominio {
   id: string;
   nome: string;
-  tipo: 'estrategico' | 'core' | 'plataforma' | 'corporativo';
-  propostasValor?: PropostaValor[];
+  tipo: DominioTipo;
   jornadas?: Jornada[];
+  propostasValor?: PropostaValor[];
   totalProcessos: number;
 }
 
@@ -162,7 +143,55 @@ export interface ArquiteturaData {
   totalMacroprocessos: number;
 }
 
-// Filter types
+export interface JornadaCompleta extends Jornada {
+  dominio: {
+    id: string;
+    nome: string;
+    tipo: DominioTipo;
+  };
+  propostasValor: {
+    id: string;
+    codigo: string;
+    nome: string;
+    cor: string;
+  }[];
+}
+
+export interface DonoJornada {
+  id: string;
+  nome: string;
+  cargo?: string;
+  area?: string;
+  jornadas: JornadaCompleta[];
+  totalProcessos: number;
+}
+
+// Detail Panel - Para o modal lateral
+export type DetailType = 'bu' | 'dominio' | 'jornada' | 'macro' | 'processo';
+
+export interface DetailPanelState {
+  isOpen: boolean;
+  type: DetailType | null;
+  data: BusinessUnit | DominioCompleto | JornadaCompleta | MacroprocessoCompleto | Processo | null;
+  breadcrumb: { type: DetailType; id: string; nome: string }[];
+}
+
+// Dropdown/Expandable state
+export interface ExpandedState {
+  buId: string | null;
+  dominioId: string | null;
+  jornadaId: string | null;
+  macroId: string | null;
+}
+
+// Filter types for Structure View
+export interface StructureFilterState {
+  search: string;
+  vpId: string | null;
+  categoria: BUCategoria | null;
+}
+
+// Legacy filter types for Arquitetura View
 export interface FilterState {
   businessUnit: string | null;
   segmento: string | null;
@@ -175,17 +204,41 @@ export interface FilterState {
 }
 
 // Navigation
-export type PageType = 'home' | 'arquitetura' | 'arvore' | 'heatmap' | 'configuracoes' | 'cadeia' | 'bu-detail' | 'dominio-detail' | 'jornada-detail' | 'macro-detail';
+export type PageType =
+  | 'home'
+  | 'estrutura'
+  | 'arquitetura'
+  | 'arvore'
+  | 'heatmap'
+  | 'configuracoes'
+  | 'cadeia'
+  | 'bu-detail'
+  | 'dominio-detail'
+  | 'jornada-detail'
+  | 'macro-detail'
+  | 'processo-detail'
+  // Cadastros section
+  | 'cadastros-dominios'
+  | 'cadastros-jornadas'
+  | 'cadastros-macroprocessos'
+  | 'cadastros-processos'
+  | 'cadastros-processo-detalhe'
+  | 'cadastros-processo-novo';
 export type ViewType = 'arquitetura' | 'arvore' | 'heatmap';
 
-// Drill-down navigation state
-export interface DrillDownState {
-  buId?: string;
-  dominioId?: string;
-  jornadaId?: string;
-  macroId?: string;
+// Processo detalhado (para página de cadastro)
+export interface ProcessoDetalhado extends Processo {
+  dominio?: { id: string; codigo: string; nome: string };
+  jornada?: { id: string; codigo: string; nome: string };
+  macroprocesso?: { id: string; codigo: string; nome: string };
+  bu?: { id: string; codigo: string; nome: string };
+  vp?: { id: string; nome: string };
+  criadoEm?: string;
+  atualizadoEm?: string;
+  criticidade?: 'baixa' | 'media' | 'alta' | 'critico';
 }
 
+// Navigation Item
 export interface NavigationItem {
   id: PageType;
   label: string;

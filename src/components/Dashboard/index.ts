@@ -4,3 +4,5 @@ export { MetricCards } from './MetricCards';
 export { FilterBar } from './FilterBar';
 export { ArquiteturaView } from './ArquiteturaView';
 export { BottomBar } from './BottomBar';
+export { StructureView } from './StructureView';
+export { HomeView } from './HomeView';

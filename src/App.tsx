@@ -4,16 +4,17 @@
  */
 
 import { useState } from 'react';
-import type { PageType, ViewType, FilterState, Macroprocesso, BusinessUnit, DominioCompleto, JornadaCompleta, MacroprocessoCompleto } from './types';
+import type { PageType, ViewType, FilterState, Macroprocesso, BusinessUnit, DominioCompleto, JornadaCompleta, MacroprocessoCompleto, ProcessoDetalhado, Processo } from './types';
 import { Layout } from './components/Layout';
 import { Dashboard } from './components/Dashboard';
-import { HomeView } from './components/Dashboard/HomeView';
+import { StructureView } from './components/Dashboard/StructureView';
 import { BUDetailPage } from './components/Dashboard/BUDetailPage';
 import { DominioDetailPage } from './components/Dashboard/DominioDetailPage';
 import { JornadaDetailPage } from './components/Dashboard/JornadaDetailPage';
 import { MacroDetailPage } from './components/Dashboard/MacroDetailPage';
 import { CadeiaPage } from './components/Dashboard/CadeiaPage';
 import { PlaceholderPage } from './components/PlaceholderPage';
+import { ProcessoPage, ProcessoFormPage, DominioFormPage, JornadaFormPage, MacroprocessoFormPage } from './components/Cadastros';
 
 const initialFilters: FilterState = {
   businessUnit: null,
@@ -39,6 +40,7 @@ function App() {
   const [activeView, setActiveView] = useState<ViewType>('arquitetura');
   const [filters, setFilters] = useState<FilterState>(initialFilters);
   const [selectedMacro, setSelectedMacro] = useState<Macroprocesso | null>(null);
+  const [selectedProcesso, setSelectedProcesso] = useState<ProcessoDetalhado | null>(null);
 
   // Drill-down state
   const [drillDown, setDrillDown] = useState<DrillDownState>({
@@ -54,24 +56,39 @@ function App() {
     setActivePage('bu-detail');
   };
 
-  const handleSelectDominio = (dominio: DominioCompleto) => {
-    setDrillDown(prev => ({ ...prev, dominio, jornada: null, macro: null }));
+  const handleSelectDominio = (dominio: DominioCompleto, bu?: BusinessUnit) => {
+    setDrillDown(prev => ({
+      bu: bu || prev.bu,
+      dominio,
+      jornada: null,
+      macro: null
+    }));
     setActivePage('dominio-detail');
   };
 
-  const handleSelectJornada = (jornada: JornadaCompleta) => {
-    setDrillDown(prev => ({ ...prev, jornada, macro: null }));
+  const handleSelectJornada = (jornada: JornadaCompleta, bu?: BusinessUnit, dominio?: DominioCompleto) => {
+    setDrillDown(prev => ({
+      bu: bu || prev.bu,
+      dominio: dominio || prev.dominio,
+      jornada,
+      macro: null
+    }));
     setActivePage('jornada-detail');
   };
 
-  const handleSelectMacro = (macro: MacroprocessoCompleto) => {
-    setDrillDown(prev => ({ ...prev, macro }));
+  const handleSelectMacro = (macro: MacroprocessoCompleto, bu?: BusinessUnit, dominio?: DominioCompleto, jornada?: JornadaCompleta) => {
+    setDrillDown(prev => ({
+      bu: bu || prev.bu,
+      dominio: dominio || prev.dominio,
+      jornada: jornada || prev.jornada,
+      macro
+    }));
     setActivePage('macro-detail');
   };
 
-  const handleBackToHome = () => {
+  const handleBackToStructure = () => {
     setDrillDown({ bu: null, dominio: null, jornada: null, macro: null });
-    setActivePage('home');
+    setActivePage('estrutura');
   };
 
   const handleBackToBU = () => {
@@ -100,20 +117,73 @@ function App() {
     setSelectedMacro(null);
   };
 
+  // Handler para selecionar processo da tabela de macroprocesso ou painel lateral
+  const handleSelectProcesso = (
+    processo: Processo,
+    bu?: BusinessUnit,
+    dominio?: DominioCompleto,
+    jornada?: JornadaCompleta,
+    macro?: MacroprocessoCompleto
+  ) => {
+    // Usa os parâmetros passados ou fallback para o drill-down state
+    const contextBU = bu || drillDown.bu;
+    const contextDominio = dominio || drillDown.dominio;
+    const contextJornada = jornada || drillDown.jornada;
+    const contextMacro = macro || drillDown.macro;
+
+    // Converte Processo para ProcessoDetalhado com dados do contexto
+    const processoDetalhado: ProcessoDetalhado = {
+      ...processo,
+      dominio: contextDominio ? {
+        id: contextDominio.id,
+        codigo: contextDominio.codigo,
+        nome: contextDominio.nome
+      } : undefined,
+      jornada: contextJornada ? {
+        id: contextJornada.id,
+        codigo: contextJornada.codigo,
+        nome: contextJornada.nome
+      } : undefined,
+      macroprocesso: contextMacro ? {
+        id: contextMacro.id,
+        codigo: contextMacro.codigo,
+        nome: contextMacro.nome
+      } : undefined,
+      bu: contextBU ? {
+        id: contextBU.id,
+        codigo: contextBU.codigo,
+        nome: contextBU.nome
+      } : undefined,
+    };
+    setSelectedProcesso(processoDetalhado);
+    setActivePage('cadastros-processo-detalhe');
+  };
+
   const renderContent = () => {
     switch (activePage) {
       case 'home':
-        return <HomeView onSelectBU={handleSelectBU} />;
+        return (
+          <PlaceholderPage
+            title="Home"
+            description="Página inicial em construção. Utilize a seção 'Estrutura Organizacional' no menu para navegar pela estrutura de processos."
+          />
+        );
 
       case 'bu-detail':
         return drillDown.bu ? (
           <BUDetailPage
             bu={drillDown.bu}
-            onBack={handleBackToHome}
+            onBack={handleBackToStructure}
             onSelectDominio={handleSelectDominio}
           />
         ) : (
-          <HomeView onSelectBU={handleSelectBU} />
+          <StructureView
+            onSelectBU={handleSelectBU}
+            onSelectDominio={handleSelectDominio}
+            onSelectJornada={handleSelectJornada}
+            onSelectMacro={handleSelectMacro}
+            onSelectProcesso={handleSelectProcesso}
+          />
         );
 
       case 'dominio-detail':
@@ -125,7 +195,13 @@ function App() {
             onSelectJornada={handleSelectJornada}
           />
         ) : (
-          <HomeView onSelectBU={handleSelectBU} />
+          <StructureView
+            onSelectBU={handleSelectBU}
+            onSelectDominio={handleSelectDominio}
+            onSelectJornada={handleSelectJornada}
+            onSelectMacro={handleSelectMacro}
+            onSelectProcesso={handleSelectProcesso}
+          />
         );
 
       case 'jornada-detail':
@@ -138,7 +214,13 @@ function App() {
             onSelectMacro={handleSelectMacro}
           />
         ) : (
-          <HomeView onSelectBU={handleSelectBU} />
+          <StructureView
+            onSelectBU={handleSelectBU}
+            onSelectDominio={handleSelectDominio}
+            onSelectJornada={handleSelectJornada}
+            onSelectMacro={handleSelectMacro}
+            onSelectProcesso={handleSelectProcesso}
+          />
         );
 
       case 'macro-detail':
@@ -149,9 +231,16 @@ function App() {
             jornada={drillDown.jornada}
             macro={drillDown.macro}
             onBack={handleBackToJornada}
+            onSelectProcesso={handleSelectProcesso}
           />
         ) : (
-          <HomeView onSelectBU={handleSelectBU} />
+          <StructureView
+            onSelectBU={handleSelectBU}
+            onSelectDominio={handleSelectDominio}
+            onSelectJornada={handleSelectJornada}
+            onSelectMacro={handleSelectMacro}
+            onSelectProcesso={handleSelectProcesso}
+          />
         );
 
       case 'cadeia':
@@ -174,8 +263,75 @@ function App() {
           />
         );
 
+      // Cadastros pages
+      case 'cadastros-dominios':
+        return (
+          <DominioFormPage
+            onBack={() => setActivePage('estrutura')}
+          />
+        );
+
+      case 'cadastros-jornadas':
+        return (
+          <JornadaFormPage
+            onBack={() => setActivePage('estrutura')}
+          />
+        );
+
+      case 'cadastros-macroprocessos':
+        return (
+          <MacroprocessoFormPage
+            onBack={() => setActivePage('estrutura')}
+          />
+        );
+
+      case 'cadastros-processos':
+        return (
+          <ProcessoFormPage
+            onBack={() => setActivePage('estrutura')}
+          />
+        );
+
+      case 'cadastros-processo-detalhe':
+        return selectedProcesso ? (
+          <ProcessoPage
+            processo={selectedProcesso}
+            onBack={() => {
+              // Volta para macro-detail se veio de lá, senão vai para estrutura
+              if (drillDown.macro) {
+                setActivePage('macro-detail');
+              } else {
+                setActivePage('estrutura');
+              }
+            }}
+          />
+        ) : (
+          <ProcessoFormPage
+            onBack={() => setActivePage('estrutura')}
+          />
+        );
+
+      case 'estrutura':
+        return (
+          <StructureView
+            onSelectBU={handleSelectBU}
+            onSelectDominio={handleSelectDominio}
+            onSelectJornada={handleSelectJornada}
+            onSelectMacro={handleSelectMacro}
+            onSelectProcesso={handleSelectProcesso}
+          />
+        );
+
       default:
-        return <HomeView onSelectBU={handleSelectBU} />;
+        return (
+          <StructureView
+            onSelectBU={handleSelectBU}
+            onSelectDominio={handleSelectDominio}
+            onSelectJornada={handleSelectJornada}
+            onSelectMacro={handleSelectMacro}
+            onSelectProcesso={handleSelectProcesso}
+          />
+        );
     }
   };
 

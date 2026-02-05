@@ -8,9 +8,11 @@ import './PlaceholderPage.css';
 interface PlaceholderPageProps {
   title: string;
   description?: string;
+  actionLabel?: string;
+  onAction?: () => void;
 }
 
-export function PlaceholderPage({ title, description }: PlaceholderPageProps) {
+export function PlaceholderPage({ title, description, actionLabel, onAction }: PlaceholderPageProps) {
   return (
     <div className="placeholder-page">
       <div className="placeholder-content">
@@ -41,6 +43,11 @@ export function PlaceholderPage({ title, description }: PlaceholderPageProps) {
         </div>
         <h1 className="placeholder-title">{title}</h1>
         {description && <p className="placeholder-description">{description}</p>}
+        {actionLabel && onAction && (
+          <button className="placeholder-action" onClick={onAction}>
+            {actionLabel}
+          </button>
+        )}
         <div className="placeholder-badge">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />

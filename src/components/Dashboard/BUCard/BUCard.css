@@ -1,0 +1,472 @@
+/**
+ * GPS 2.0 - BU Card Styles
+ * Layout baseado no design do Figma com cascata expansível
+ */
+
+/* ===== Design Tokens from Figma ===== */
+:root {
+  --figma-neutral-20: #282733;
+  --figma-neutral-60: #838199;
+  --figma-neutral-95: #EFEFF2;
+  --figma-neutral-100: #FFFFFF;
+  --figma-primary-50: #9755FE;
+  --figma-primary-95: #F5EDFF;
+  --figma-info-50: #3F6E9F;
+  --figma-info-95: #E0ECFA;
+  --figma-secondary-95: #FFFCDE;
+  --figma-secondary-50: #EF6100;
+  --figma-error-40: #AE3B36;
+  --figma-error-90: #F7DBD9;
+}
+
+/* ===== Card Container ===== */
+.bu-card-new {
+  display: flex;
+  background: var(--figma-neutral-100);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    0 4px 4px rgba(0, 0, 0, 0.05);
+  border: 0.667px solid var(--figma-neutral-95);
+  transition: all 0.2s ease;
+}
+
+.bu-card-new:hover {
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    0 4px 8px rgba(0, 0, 0, 0.08),
+    0 8px 16px rgba(0, 0, 0, 0.05);
+}
+
+.bu-card-new--open {
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.1),
+    0 8px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* Accent Border (left) */
+.bu-card-new-accent {
+  width: 3px;
+  flex-shrink: 0;
+  background: var(--figma-primary-50);
+  border-radius: 16px 0 0 16px;
+}
+
+/* Main Content */
+.bu-card-new-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 24px;
+}
+
+/* ===== Header Row ===== */
+.bu-card-new-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+/* Title (Code + Name) */
+.bu-card-new-title {
+  display: flex;
+  flex-direction: column;
+  min-width: 120px;
+}
+
+.bu-card-new-code {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--figma-neutral-60);
+  letter-spacing: -0.7px;
+  line-height: 1.4;
+}
+
+.bu-card-new-name {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--figma-neutral-20);
+  letter-spacing: -1px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* VP Info */
+.bu-card-new-vp {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 24px;
+  border-left: 1px solid var(--figma-neutral-95);
+}
+
+.bu-card-new-vp-avatar {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.bu-card-new-vp-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.bu-card-new-vp-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--figma-neutral-20);
+  letter-spacing: -0.5px;
+}
+
+.bu-card-new-vp-role {
+  font-size: 12px;
+  color: var(--figma-neutral-60);
+  letter-spacing: -0.5px;
+}
+
+/* Spacer */
+.bu-card-new-spacer {
+  flex: 1;
+}
+
+/* Ver detalhes button */
+.bu-card-new-details-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--figma-primary-50);
+  background: var(--figma-primary-95);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.bu-card-new-details-btn:hover {
+  background: hsl(266 98% 92%);
+}
+
+/* ===== Stats Row (below header) ===== */
+.bu-card-new-stats {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.bu-card-new-stat {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.bu-card-new-stat-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.bu-card-new-stat-icon--dominio {
+  background: var(--figma-info-95);
+  color: var(--figma-info-50);
+}
+
+.bu-card-new-stat-icon--jornada {
+  background: var(--figma-primary-95);
+  color: var(--figma-primary-50);
+}
+
+.bu-card-new-stat-icon--macro {
+  background: var(--figma-secondary-95);
+  color: var(--figma-secondary-50);
+}
+
+.bu-card-new-stat-icon--processo {
+  background: var(--figma-primary-95);
+  color: var(--figma-primary-50);
+}
+
+.bu-card-new-stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.bu-card-new-stat-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--figma-neutral-20);
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.bu-card-new-stat-label {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--figma-neutral-60);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.bu-card-new-stat--highlight .bu-card-new-stat-value {
+  color: var(--figma-primary-50);
+}
+
+.bu-card-new-stat--highlight .bu-card-new-stat-label {
+  color: var(--figma-primary-50);
+}
+
+/* Expand button */
+.bu-card-new-expand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background 0.15s ease;
+  margin-left: 12px;
+}
+
+.bu-card-new-expand:hover {
+  background: var(--figma-neutral-95);
+}
+
+.bu-card-new-chevron {
+  width: 20px;
+  height: 20px;
+  color: var(--figma-neutral-60);
+  transition: transform 0.2s ease;
+}
+
+.bu-card-new-chevron--open {
+  transform: rotate(180deg);
+}
+
+
+/* ===== Cascade (FAQ-style expandable) ===== */
+.bu-card-new-cascade {
+  border-top: 1px solid var(--figma-neutral-95);
+  padding-top: 16px;
+  margin-top: 8px;
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cascade-item {
+  margin-bottom: 4px;
+}
+
+.cascade-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--figma-neutral-100);
+  border: 1px solid var(--figma-neutral-95);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.cascade-row:hover {
+  background: hsl(0 0% 98%);
+  border-color: hsl(0 0% 90%);
+}
+
+.cascade-row--dominio {
+  background: var(--figma-neutral-100);
+}
+
+.cascade-row--jornada {
+  background: hsl(0 0% 99%);
+}
+
+.cascade-row--macro {
+  background: hsl(0 0% 98%);
+}
+
+.cascade-row--processo {
+  cursor: default;
+  padding: 10px 16px;
+}
+
+.cascade-row--processo:hover {
+  background: hsl(0 0% 98%);
+}
+
+.cascade-chevron {
+  width: 16px;
+  height: 16px;
+  color: var(--figma-neutral-60);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.cascade-chevron--open {
+  transform: rotate(90deg);
+}
+
+/* Cascade Icons with Colors */
+.cascade-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.cascade-icon--dominio {
+  background: var(--figma-info-95);
+  color: var(--figma-info-50);
+}
+
+.cascade-icon--jornada {
+  background: var(--figma-primary-95);
+  color: var(--figma-primary-50);
+}
+
+.cascade-icon--macro {
+  background: var(--figma-secondary-95);
+  color: var(--figma-secondary-50);
+}
+
+.cascade-icon--processo {
+  background: hsl(0 0% 95%);
+  color: var(--figma-neutral-60);
+}
+
+.cascade-name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--figma-neutral-20);
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cascade-count {
+  font-size: 12px;
+  color: var(--figma-neutral-60);
+  flex-shrink: 0;
+}
+
+.cascade-details-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: var(--figma-primary-95);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--figma-primary-50);
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.cascade-details-btn:hover {
+  background: hsl(266 98% 88%);
+  transform: scale(1.05);
+}
+
+.cascade-status {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.cascade-status--ativo {
+  background: #E6F4EA;
+  color: #1E7E34;
+}
+
+.cascade-status--revisao {
+  background: #FEF3C7;
+  color: #B45309;
+}
+
+.cascade-status--inativo {
+  background: var(--figma-neutral-95);
+  color: var(--figma-neutral-60);
+}
+
+.cascade-nested {
+  margin-left: 24px;
+  padding-left: 16px;
+  border-left: 2px solid var(--figma-neutral-95);
+  margin-top: 4px;
+  animation: slideDown 0.15s ease;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1200px) {
+  .bu-card-new-header {
+    gap: 16px;
+  }
+
+  .bu-card-new-vp {
+    display: none;
+  }
+
+  .bu-card-new-stats {
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .bu-card-new-main {
+    padding: 16px;
+  }
+
+  .bu-card-new-stats {
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .bu-card-new-stat-icon-wrapper {
+    width: 40px;
+    height: 40px;
+  }
+
+  .bu-card-new-stat-value {
+    font-size: 20px;
+  }
+
+  .cascade-nested {
+    margin-left: 16px;
+    padding-left: 12px;
+  }
+}

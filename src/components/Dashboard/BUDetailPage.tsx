@@ -52,7 +52,7 @@ function DominioCard({
           </div>
           <div className="detail-card-stat">
             <span className="detail-card-stat-value">{dominio.totalMacroprocessos}</span>
-            <span className="detail-card-stat-label">Macros</span>
+            <span className="detail-card-stat-label">Macroprocessos</span>
           </div>
           <div className="detail-card-stat">
             <span className="detail-card-stat-value">{dominio.totalProcessos}</span>
@@ -88,8 +88,9 @@ export function BUDetailPage({ bu, onBack, onSelectDominio }: BUDetailPageProps)
               <Building2 style={{ color: bu.cor }} />
             </div>
             <div className="detail-hero-text">
-              <span className="detail-hero-code">{bu.codigo}</span>
+              <span className="detail-hero-type">Business Unit</span>
               <h1 className="detail-hero-title">{bu.nome}</h1>
+              <span className="detail-hero-code">{bu.codigo}</span>
             </div>
           </div>
 
@@ -124,7 +125,7 @@ export function BUDetailPage({ bu, onBack, onSelectDominio }: BUDetailPageProps)
           <div className="detail-hero-metric">
             <Boxes />
             <span className="detail-hero-metric-value">{bu.totalMacroprocessos}</span>
-            <span className="detail-hero-metric-label">Macros</span>
+            <span className="detail-hero-metric-label">Macroprocessos</span>
           </div>
           <div className="detail-hero-metric-divider" />
           <div className="detail-hero-metric">
@@ -143,15 +144,25 @@ export function BUDetailPage({ bu, onBack, onSelectDominio }: BUDetailPageProps)
           <span className="detail-section-badge">{bu.dominios.length}</span>
         </header>
 
-        <div className="detail-grid">
-          {bu.dominios.map((dominio) => (
-            <DominioCard
-              key={dominio.id}
-              dominio={dominio}
-              onClick={() => onSelectDominio(dominio)}
-            />
-          ))}
-        </div>
+        {bu.dominios.length > 0 ? (
+          <div className="detail-grid">
+            {bu.dominios.map((dominio) => (
+              <DominioCard
+                key={dominio.id}
+                dominio={dominio}
+                onClick={() => onSelectDominio(dominio)}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="detail-empty">
+            <Layers className="detail-empty-icon" />
+            <h3 className="detail-empty-title">Nenhum domínio cadastrado</h3>
+            <p className="detail-empty-desc">
+              Esta Business Unit ainda não possui domínios vinculados.
+            </p>
+          </div>
+        )}
       </section>
     </div>
   );

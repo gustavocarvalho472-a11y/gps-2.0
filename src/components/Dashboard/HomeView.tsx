@@ -77,7 +77,7 @@ function BUCard({ bu, onClick, index }: { bu: BusinessUnit; onClick: () => void;
           </div>
           <div className="bu-card-stat">
             <span className="bu-card-stat-value">{bu.totalMacroprocessos}</span>
-            <span className="bu-card-stat-label">macro</span>
+            <span className="bu-card-stat-label">Macroprocessos</span>
           </div>
         </div>
 

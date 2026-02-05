@@ -47,6 +47,27 @@
   line-height: 1.5;
 }
 
+.placeholder-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-3) var(--spacing-5);
+  margin-bottom: var(--spacing-4);
+  background-color: var(--color-primary-40);
+  color: white;
+  border: none;
+  border-radius: var(--radius-lg);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-xs2);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.placeholder-action:hover {
+  background-color: var(--color-primary-30);
+}
+
 .placeholder-badge {
   display: inline-flex;
   align-items: center;

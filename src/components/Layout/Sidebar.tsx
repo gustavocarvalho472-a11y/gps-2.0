@@ -1,8 +1,10 @@
 /**
  * GPS 2.0 - Sidebar Navigation
- * Menu lateral colapsável estilo Teams
+ * Menu lateral colapsável com seções expansíveis
  */
 
+import { useState } from 'react';
+import { Home, Building2, Link2, FolderPlus, Layers, GitBranch, Boxes, FileText, Settings, ChevronDown, ChevronRight, PanelLeftClose, PanelLeft } from 'lucide-react';
 import type { PageType, ViewType } from '../../types';
 import './Sidebar.css';
 
@@ -20,6 +22,7 @@ interface NavItem {
   label: string;
   view?: ViewType;
   icon: React.ReactNode;
+  children?: NavItem[];
 }
 
 export function Sidebar({
@@ -29,6 +32,8 @@ export function Sidebar({
   collapsed,
   onToggleCollapse,
 }: SidebarProps) {
+  const [expandedMenus, setExpandedMenus] = useState<string[]>(['cadastros']);
+
   const handleNavClick = (page: PageType, view?: ViewType) => {
     onPageChange(page);
     if (view) {
@@ -36,76 +41,63 @@ export function Sidebar({
     }
   };
 
+  const toggleMenu = (menuId: string) => {
+    setExpandedMenus(prev =>
+      prev.includes(menuId)
+        ? prev.filter(id => id !== menuId)
+        : [...prev, menuId]
+    );
+  };
+
+  const isMenuExpanded = (menuId: string) => expandedMenus.includes(menuId);
+
+  // Check if a parent menu should be highlighted
+  const isCadastrosActive = activePage.startsWith('cadastros-');
+
   const navItems: NavItem[] = [
     {
       id: 'home',
       label: 'Home',
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1V9.5z"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      ),
+      icon: <Home size={20} />,
     },
     {
-      id: 'arquitetura',
-      label: 'Arquitetura de Negócios',
-      view: 'arquitetura',
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1.5" />
-          <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1.5" />
-          <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1.5" />
-          <rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1.5" />
-        </svg>
-      ),
+      id: 'estrutura',
+      label: 'Estrutura organizacional',
+      icon: <Building2 size={20} />,
     },
     {
-      id: 'arvore',
-      label: 'Árvore de Processos',
-      view: 'arvore',
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M12 3v6M12 9l-6 6M12 9l6 6M6 15v4M18 15v4"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-          />
-          <circle cx="12" cy="3" r="2" fill="currentColor" />
-          <circle cx="6" cy="19" r="2" fill="currentColor" />
-          <circle cx="18" cy="19" r="2" fill="currentColor" />
-        </svg>
-      ),
+      id: 'cadeia',
+      label: 'Cadeia de valor',
+      icon: <Link2 size={20} />,
+    },
+  ];
+
+  const cadastrosSubItems: NavItem[] = [
+    {
+      id: 'cadastros-dominios',
+      label: 'Domínios',
+      icon: <Layers size={18} />,
     },
     {
-      id: 'heatmap',
-      label: 'Heatmap',
-      view: 'heatmap',
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <rect x="3" y="3" width="5" height="5" rx="1" fill="currentColor" opacity="0.3" />
-          <rect x="10" y="3" width="5" height="5" rx="1" fill="currentColor" opacity="0.6" />
-          <rect x="17" y="3" width="5" height="5" rx="1" fill="currentColor" opacity="0.9" />
-          <rect x="3" y="10" width="5" height="5" rx="1" fill="currentColor" opacity="0.5" />
-          <rect x="10" y="10" width="5" height="5" rx="1" fill="currentColor" opacity="0.8" />
-          <rect x="17" y="10" width="5" height="5" rx="1" fill="currentColor" opacity="0.4" />
-          <rect x="3" y="17" width="5" height="5" rx="1" fill="currentColor" opacity="0.7" />
-          <rect x="10" y="17" width="5" height="5" rx="1" fill="currentColor" opacity="0.2" />
-          <rect x="17" y="17" width="5" height="5" rx="1" fill="currentColor" opacity="0.6" />
-        </svg>
-      ),
+      id: 'cadastros-jornadas',
+      label: 'Jornadas',
+      icon: <GitBranch size={18} />,
+    },
+    {
+      id: 'cadastros-macroprocessos',
+      label: 'Macroprocessos',
+      icon: <Boxes size={18} />,
+    },
+    {
+      id: 'cadastros-processos',
+      label: 'Processos',
+      icon: <FileText size={18} />,
     },
   ];
 
   return (
     <aside className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
-      {/* Logo */}
+      {/* Header */}
       <div className="sidebar-header">
         <div className="sidebar-logo">
           <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
@@ -124,20 +116,13 @@ export function Sidebar({
           onClick={onToggleCollapse}
           title={collapsed ? 'Expandir menu' : 'Recolher menu'}
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <path
-              d={collapsed ? 'M9 18l6-6-6-6' : 'M15 18l-6-6 6-6'}
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          {collapsed ? <PanelLeft size={18} /> : <PanelLeftClose size={18} />}
         </button>
       </div>
 
       {/* Navigation */}
       <nav className="sidebar-nav">
+        {/* Main nav items */}
         {navItems.map((item) => (
           <button
             key={item.id}
@@ -149,6 +134,41 @@ export function Sidebar({
             <span className="sidebar-label">{item.label}</span>
           </button>
         ))}
+
+        {/* Cadastros expandable section */}
+        <div className="sidebar-group">
+          <button
+            className={`sidebar-item sidebar-item-expandable ${isCadastrosActive ? 'active' : ''}`}
+            onClick={() => !collapsed && toggleMenu('cadastros')}
+            title={collapsed ? 'Cadastros' : undefined}
+          >
+            <span className="sidebar-icon">
+              <FolderPlus size={20} />
+            </span>
+            <span className="sidebar-label">Cadastros</span>
+            {!collapsed && (
+              <span className="sidebar-expand-icon">
+                {isMenuExpanded('cadastros') ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+              </span>
+            )}
+          </button>
+
+          {!collapsed && isMenuExpanded('cadastros') && (
+            <div className="sidebar-submenu">
+              {cadastrosSubItems.map((subItem) => (
+                <button
+                  key={subItem.id}
+                  className={`sidebar-subitem ${activePage === subItem.id || (subItem.id === 'cadastros-processos' && activePage === 'cadastros-processo-detalhe') ? 'active' : ''}`}
+                  onClick={() => handleNavClick(subItem.id)}
+                >
+                  <span className="sidebar-subitem-icon">{subItem.icon}</span>
+                  <span className="sidebar-subitem-label">{subItem.label}</span>
+                  <ChevronRight className="sidebar-subitem-chevron" size={14} />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </nav>
 
       {/* Bottom Section */}
@@ -159,15 +179,7 @@ export function Sidebar({
           title={collapsed ? 'Configurações' : undefined}
         >
           <span className="sidebar-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.5" />
-              <path
-                d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-            </svg>
+            <Settings size={20} />
           </span>
           <span className="sidebar-label">Configurações</span>
         </button>

@@ -16,8 +16,8 @@ interface LayoutProps {
   activeView: ViewType;
   onPageChange: (page: PageType) => void;
   onViewChange: (view: ViewType) => void;
-  filters: FilterState;
-  onFilterChange: (filters: FilterState) => void;
+  filters?: FilterState;
+  onFilterChange?: (filters: FilterState) => void;
   showFilters?: boolean;
 }
 
@@ -34,8 +34,8 @@ export function Layout({
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const filtersOpen = true;
 
-  // Only show filters on arquitetura page
-  const shouldShowFilters = showFilters && activePage === 'arquitetura';
+  // Only show filters on arquitetura page when filters are provided
+  const shouldShowFilters = showFilters && activePage === 'arquitetura' && filters && onFilterChange;
 
   return (
     <div className={`layout ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
@@ -49,7 +49,7 @@ export function Layout({
       />
       <div className="layout-content">
         <div className="layout-body">
-          {shouldShowFilters && (
+          {shouldShowFilters && filters && onFilterChange && (
             <FilterSidebar
               isOpen={filtersOpen}
               filters={filters}

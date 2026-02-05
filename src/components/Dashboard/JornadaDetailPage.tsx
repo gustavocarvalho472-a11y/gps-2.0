@@ -86,9 +86,9 @@ export function JornadaDetailPage({ bu, dominio, jornada, onBack, onSelectMacro 
               <GitBranch />
             </div>
             <div className="detail-hero-text">
-              <span className="detail-hero-code">{jornada.codigo}</span>
+              <span className="detail-hero-type">Jornada</span>
               <h1 className="detail-hero-title">{jornada.nome}</h1>
-              <p className="detail-hero-subtitle">{bu.nome} / {dominio.nome}</p>
+              <p className="detail-hero-subtitle">{bu.nome} · {dominio.nome} · {jornada.codigo}</p>
             </div>
           </div>
 
@@ -111,7 +111,7 @@ export function JornadaDetailPage({ bu, dominio, jornada, onBack, onSelectMacro 
           <div className="detail-hero-metric">
             <Boxes />
             <span className="detail-hero-metric-value">{jornada.totalMacroprocessos}</span>
-            <span className="detail-hero-metric-label">Macros</span>
+            <span className="detail-hero-metric-label">Macroprocessos</span>
           </div>
           <div className="detail-hero-metric-divider" />
           <div className="detail-hero-metric">
@@ -130,15 +130,25 @@ export function JornadaDetailPage({ bu, dominio, jornada, onBack, onSelectMacro 
           <span className="detail-section-badge">{jornada.macroprocessos.length}</span>
         </header>
 
-        <div className="detail-grid">
-          {jornada.macroprocessos.map((macro) => (
-            <MacroCard
-              key={macro.id}
-              macro={macro}
-              onClick={() => onSelectMacro(macro)}
-            />
-          ))}
-        </div>
+        {jornada.macroprocessos.length > 0 ? (
+          <div className="detail-grid">
+            {jornada.macroprocessos.map((macro) => (
+              <MacroCard
+                key={macro.id}
+                macro={macro}
+                onClick={() => onSelectMacro(macro)}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="detail-empty">
+            <Boxes className="detail-empty-icon" />
+            <h3 className="detail-empty-title">Nenhum macroprocesso cadastrado</h3>
+            <p className="detail-empty-desc">
+              Esta jornada ainda não possui macroprocessos vinculados.
+            </p>
+          </div>
+        )}
       </section>
     </div>
   );
