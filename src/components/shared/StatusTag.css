@@ -1,0 +1,49 @@
+/**
+ * GPS 2.0 - Status Tag Styles
+ * Estilos baseados no design do Figma
+ */
+
+.status-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.7px;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+/* Sizes */
+.status-tag--md {
+  padding: 4px 8px;
+  border-radius: 8.4px;
+  font-size: 14px;
+}
+
+.status-tag--sm {
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+/* Status Colors - Based on Figma */
+.status-tag--atualizado {
+  background: #D1FAE5;
+  color: #059669;
+}
+
+.status-tag--desatualizado {
+  background: #F7DBD9;
+  color: #AE3B36;
+}
+
+.status-tag--em_aprovacao {
+  background: #FFFBCE;
+  color: #EF6100;
+}
+
+.status-tag--critico {
+  background: #F7DBD9;
+  color: #AE3B36;
+}

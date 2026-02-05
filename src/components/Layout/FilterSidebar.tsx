@@ -99,7 +99,7 @@ export function FilterSidebar({ isOpen, filters, onFilterChange }: FilterSidebar
   // Products and Modalidades (mock data for now)
   const produtos = ['Graduação', 'Pós-Graduação', 'Técnico', 'EJA', 'Extensão'];
   const modalidades = ['Presencial', 'EAD', 'Semipresencial', 'Híbrido'];
-  const processos = ['Todos os processos', 'Ativos', 'Em revisão', 'Inativos'];
+  const processos = ['Todos os processos', 'Atualizados', 'Desatualizados'];
   const aplicacoes = ['Sistema A', 'Sistema B', 'Portal', 'App Mobile'];
 
   if (!isOpen) return null;

@@ -194,7 +194,7 @@ function ProcessCard({ processo, index }: ProcessCardProps) {
           variant="outline"
           className={`status-badge status-${processo.status}`}
         >
-          {processo.status === 'ativo' ? 'Ativo' : processo.status === 'em_revisao' ? 'Em Revisão' : 'Inativo'}
+          {processo.status === 'ativo' ? 'Atualizado' : processo.status === 'em_revisao' ? 'Desatualizado' : 'Desatualizado'}
         </Badge>
         <span className="process-fte">{processo.fte} FTE</span>
       </div>

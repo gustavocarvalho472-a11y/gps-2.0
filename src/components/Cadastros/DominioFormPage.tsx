@@ -55,9 +55,8 @@ const prioridadeOptions = [
 ];
 
 const statusOptions = [
-  { value: 'ativo', label: 'Ativo' },
-  { value: 'em_revisao', label: 'Em Revisão' },
-  { value: 'inativo', label: 'Inativo' },
+  { value: 'ativo', label: 'Atualizado' },
+  { value: 'em_revisao', label: 'Desatualizado' },
 ];
 
 export function DominioFormPage({ onBack, onSubmit }: DominioFormPageProps) {

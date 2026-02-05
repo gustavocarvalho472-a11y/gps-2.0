@@ -19,13 +19,8 @@ interface MacroDetailPageProps {
 
 export function MacroDetailPage({ bu, dominio, jornada, macro, onBack, onSelectProcesso }: MacroDetailPageProps) {
   // Calcular estatísticas
-  const processosAtivos = macro.processos.filter(p => p.status === 'ativo').length;
-  const processosRevisao = macro.processos.filter(p => p.status === 'em_revisao').length;
   const processosAtualizados = macro.processos.filter(p => p.status === 'ativo').length;
   const processosDesatualizados = macro.processos.filter(p => p.status !== 'ativo').length;
-  const automacaoMedia = macro.processos.length > 0
-    ? Math.round(macro.processos.reduce((acc, p) => acc + (p.automatizacao || 0), 0) / macro.processos.length)
-    : 0;
 
   // Helper para determinar se processo está atualizado
   const isAtualizado = (status: string) => status === 'ativo';
@@ -98,11 +93,6 @@ export function MacroDetailPage({ bu, dominio, jornada, macro, onBack, onSelectP
             <span className="detail-hero-metric-value" style={{ color: '#DC2626' }}>{processosDesatualizados}</span>
             <span className="detail-hero-metric-label">Desatualizados</span>
           </div>
-          <div className="detail-hero-metric-divider" />
-          <div className="detail-hero-metric">
-            <span className="detail-hero-metric-value">{automacaoMedia}%</span>
-            <span className="detail-hero-metric-label">Automação</span>
-          </div>
         </div>
       </div>
 
@@ -124,7 +114,6 @@ export function MacroDetailPage({ bu, dominio, jornada, macro, onBack, onSelectP
                   <th>Atualização</th>
                   <th>Status</th>
                   <th>Complexidade</th>
-                  <th>Automação</th>
                   <th>FTE</th>
                   <th>Ações</th>
                 </tr>
@@ -142,24 +131,13 @@ export function MacroDetailPage({ bu, dominio, jornada, macro, onBack, onSelectP
                     </td>
                     <td>
                       <span className={`status-badge status-badge--${processo.status === 'em_revisao' ? 'revisao' : processo.status}`}>
-                        {processo.status === 'ativo' ? 'Ativo' : processo.status === 'em_revisao' ? 'Em Revisão' : 'Inativo'}
+                        {processo.status === 'ativo' ? 'Atualizado' : processo.status === 'em_revisao' ? 'Desatualizado' : 'Desatualizado'}
                       </span>
                     </td>
                     <td>
                       <span className={`complexity complexity--${processo.complexidade}`}>
                         {processo.complexidade === 'alta' ? 'Alta' : processo.complexidade === 'media' ? 'Média' : 'Baixa'}
                       </span>
-                    </td>
-                    <td>
-                      <div className="detail-progress">
-                        <div className="detail-progress-bar">
-                          <div
-                            className="detail-progress-fill"
-                            style={{ width: `${processo.automatizacao}%` }}
-                          />
-                        </div>
-                        <span className="detail-progress-value">{processo.automatizacao}%</span>
-                      </div>
                     </td>
                     <td className="detail-table-fte">{processo.fte}</td>
                     <td className="detail-table-actions">

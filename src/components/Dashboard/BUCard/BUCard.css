@@ -414,13 +414,13 @@
 }
 
 .cascade-status--revisao {
-  background: #FEF3C7;
-  color: #B45309;
+  background: #FEE2E2;
+  color: #DC2626;
 }
 
 .cascade-status--inativo {
-  background: var(--figma-neutral-95);
-  color: var(--figma-neutral-60);
+  background: #FEE2E2;
+  color: #DC2626;
 }
 
 .cascade-nested {

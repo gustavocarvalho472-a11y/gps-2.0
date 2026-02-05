@@ -482,21 +482,6 @@
   font-weight: 600;
 }
 
-.automacao-cell {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.automacao-value {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--muted-foreground);
-  font-variant-numeric: tabular-nums;
-  min-width: 32px;
-  text-align: right;
-}
-
 .complexidade-alta { color: #dc2626; }
 .complexidade-media { color: #ea580c; }
 .complexidade-baixa { color: #16a34a; }

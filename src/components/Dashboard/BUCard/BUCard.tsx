@@ -228,7 +228,7 @@ export function BUCard({ bu, isExpanded, onToggle, onShowDetails }: BUCardProps)
                                         </div>
                                         <span className="cascade-name">{processo.nome}</span>
                                         <span className={`cascade-status cascade-status--${processo.status === 'em_revisao' ? 'revisao' : processo.status}`}>
-                                          {processo.status === 'ativo' ? 'Ativo' : processo.status === 'em_revisao' ? 'Revisão' : 'Inativo'}
+                                          {processo.status === 'ativo' ? 'Atualizado' : processo.status === 'em_revisao' ? 'Desatualizado' : 'Desatualizado'}
                                         </span>
                                       </div>
                                     ))}

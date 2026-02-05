@@ -1,0 +1,290 @@
+/**
+ * GPS 2.0 - Processo List Page Styles
+ * Estilos seguindo fielmente o design do Figma (node 63:3007)
+ * Card styles are now handled by shared ProcessCard component
+ */
+
+.processo-list-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-height: 100%;
+  width: 100%;
+  background: #F6F6F6;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* Header */
+.processo-list-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.processo-list-title-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.processo-list-breadcrumb-label {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #8038F0;
+  letter-spacing: -0.8px;
+  line-height: 1.4;
+}
+
+.processo-list-title {
+  font-family: 'Axiforma', sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: #282733;
+  letter-spacing: -1.6px;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.processo-list-add-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 24px 8px 16px;
+  background: #9755FE;
+  color: white;
+  border: none;
+  border-radius: 24px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0px 4px 16px rgba(33, 37, 41, 0.12);
+  transition: background 0.2s;
+}
+
+.processo-list-add-btn:hover {
+  background: #8038F0;
+}
+
+/* Metric Cards */
+.processo-list-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+/* Toolbar */
+.processo-list-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.processo-list-search {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: white;
+  border: 1px solid #EFEFF2;
+  border-radius: 50px;
+  padding: 5px 9px;
+}
+
+.processo-list-search-icon {
+  color: #64627F;
+  flex-shrink: 0;
+}
+
+.processo-list-search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #282733;
+  letter-spacing: -0.7px;
+  line-height: 1.4;
+  background: transparent;
+}
+
+.processo-list-search-input::placeholder {
+  color: #64627F;
+}
+
+.processo-list-filter-wrapper {
+  position: relative;
+}
+
+.processo-list-filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: white;
+  border: 1px solid #EFEFF2;
+  border-radius: 50px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #64627F;
+  letter-spacing: -0.7px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.processo-list-filter-btn:hover {
+  border-color: #9755FE;
+}
+
+.processo-list-filter-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: white;
+  border: 1px solid #EFEFF2;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  min-width: 160px;
+  overflow: hidden;
+}
+
+.processo-filter-option {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  text-align: left;
+  background: none;
+  border: none;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  color: #64627F;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.processo-filter-option:hover {
+  background: #F7F7F7;
+}
+
+.processo-filter-option.active {
+  background: #F5EDFF;
+  color: #9755FE;
+  font-weight: 500;
+}
+
+/* Cards List */
+.processo-list-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Pagination */
+.processo-list-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.processo-pagination-nav {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F7F7F7;
+  border: none;
+  border-radius: 50px;
+  color: #64627F;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.processo-pagination-nav:hover:not(:disabled) {
+  background: #EFEFF2;
+  color: #9755FE;
+}
+
+.processo-pagination-nav:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.processo-pagination-pages {
+  display: flex;
+  gap: 8px;
+}
+
+.processo-pagination-page {
+  height: 36px;
+  min-width: 36px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F9F4FF;
+  border: none;
+  border-radius: 24px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #9755FE;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.processo-pagination-page:hover {
+  background: #F5EDFF;
+}
+
+.processo-pagination-page.active {
+  background: #9755FE;
+  color: white;
+  box-shadow: 0px 4px 16px rgba(33, 37, 41, 0.12);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .processo-list-metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .processo-list-page {
+    padding: 16px;
+  }
+
+  .processo-list-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .processo-list-add-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .processo-list-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .processo-list-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .processo-list-filter-wrapper {
+    align-self: flex-end;
+  }
+}

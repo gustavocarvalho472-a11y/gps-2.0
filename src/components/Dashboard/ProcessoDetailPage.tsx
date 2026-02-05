@@ -3,7 +3,7 @@
  * Mostra os detalhes de um Processo individual
  */
 
-import { ArrowLeft, FileText, ChevronRight, Zap, Users, BarChart3, Clock, CheckCircle2, AlertCircle } from 'lucide-react';
+import { ArrowLeft, FileText, ChevronRight, Users, BarChart3, Clock, CheckCircle2, AlertCircle } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import type { BusinessUnit, DominioCompleto, JornadaCompleta, MacroprocessoCompleto, Processo } from '../../types';
 import './DetailPage.css';
@@ -23,9 +23,9 @@ export function ProcessoDetailPage({ bu, dominio, jornada, macro, processo, onBa
 
   const getStatusLabel = (status: string) => {
     switch (status) {
-      case 'ativo': return 'Ativo';
-      case 'em_revisao': return 'Em Revisão';
-      case 'inativo': return 'Inativo';
+      case 'ativo': return 'Atualizado';
+      case 'em_revisao': return 'Desatualizado';
+      case 'inativo': return 'Desatualizado';
       default: return status;
     }
   };
@@ -121,12 +121,6 @@ export function ProcessoDetailPage({ bu, dominio, jornada, macro, processo, onBa
           </div>
           <div className="detail-hero-metric-divider" />
           <div className="detail-hero-metric">
-            <Zap />
-            <span className="detail-hero-metric-value">{processo.automatizacao ?? 0}%</span>
-            <span className="detail-hero-metric-label">Automação</span>
-          </div>
-          <div className="detail-hero-metric-divider" />
-          <div className="detail-hero-metric">
             <Clock />
             <span className="detail-hero-metric-value">{processo.fte ?? 'N/A'}</span>
             <span className="detail-hero-metric-label">FTE</span>
@@ -137,27 +131,6 @@ export function ProcessoDetailPage({ bu, dominio, jornada, macro, processo, onBa
       {/* Informações Detalhadas */}
       <section className="detail-section">
         <div className="detail-info-grid">
-          {/* Card de Automação */}
-          <div className="detail-info-card">
-            <h3 className="detail-info-card-title">Nível de Automação</h3>
-            <div className="detail-info-progress">
-              <div className="detail-info-progress-bar">
-                <div
-                  className="detail-info-progress-fill"
-                  style={{ width: `${processo.automatizacao ?? 0}%` }}
-                />
-              </div>
-              <span className="detail-info-progress-value">{processo.automatizacao ?? 0}%</span>
-            </div>
-            <p className="detail-info-card-desc">
-              {(processo.automatizacao ?? 0) >= 70
-                ? 'Este processo possui alto nível de automação.'
-                : (processo.automatizacao ?? 0) >= 40
-                ? 'Este processo possui nível moderado de automação.'
-                : 'Este processo possui baixo nível de automação.'}
-            </p>
-          </div>
-
           {/* Card de Analytics */}
           <div className="detail-info-card">
             <h3 className="detail-info-card-title">Nível Analítico</h3>

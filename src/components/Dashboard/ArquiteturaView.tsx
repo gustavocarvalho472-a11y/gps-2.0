@@ -6,7 +6,6 @@
 import { useState } from 'react';
 import type { Dominio, Jornada, Macroprocesso, Processo } from '../../types';
 import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import './ArquiteturaView.css';
@@ -245,7 +244,6 @@ export function ArquiteturaView({ dominios, onOpenCadeia }: ArquiteturaViewProps
                 <th>Código</th>
                 <th>Nome do Processo</th>
                 <th>Status</th>
-                <th>Automação</th>
                 <th>Complexidade</th>
                 <th>FTE</th>
               </tr>
@@ -272,14 +270,8 @@ export function ArquiteturaView({ dominios, onOpenCadeia }: ArquiteturaViewProps
                           borderColor: processo.status === 'ativo' ? 'var(--status-ativo-border)' : processo.status === 'em_revisao' ? 'var(--status-revisao-border)' : 'var(--status-inativo-border)'
                         }}
                       >
-                        {processo.status === 'ativo' ? 'Ativo' : processo.status === 'em_revisao' ? 'Em Revisão' : 'Inativo'}
+                        {processo.status === 'ativo' ? 'Atualizado' : processo.status === 'em_revisao' ? 'Desatualizado' : 'Desatualizado'}
                       </Badge>
-                    </td>
-                    <td>
-                      <div className="automacao-cell">
-                        <Progress value={processo.automatizacao} className="h-1.5 w-16" />
-                        <span className="automacao-value">{processo.automatizacao}%</span>
-                      </div>
                     </td>
                     <td className={`complexidade-${processo.complexidade}`} style={{ fontWeight: 500 }}>
                       {processo.complexidade === 'alta' ? 'Alta' : processo.complexidade === 'media' ? 'Média' : 'Baixa'}
@@ -321,12 +313,8 @@ export function ArquiteturaView({ dominios, onOpenCadeia }: ArquiteturaViewProps
                       borderColor: selectedProcesso.status === 'ativo' ? 'var(--status-ativo-border)' : selectedProcesso.status === 'em_revisao' ? 'var(--status-revisao-border)' : 'var(--status-inativo-border)'
                     }}
                   >
-                    {selectedProcesso.status === 'ativo' ? 'Ativo' : selectedProcesso.status === 'em_revisao' ? 'Em Revisão' : 'Inativo'}
+                    {selectedProcesso.status === 'ativo' ? 'Atualizado' : selectedProcesso.status === 'em_revisao' ? 'Desatualizado' : 'Desatualizado'}
                   </Badge>
-                </div>
-                <div className="detail-item">
-                  <span className="detail-label">Automação</span>
-                  <span className="detail-value">{selectedProcesso.automatizacao}%</span>
                 </div>
                 <div className="detail-item">
                   <span className="detail-label">Complexidade</span>

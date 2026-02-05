@@ -434,13 +434,13 @@
 }
 
 .dropdown-status--revisao {
-  background: #FEF3C7;
-  color: #B45309;
+  background: #FEE2E2;
+  color: #DC2626;
 }
 
 .dropdown-status--inativo {
-  background: hsl(var(--muted));
-  color: var(--color-text-secondary);
+  background: #FEE2E2;
+  color: #DC2626;
 }
 
 .dropdown-nested {
@@ -760,13 +760,13 @@
 }
 
 .panel-list-status--revisao {
-  background: #FEF3C7;
-  color: #B45309;
+  background: #FEE2E2;
+  color: #DC2626;
 }
 
 .panel-list-status--inativo {
-  background: hsl(var(--muted));
-  color: var(--color-text-secondary);
+  background: #FEE2E2;
+  color: #DC2626;
 }
 
 /* ===== Overlay ===== */
@@ -1119,13 +1119,13 @@
 }
 
 .panel-item-card-status--revisao {
-  background: #FEF3C7;
-  color: #B45309;
+  background: #FEE2E2;
+  color: #DC2626;
 }
 
 .panel-item-card-status--inativo {
-  background: #EFEFF2;
-  color: #838199;
+  background: #FEE2E2;
+  color: #DC2626;
 }
 
 .panel-item-card-action {
@@ -1154,3 +1154,4 @@
   width: 14px;
   height: 14px;
 }
+

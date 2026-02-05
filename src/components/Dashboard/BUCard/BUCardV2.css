@@ -547,15 +547,15 @@
 }
 
 .dropdown-v2-status--revisao {
-  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
-  color: #B45309;
-  border: 1px solid #FCD34D;
+  background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
+  color: #DC2626;
+  border: 1px solid #EF4444;
 }
 
 .dropdown-v2-status--inativo {
-  background: linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%);
-  color: var(--color-text-tertiary);
-  border: 1px solid #CBD5E1;
+  background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
+  color: #DC2626;
+  border: 1px solid #EF4444;
 }
 
 /* ===== Responsive ===== */

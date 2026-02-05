@@ -265,15 +265,15 @@
 }
 
 .status-badge.status-em_revisao {
-  background: var(--status-revisao-bg, #fef3c7);
-  color: var(--status-revisao-text, #92400e);
-  border-color: var(--status-revisao-border, #fcd34d);
+  background: var(--status-revisao-bg, #FEE2E2);
+  color: var(--status-revisao-text, #DC2626);
+  border-color: var(--status-revisao-border, #EF4444);
 }
 
 .status-badge.status-inativo {
-  background: var(--status-inativo-bg, #f3f4f6);
-  color: var(--status-inativo-text, #6b7280);
-  border-color: var(--status-inativo-border, #d1d5db);
+  background: var(--status-inativo-bg, #FEE2E2);
+  color: var(--status-inativo-text, #DC2626);
+  border-color: var(--status-inativo-border, #EF4444);
 }
 
 .process-fte {

@@ -206,12 +206,12 @@
   --status-ativo-bg: #E6F4EA;
   --status-ativo-text: #1E7E34;
   --status-ativo-border: #34A853;
-  --status-revisao-bg: #FFF3E0;
-  --status-revisao-text: #E65100;
-  --status-revisao-border: #FB8C00;
-  --status-inativo-bg: #F5F5F5;
-  --status-inativo-text: #616161;
-  --status-inativo-border: #9E9E9E;
+  --status-revisao-bg: #FEE2E2;
+  --status-revisao-text: #DC2626;
+  --status-revisao-border: #EF4444;
+  --status-inativo-bg: #FEE2E2;
+  --status-inativo-text: #DC2626;
+  --status-inativo-border: #EF4444;
 
   /* Interactive States */
   --interactive-hover: rgba(124, 58, 237, 0.08);

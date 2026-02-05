@@ -595,13 +595,13 @@
 }
 
 .status-badge--revisao {
-  background: #FEF3C7;
-  color: #B45309;
+  background: #FEE2E2;
+  color: #DC2626;
 }
 
 .status-badge--inativo {
-  background: hsl(var(--muted));
-  color: var(--color-text-secondary);
+  background: #FEE2E2;
+  color: #DC2626;
 }
 
 /* ===== Complexity ===== */
@@ -620,34 +620,6 @@
 
 .complexity--baixa {
   color: #059669;
-}
-
-/* ===== Progress ===== */
-.detail-progress {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.detail-progress-bar {
-  width: 4rem;
-  height: 6px;
-  background: hsl(var(--muted));
-  border-radius: var(--radius-full);
-  overflow: hidden;
-}
-
-.detail-progress-fill {
-  height: 100%;
-  background: var(--color-primary-40);
-  border-radius: var(--radius-full);
-  transition: width 0.3s ease;
-}
-
-.detail-progress-value {
-  font-size: 0.75rem;
-  font-family: var(--font-family-mono);
-  color: var(--color-text-tertiary);
 }
 
 /* ===== Info Cards (ProcessoDetailPage) ===== */
@@ -739,11 +711,11 @@
 }
 
 .status-color--revisao {
-  color: #D97706 !important;
+  color: #DC2626 !important;
 }
 
 .status-color--inativo {
-  color: var(--color-text-secondary) !important;
+  color: #DC2626 !important;
 }
 
 .complexity-color--alta {

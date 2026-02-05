@@ -238,7 +238,7 @@ export function BUCardV2({ bu, vp, isExpanded, onToggle, onShowDetails }: BUCard
                                           processo.status === 'inativo' && "bg-muted text-muted-foreground"
                                         )}
                                       >
-                                        {processo.status === 'ativo' ? 'Ativo' : processo.status === 'em_revisao' ? 'Revisão' : 'Inativo'}
+                                        {processo.status === 'ativo' ? 'Atualizado' : processo.status === 'em_revisao' ? 'Desatualizado' : 'Desatualizado'}
                                       </span>
                                     </div>
                                   ))}

@@ -14,7 +14,7 @@ import { JornadaDetailPage } from './components/Dashboard/JornadaDetailPage';
 import { MacroDetailPage } from './components/Dashboard/MacroDetailPage';
 import { CadeiaPage } from './components/Dashboard/CadeiaPage';
 import { PlaceholderPage } from './components/PlaceholderPage';
-import { ProcessoPage, ProcessoFormPage, DominioFormPage, JornadaFormPage, MacroprocessoFormPage } from './components/Cadastros';
+import { ProcessoPage, ProcessoFormPage, ProcessoListPage, DominioFormPage, DominioListPage, JornadaFormPage, JornadaListPage, MacroprocessoFormPage, MacroprocessoListPage } from './components/Cadastros';
 
 const initialFilters: FilterState = {
   businessUnit: null,
@@ -49,6 +49,21 @@ function App() {
     jornada: null,
     macro: null,
   });
+
+  // Cadastros sub-page state
+  const [showDominioForm, setShowDominioForm] = useState(false);
+  const [showJornadaForm, setShowJornadaForm] = useState(false);
+  const [showMacroForm, setShowMacroForm] = useState(false);
+  const [showProcessoForm, setShowProcessoForm] = useState(false);
+
+  // Handler para mudança de página (reseta estados internos)
+  const handlePageChange = (page: PageType) => {
+    setShowDominioForm(false);
+    setShowJornadaForm(false);
+    setShowMacroForm(false);
+    setShowProcessoForm(false);
+    setActivePage(page);
+  };
 
   // Handlers para navegação drill-down
   const handleSelectBU = (bu: BusinessUnit) => {
@@ -265,30 +280,62 @@ function App() {
 
       // Cadastros pages
       case 'cadastros-dominios':
+        if (showDominioForm) {
+          return (
+            <DominioFormPage
+              onBack={() => setShowDominioForm(false)}
+            />
+          );
+        }
         return (
-          <DominioFormPage
+          <DominioListPage
             onBack={() => setActivePage('estrutura')}
+            onAddNew={() => setShowDominioForm(true)}
           />
         );
 
       case 'cadastros-jornadas':
+        if (showJornadaForm) {
+          return (
+            <JornadaFormPage
+              onBack={() => setShowJornadaForm(false)}
+            />
+          );
+        }
         return (
-          <JornadaFormPage
+          <JornadaListPage
             onBack={() => setActivePage('estrutura')}
+            onAddNew={() => setShowJornadaForm(true)}
           />
         );
 
       case 'cadastros-macroprocessos':
+        if (showMacroForm) {
+          return (
+            <MacroprocessoFormPage
+              onBack={() => setShowMacroForm(false)}
+            />
+          );
+        }
         return (
-          <MacroprocessoFormPage
+          <MacroprocessoListPage
             onBack={() => setActivePage('estrutura')}
+            onAddNew={() => setShowMacroForm(true)}
           />
         );
 
       case 'cadastros-processos':
+        if (showProcessoForm) {
+          return (
+            <ProcessoFormPage
+              onBack={() => setShowProcessoForm(false)}
+            />
+          );
+        }
         return (
-          <ProcessoFormPage
+          <ProcessoListPage
             onBack={() => setActivePage('estrutura')}
+            onAddNew={() => setShowProcessoForm(true)}
           />
         );
 
@@ -339,7 +386,7 @@ function App() {
     <Layout
       activePage={activePage}
       activeView={activeView}
-      onPageChange={setActivePage}
+      onPageChange={handlePageChange}
       onViewChange={setActiveView}
       filters={filters}
       onFilterChange={setFilters}

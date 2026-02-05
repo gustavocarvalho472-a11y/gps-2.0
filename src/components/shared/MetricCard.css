@@ -1,0 +1,33 @@
+/**
+ * GPS 2.0 - Metric Card Styles
+ * Estilos baseados no design do Figma (node 67:256)
+ */
+
+.gps-metric-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #FFFFFF;
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.gps-metric-card-label {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #838199;
+  letter-spacing: -0.8px;
+  line-height: 1.4;
+}
+
+.gps-metric-card-value {
+  font-family: 'Axiforma', sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: #3C3B4C;
+  letter-spacing: -1.6px;
+  line-height: 1.2;
+}

@@ -7,7 +7,7 @@ import { useState, useMemo } from 'react';
 import {
   Search, Filter, ChevronRight, X,
   Building2, Route, GitBranch, Boxes, FileText,
-  Users, BarChart3, Zap, ExternalLink, Eye
+  Users, BarChart3, ExternalLink
 } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { BUCard } from './BUCard';
@@ -52,7 +52,7 @@ interface DetailPanelProps {
   onOpenPage?: () => void;
 }
 
-function DetailPanel({ isOpen, type, data, breadcrumb, onClose, parentBU, parentDominio, parentJornada, parentMacro, onNavigateToBU, onNavigateToDominio, onNavigateToJornada, onNavigateToMacro, onNavigateToProcesso, onOpenPage }: DetailPanelProps) {
+function DetailPanel({ isOpen, type, data, breadcrumb, onClose, parentBU, parentDominio, parentJornada, parentMacro: _parentMacro, onNavigateToBU: _onNavigateToBU, onNavigateToDominio, onNavigateToJornada, onNavigateToMacro, onNavigateToProcesso, onOpenPage }: DetailPanelProps) {
   if (!isOpen || !data || !type) return null;
 
   const getIcon = () => {
@@ -299,9 +299,6 @@ function DetailPanel({ isOpen, type, data, breadcrumb, onClose, parentBU, parent
         const macro = data as MacroprocessoCompleto;
         const ativos = macro.processos.filter(p => p.status === 'ativo').length;
         const revisao = macro.processos.filter(p => p.status === 'em_revisao').length;
-        const automacaoMedia = macro.processos.length > 0
-          ? Math.round(macro.processos.reduce((acc, p) => acc + (p.automatizacao || 0), 0) / macro.processos.length)
-          : 0;
 
         return (
           <>
@@ -322,7 +319,7 @@ function DetailPanel({ isOpen, type, data, breadcrumb, onClose, parentBU, parent
                 </div>
                 <div className="panel-stat-card-info">
                   <span className="panel-stat-card-value">{ativos}</span>
-                  <span className="panel-stat-card-label">Ativos</span>
+                  <span className="panel-stat-card-label">Atualizados</span>
                 </div>
               </div>
               <div className="panel-stat-card panel-stat-card--warning">
@@ -331,16 +328,7 @@ function DetailPanel({ isOpen, type, data, breadcrumb, onClose, parentBU, parent
                 </div>
                 <div className="panel-stat-card-info">
                   <span className="panel-stat-card-value">{revisao}</span>
-                  <span className="panel-stat-card-label">Revisão</span>
-                </div>
-              </div>
-              <div className="panel-stat-card panel-stat-card--info">
-                <div className="panel-stat-card-icon">
-                  <Zap size={20} />
-                </div>
-                <div className="panel-stat-card-info">
-                  <span className="panel-stat-card-value">{automacaoMedia}%</span>
-                  <span className="panel-stat-card-label">Automação</span>
+                  <span className="panel-stat-card-label">Desatualizado</span>
                 </div>
               </div>
             </div>
@@ -379,7 +367,7 @@ function DetailPanel({ isOpen, type, data, breadcrumb, onClose, parentBU, parent
                       <span className="panel-item-card-meta">{p.codigo}</span>
                     </div>
                     <span className={`panel-item-card-status panel-item-card-status--${p.status === 'em_revisao' ? 'revisao' : p.status}`}>
-                      {p.status === 'ativo' ? 'Ativo' : p.status === 'em_revisao' ? 'Revisão' : 'Inativo'}
+                      {p.status === 'ativo' ? 'Atualizado' : p.status === 'em_revisao' ? 'Desatualizado' : 'Desatualizado'}
                     </span>
                     <ChevronRight className="panel-item-card-arrow" />
                   </button>

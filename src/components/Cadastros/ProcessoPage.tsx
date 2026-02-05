@@ -4,7 +4,7 @@
  */
 
 import { useState } from 'react';
-import { ArrowLeft, ChevronRight, Route, GitBranch, Boxes, Building2, Users, MoreHorizontal, Eye, Grid3X3, Workflow, CheckCircle2, Circle, User, UserCheck, Bell, Play } from 'lucide-react';
+import { ArrowLeft, ChevronRight, Route, GitBranch, Boxes, Building2, Users, MoreHorizontal, Eye, Workflow, CheckCircle2, Circle, List, FileText } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import type { ProcessoDetalhado } from '../../types';
 import './ProcessoPage.css';
@@ -13,38 +13,6 @@ interface ProcessoPageProps {
   processo: ProcessoDetalhado;
   onBack: () => void;
 }
-
-// Mock data para matriz DERI
-const mockDeriData = [
-  {
-    atividade: 'Análise de requisitos',
-    decisao: ['Gerente de Produto'],
-    execucao: ['Analista de Negócios', 'Analista de Sistemas'],
-    responsavel: ['Tech Lead'],
-    informado: ['Stakeholders', 'Equipe de QA']
-  },
-  {
-    atividade: 'Desenvolvimento',
-    decisao: ['Tech Lead'],
-    execucao: ['Desenvolvedores'],
-    responsavel: ['Tech Lead'],
-    informado: ['Gerente de Produto', 'QA']
-  },
-  {
-    atividade: 'Testes e Validação',
-    decisao: ['QA Lead'],
-    execucao: ['Equipe de QA'],
-    responsavel: ['QA Lead'],
-    informado: ['Tech Lead', 'Desenvolvedores']
-  },
-  {
-    atividade: 'Aprovação e Deploy',
-    decisao: ['Gerente de TI'],
-    execucao: ['DevOps'],
-    responsavel: ['Tech Lead'],
-    informado: ['Todos os stakeholders']
-  }
-];
 
 // Mock data para etapas BPMN
 const mockBpmnSteps = [
@@ -58,8 +26,22 @@ const mockBpmnSteps = [
   { id: 8, tipo: 'fim', nome: 'Fim', status: 'pendente' }
 ];
 
+// Mock data para lista de subprocessos/atividades
+const mockListaAtividades = [
+  { id: 1, codigo: 'ATI-001', nome: 'Receber solicitação do cliente', tipo: 'atividade', status: 'atualizado', responsavel: 'Analista de Atendimento' },
+  { id: 2, codigo: 'ATI-002', nome: 'Validar dados cadastrais', tipo: 'atividade', status: 'atualizado', responsavel: 'Analista de Cadastro' },
+  { id: 3, codigo: 'ATI-003', nome: 'Verificar documentação', tipo: 'atividade', status: 'atualizado', responsavel: 'Analista de Compliance' },
+  { id: 4, codigo: 'ATI-004', nome: 'Analisar crédito', tipo: 'atividade', status: 'desatualizado', responsavel: 'Analista de Crédito' },
+  { id: 5, codigo: 'ATI-005', nome: 'Aprovar ou rejeitar proposta', tipo: 'decisao', status: 'atualizado', responsavel: 'Gerente de Operações' },
+  { id: 6, codigo: 'ATI-006', nome: 'Gerar contrato', tipo: 'atividade', status: 'atualizado', responsavel: 'Analista de Contratos' },
+  { id: 7, codigo: 'ATI-007', nome: 'Coletar assinaturas', tipo: 'atividade', status: 'atualizado', responsavel: 'Analista de Contratos' },
+  { id: 8, codigo: 'ATI-008', nome: 'Registrar operação', tipo: 'atividade', status: 'atualizado', responsavel: 'Analista de Backoffice' },
+  { id: 9, codigo: 'ATI-009', nome: 'Notificar cliente', tipo: 'atividade', status: 'desatualizado', responsavel: 'Sistema Automático' },
+  { id: 10, codigo: 'ATI-010', nome: 'Arquivar documentos', tipo: 'atividade', status: 'atualizado', responsavel: 'Analista de Documentação' },
+];
+
 export function ProcessoPage({ processo, onBack }: ProcessoPageProps) {
-  const [activeTab, setActiveTab] = useState<'deri' | 'bpmn'>('deri');
+  const [activeTab, setActiveTab] = useState<'bpmn' | 'lista'>('bpmn');
 
   // Determinar tags de status
   const isAtualizado = processo.status === 'ativo';
@@ -220,122 +202,22 @@ export function ProcessoPage({ processo, onBack }: ProcessoPageProps) {
       {/* Tabs de visualização */}
       <div className="processo-tabs">
         <button
-          className={`processo-tab ${activeTab === 'deri' ? 'processo-tab--active' : ''}`}
-          onClick={() => setActiveTab('deri')}
-        >
-          <Grid3X3 size={18} />
-          Matriz DERI
-        </button>
-        <button
           className={`processo-tab ${activeTab === 'bpmn' ? 'processo-tab--active' : ''}`}
           onClick={() => setActiveTab('bpmn')}
         >
           <Workflow size={18} />
           Fluxo BPMN
         </button>
+        <button
+          className={`processo-tab ${activeTab === 'lista' ? 'processo-tab--active' : ''}`}
+          onClick={() => setActiveTab('lista')}
+        >
+          <List size={18} />
+          Lista de Atividades
+        </button>
       </div>
 
       {/* Conteúdo das tabs */}
-      {activeTab === 'deri' && (
-        <div className="processo-deri-section">
-          <div className="processo-section-header">
-            <Grid3X3 size={20} />
-            <h2>Matriz DERI - Responsabilidades</h2>
-          </div>
-          <p className="processo-section-desc">
-            Matriz de responsabilidades definindo quem Decide, Executa, é Responsável e deve ser Informado em cada atividade.
-          </p>
-
-          <div className="deri-legend">
-            <div className="deri-legend-item">
-              <span className="deri-badge deri-badge--d">D</span>
-              <span>Decisão</span>
-            </div>
-            <div className="deri-legend-item">
-              <span className="deri-badge deri-badge--e">E</span>
-              <span>Execução</span>
-            </div>
-            <div className="deri-legend-item">
-              <span className="deri-badge deri-badge--r">R</span>
-              <span>Responsável</span>
-            </div>
-            <div className="deri-legend-item">
-              <span className="deri-badge deri-badge--i">I</span>
-              <span>Informado</span>
-            </div>
-          </div>
-
-          <div className="deri-table-wrapper">
-            <table className="deri-table">
-              <thead>
-                <tr>
-                  <th>Atividade</th>
-                  <th>
-                    <div className="deri-header">
-                      <User size={14} />
-                      Decisão (D)
-                    </div>
-                  </th>
-                  <th>
-                    <div className="deri-header">
-                      <Play size={14} />
-                      Execução (E)
-                    </div>
-                  </th>
-                  <th>
-                    <div className="deri-header">
-                      <UserCheck size={14} />
-                      Responsável (R)
-                    </div>
-                  </th>
-                  <th>
-                    <div className="deri-header">
-                      <Bell size={14} />
-                      Informado (I)
-                    </div>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {mockDeriData.map((row, index) => (
-                  <tr key={index}>
-                    <td className="deri-atividade">{row.atividade}</td>
-                    <td>
-                      <div className="deri-cell">
-                        {row.decisao.map((pessoa, i) => (
-                          <span key={i} className="deri-pessoa deri-pessoa--d">{pessoa}</span>
-                        ))}
-                      </div>
-                    </td>
-                    <td>
-                      <div className="deri-cell">
-                        {row.execucao.map((pessoa, i) => (
-                          <span key={i} className="deri-pessoa deri-pessoa--e">{pessoa}</span>
-                        ))}
-                      </div>
-                    </td>
-                    <td>
-                      <div className="deri-cell">
-                        {row.responsavel.map((pessoa, i) => (
-                          <span key={i} className="deri-pessoa deri-pessoa--r">{pessoa}</span>
-                        ))}
-                      </div>
-                    </td>
-                    <td>
-                      <div className="deri-cell">
-                        {row.informado.map((pessoa, i) => (
-                          <span key={i} className="deri-pessoa deri-pessoa--i">{pessoa}</span>
-                        ))}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-
       {activeTab === 'bpmn' && (
         <div className="processo-bpmn-section">
           <div className="processo-section-header">
@@ -396,6 +278,75 @@ export function ProcessoPage({ processo, onBack }: ProcessoPageProps) {
             <div className="bpmn-status-item">
               <span className="bpmn-status-dot bpmn-status-dot--pendente"></span>
               <span>Pendente</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'lista' && (
+        <div className="processo-lista-section">
+          <div className="processo-section-header">
+            <List size={20} />
+            <h2>Lista de Atividades</h2>
+          </div>
+          <p className="processo-section-desc">
+            Visualização em lista das atividades que compõem este processo.
+          </p>
+
+          <div className="lista-table-wrapper">
+            <div className="lista-table">
+              {/* Header */}
+              <div className="lista-row lista-row--header">
+                <div className="lista-cell lista-cell--status"></div>
+                <div className="lista-cell lista-cell--codigo">Código</div>
+                <div className="lista-cell lista-cell--nome">Atividade</div>
+                <div className="lista-cell lista-cell--tipo">Tipo</div>
+                <div className="lista-cell lista-cell--responsavel">Responsável</div>
+                <div className="lista-cell lista-cell--acoes"></div>
+              </div>
+
+              {/* Rows */}
+              {mockListaAtividades.map((atividade, index) => (
+                <div
+                  key={atividade.id}
+                  className={`lista-row ${index % 2 === 0 ? 'lista-row--even' : 'lista-row--odd'}`}
+                >
+                  <div className="lista-cell lista-cell--status">
+                    <span className={`lista-status-indicator lista-status-indicator--${atividade.status}`}></span>
+                  </div>
+                  <div className="lista-cell lista-cell--codigo">
+                    <span className="lista-codigo">{atividade.codigo}</span>
+                  </div>
+                  <div className="lista-cell lista-cell--nome">
+                    <FileText size={14} className="lista-nome-icon" />
+                    <span className="lista-nome">{atividade.nome}</span>
+                  </div>
+                  <div className="lista-cell lista-cell--tipo">
+                    <span className={`lista-tipo lista-tipo--${atividade.tipo}`}>
+                      {atividade.tipo === 'decisao' ? 'Decisão' : 'Atividade'}
+                    </span>
+                  </div>
+                  <div className="lista-cell lista-cell--responsavel">
+                    <span className="lista-responsavel">{atividade.responsavel}</span>
+                  </div>
+                  <div className="lista-cell lista-cell--acoes">
+                    <button className="lista-action-btn" title="Ver detalhes">
+                      <Eye size={14} />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="lista-legend">
+            <div className="lista-legend-item">
+              <span className="lista-status-indicator lista-status-indicator--atualizado"></span>
+              <span>Atualizado</span>
+            </div>
+            <div className="lista-legend-item">
+              <span className="lista-status-indicator lista-status-indicator--desatualizado"></span>
+              <span>Desatualizado</span>
             </div>
           </div>
         </div>

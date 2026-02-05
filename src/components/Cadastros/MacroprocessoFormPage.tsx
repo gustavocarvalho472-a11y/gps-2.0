@@ -100,10 +100,9 @@ const impactoOptions = [
 ];
 
 const statusOptions = [
-  { value: 'ativo', label: 'Ativo' },
-  { value: 'em_revisao', label: 'Em Revisão' },
+  { value: 'ativo', label: 'Atualizado' },
+  { value: 'em_revisao', label: 'Desatualizado' },
   { value: 'em_implementacao', label: 'Em Implementação' },
-  { value: 'inativo', label: 'Inativo' },
 ];
 
 export function MacroprocessoFormPage({ onBack, onSubmit }: MacroprocessoFormPageProps) {
