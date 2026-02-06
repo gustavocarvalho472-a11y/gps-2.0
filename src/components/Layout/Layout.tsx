@@ -19,6 +19,8 @@ interface LayoutProps {
   filters?: FilterState;
   onFilterChange?: (filters: FilterState) => void;
   showFilters?: boolean;
+  hideCadeia?: boolean;
+  hideCadastros?: boolean;
 }
 
 export function Layout({
@@ -30,6 +32,8 @@ export function Layout({
   filters,
   onFilterChange,
   showFilters = true,
+  hideCadeia = false,
+  hideCadastros = false,
 }: LayoutProps) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const filtersOpen = true;
@@ -46,6 +50,8 @@ export function Layout({
         onViewChange={onViewChange}
         collapsed={sidebarCollapsed}
         onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
+        hideCadeia={hideCadeia}
+        hideCadastros={hideCadastros}
       />
       <div className="layout-content">
         <div className="layout-body">

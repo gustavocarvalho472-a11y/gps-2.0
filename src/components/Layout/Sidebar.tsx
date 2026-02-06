@@ -15,6 +15,8 @@ interface SidebarProps {
   onViewChange: (view: ViewType) => void;
   collapsed: boolean;
   onToggleCollapse: () => void;
+  hideCadeia?: boolean;
+  hideCadastros?: boolean;
 }
 
 interface NavItem {
@@ -31,6 +33,8 @@ export function Sidebar({
   onViewChange,
   collapsed,
   onToggleCollapse,
+  hideCadeia = false,
+  hideCadastros = false,
 }: SidebarProps) {
   const [expandedMenus, setExpandedMenus] = useState<string[]>(['cadastros']);
 
@@ -65,11 +69,11 @@ export function Sidebar({
       label: 'Estrutura organizacional',
       icon: <Building2 size={20} />,
     },
-    {
-      id: 'cadeia',
+    ...(!hideCadeia ? [{
+      id: 'cadeia' as PageType,
       label: 'Cadeia de valor',
       icon: <Link2 size={20} />,
-    },
+    }] : []),
   ];
 
   const cadastrosSubItems: NavItem[] = [
@@ -136,39 +140,41 @@ export function Sidebar({
         ))}
 
         {/* Cadastros expandable section */}
-        <div className="sidebar-group">
-          <button
-            className={`sidebar-item sidebar-item-expandable ${isCadastrosActive ? 'active' : ''}`}
-            onClick={() => !collapsed && toggleMenu('cadastros')}
-            title={collapsed ? 'Cadastros' : undefined}
-          >
-            <span className="sidebar-icon">
-              <FolderPlus size={20} />
-            </span>
-            <span className="sidebar-label">Cadastros</span>
-            {!collapsed && (
-              <span className="sidebar-expand-icon">
-                {isMenuExpanded('cadastros') ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+        {!hideCadastros && (
+          <div className="sidebar-group">
+            <button
+              className={`sidebar-item sidebar-item-expandable ${isCadastrosActive ? 'active' : ''}`}
+              onClick={() => !collapsed && toggleMenu('cadastros')}
+              title={collapsed ? 'Cadastros' : undefined}
+            >
+              <span className="sidebar-icon">
+                <FolderPlus size={20} />
               </span>
-            )}
-          </button>
+              <span className="sidebar-label">Cadastros</span>
+              {!collapsed && (
+                <span className="sidebar-expand-icon">
+                  {isMenuExpanded('cadastros') ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                </span>
+              )}
+            </button>
 
-          {!collapsed && isMenuExpanded('cadastros') && (
-            <div className="sidebar-submenu">
-              {cadastrosSubItems.map((subItem) => (
-                <button
-                  key={subItem.id}
-                  className={`sidebar-subitem ${activePage === subItem.id || (subItem.id === 'cadastros-processos' && activePage === 'cadastros-processo-detalhe') ? 'active' : ''}`}
-                  onClick={() => handleNavClick(subItem.id)}
-                >
-                  <span className="sidebar-subitem-icon">{subItem.icon}</span>
-                  <span className="sidebar-subitem-label">{subItem.label}</span>
-                  <ChevronRight className="sidebar-subitem-chevron" size={14} />
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+            {!collapsed && isMenuExpanded('cadastros') && (
+              <div className="sidebar-submenu">
+                {cadastrosSubItems.map((subItem) => (
+                  <button
+                    key={subItem.id}
+                    className={`sidebar-subitem ${activePage === subItem.id || (subItem.id === 'cadastros-processos' && activePage === 'cadastros-processo-detalhe') ? 'active' : ''}`}
+                    onClick={() => handleNavClick(subItem.id)}
+                  >
+                    <span className="sidebar-subitem-icon">{subItem.icon}</span>
+                    <span className="sidebar-subitem-label">{subItem.label}</span>
+                    <ChevronRight className="sidebar-subitem-chevron" size={14} />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </nav>
 
       {/* Bottom Section */}
