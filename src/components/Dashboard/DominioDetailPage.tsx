@@ -1,12 +1,14 @@
 /**
  * GPS 2.0 - Domínio Detail Page
- * Mostra as jornadas de um Domínio
+ * Página de detalhe de Domínio seguindo novo design Figma
  */
 
-import { ArrowLeft, Layers, GitBranch, FileText, ChevronRight, Boxes } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowLeft, ChevronRight, Building2, Users, MoreHorizontal, Eye, GitBranch, Search, Filter, Plus } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { ProcessCard, type StatusType, type ResponsavelInfo } from '../shared';
 import type { BusinessUnit, DominioCompleto, JornadaCompleta } from '../../types';
-import './DetailPage.css';
+import './EntityDetailPage.css';
 
 interface DominioDetailPageProps {
   bu: BusinessUnit;
@@ -15,148 +17,226 @@ interface DominioDetailPageProps {
   onSelectJornada: (jornada: JornadaCompleta) => void;
 }
 
-function JornadaCard({
-  jornada,
-  onClick,
-}: {
-  jornada: JornadaCompleta;
-  onClick: () => void;
-}) {
-  return (
-    <article className="detail-card" onClick={onClick}>
-      <div className="detail-card-accent" />
-      <div className="detail-card-body">
-        <div className="detail-card-top">
-          <span className="detail-card-code">{jornada.codigo}</span>
-          <ChevronRight className="detail-card-chevron" />
-        </div>
-
-        <h3 className="detail-card-title">{jornada.nome}</h3>
-
-        <div className="detail-card-owner">
-          <Avatar className="detail-card-avatar">
-            <AvatarImage src={jornada.responsavel.foto} alt={jornada.responsavel.nome} />
-            <AvatarFallback>
-              {jornada.responsavel.nome.split(' ').map(n => n[0]).join('').slice(0, 2)}
-            </AvatarFallback>
-          </Avatar>
-          <div className="detail-card-owner-info">
-            <span className="detail-card-owner-name">{jornada.responsavel.nome}</span>
-            <span className="detail-card-owner-role">{jornada.responsavel.cargo}</span>
-          </div>
-        </div>
-
-        <div className="detail-card-stats">
-          <div className="detail-card-stat">
-            <span className="detail-card-stat-value">{jornada.totalMacroprocessos}</span>
-            <span className="detail-card-stat-label">Macroprocessos</span>
-          </div>
-          <div className="detail-card-stat">
-            <span className="detail-card-stat-value">{jornada.totalProcessos}</span>
-            <span className="detail-card-stat-label">Processos</span>
-          </div>
-        </div>
-      </div>
-    </article>
-  );
-}
-
 export function DominioDetailPage({ bu, dominio, onBack, onSelectJornada }: DominioDetailPageProps) {
-  return (
-    <div className="detail-page">
-      {/* Navigation */}
-      <nav className="detail-nav">
-        <button className="detail-back" onClick={onBack}>
-          <ArrowLeft />
-          Voltar
-        </button>
-        <div className="detail-breadcrumb">
-          <span>Estrutura</span>
-          <ChevronRight />
-          <span>{bu.nome}</span>
-          <ChevronRight />
-          <span className="detail-breadcrumb-current">{dominio.nome}</span>
-        </div>
-      </nav>
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<string>('todos');
+  const [showFilterDropdown, setShowFilterDropdown] = useState(false);
 
-      {/* Hero Card */}
-      <div className="detail-hero">
-        <div className="detail-hero-content">
-          <div className="detail-hero-main">
-            <div className="detail-hero-icon">
-              <Layers />
+  // Determinar status do domínio (mock - pode vir do backend)
+  const dominioStatus: StatusType = 'desatualizado';
+
+  // Mock de VP (pode vir do backend)
+  const vpNome = '(VPTECH) EQUIPE PÓS E OPM';
+
+  // Filtrar jornadas
+  const filteredJornadas = dominio.jornadas.filter(jornada => {
+    const matchesSearch = jornada.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      jornada.codigo.toLowerCase().includes(searchTerm.toLowerCase());
+    // Para filtro de status, como não temos no tipo atual, sempre retorna true
+    const matchesStatus = statusFilter === 'todos' || true;
+    return matchesSearch && matchesStatus;
+  });
+
+  // Converter jornada para props do ProcessCard
+  const getJornadaCardProps = (jornada: JornadaCompleta) => {
+    const responsavel: ResponsavelInfo = {
+      nome: jornada.responsavel.nome,
+      cargo: jornada.responsavel.cargo || 'Product Owner',
+      equipe: jornada.responsavel.area || vpNome
+    };
+
+    return {
+      codigo: jornada.codigo,
+      nome: jornada.nome,
+      status: 'desatualizado' as StatusType, // Mock - pode vir do backend
+      dataCriacao: '01/08/2026', // Mock
+      dataAtualizacao: '01/09/2026', // Mock
+      responsavel
+    };
+  };
+
+  return (
+    <div className="entity-detail-page">
+      {/* Header com Breadcrumb */}
+      <header className="entity-header">
+        <button className="entity-back-btn" onClick={onBack}>
+          <ArrowLeft size={16} />
+        </button>
+        <nav className="entity-breadcrumb">
+          <span>Cadastros</span>
+          <ChevronRight size={16} />
+          <span>Domínios</span>
+          <ChevronRight size={16} />
+          <span className="entity-breadcrumb-current">{dominio.nome}</span>
+        </nav>
+      </header>
+
+      {/* Card Principal */}
+      <div className="entity-card">
+        {/* Cabeçalho do Card */}
+        <div className="entity-card-header">
+          <div className="entity-card-info">
+            <span className="entity-card-type">Domínio</span>
+            <h1 className="entity-card-title">{dominio.nome}</h1>
+            <span className="entity-card-code">{dominio.codigo}</span>
+          </div>
+
+          <div className="entity-card-actions">
+            <span className={`entity-tag entity-tag--${dominioStatus}`}>
+              {dominioStatus === 'atualizado' ? 'Atualizado' : dominioStatus === 'em_aprovacao' ? 'Em aprovação' : 'Desatualizado'}
+            </span>
+            <button className="entity-more-btn">
+              <MoreHorizontal size={18} />
+            </button>
+          </div>
+        </div>
+
+        {/* Hierarquia */}
+        <div className="entity-hierarchy">
+          <div className="entity-hierarchy-item">
+            <div className="entity-hierarchy-icon entity-hierarchy-icon--bu">
+              <Building2 size={16} />
             </div>
-            <div className="detail-hero-text">
-              <span className="detail-hero-type">Domínio</span>
-              <h1 className="detail-hero-title">{dominio.nome}</h1>
-              <p className="detail-hero-subtitle">{bu.nome} · {dominio.codigo}</p>
+            <div className="entity-hierarchy-info">
+              <span className="entity-hierarchy-label">Business Unit</span>
+              <span className="entity-hierarchy-value">{bu.nome}</span>
             </div>
           </div>
 
-          <div className="detail-hero-owner">
-            <Avatar className="detail-hero-owner-avatar">
+          <div className="entity-hierarchy-item">
+            <div className="entity-hierarchy-icon entity-hierarchy-icon--vp">
+              <Users size={16} />
+            </div>
+            <div className="entity-hierarchy-info">
+              <span className="entity-hierarchy-label">VP</span>
+              <span className="entity-hierarchy-value">{vpNome}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Responsável e Ações */}
+        <div className="entity-responsavel-section">
+          <div className="entity-responsavel">
+            <Avatar className="entity-avatar">
               <AvatarImage src={dominio.responsavel.foto} alt={dominio.responsavel.nome} />
               <AvatarFallback>
                 {dominio.responsavel.nome.split(' ').map(n => n[0]).join('').slice(0, 2)}
               </AvatarFallback>
             </Avatar>
-            <div className="detail-hero-owner-info">
-              <span className="detail-hero-owner-label">Responsável</span>
-              <span className="detail-hero-owner-name">{dominio.responsavel.nome}</span>
-              <span className="detail-hero-owner-role">{dominio.responsavel.cargo}</span>
+            <div className="entity-responsavel-info">
+              <span className="entity-responsavel-label">Responsável</span>
+              <span className="entity-responsavel-name">{dominio.responsavel.nome}</span>
+              <span className="entity-responsavel-details">
+                {dominio.responsavel.cargo}
+                {dominio.responsavel.area && ` • ${dominio.responsavel.area}`}
+              </span>
             </div>
           </div>
+
+          <button className="entity-action-btn">
+            <Eye size={16} />
+            Visualizar aprovações
+          </button>
         </div>
 
-        <div className="detail-hero-metrics">
-          <div className="detail-hero-metric">
-            <GitBranch />
-            <span className="detail-hero-metric-value">{dominio.totalJornadas}</span>
-            <span className="detail-hero-metric-label">Jornadas</span>
-          </div>
-          <div className="detail-hero-metric-divider" />
-          <div className="detail-hero-metric">
-            <Boxes />
-            <span className="detail-hero-metric-value">{dominio.totalMacroprocessos}</span>
-            <span className="detail-hero-metric-label">Macroprocessos</span>
-          </div>
-          <div className="detail-hero-metric-divider" />
-          <div className="detail-hero-metric">
-            <FileText />
-            <span className="detail-hero-metric-value">{dominio.totalProcessos}</span>
-            <span className="detail-hero-metric-label">Processos</span>
-          </div>
+        {/* Footer com datas */}
+        <div className="entity-footer">
+          <span className="entity-date">Criado em 02/02/2026</span>
+          <span className="entity-date">Última atualização em 02/02/2026</span>
         </div>
       </div>
 
-      {/* Jornadas Section */}
-      <section className="detail-section">
-        <header className="detail-section-header">
-          <GitBranch />
-          <h2 className="detail-section-title">Jornadas</h2>
-          <span className="detail-section-badge">{dominio.jornadas.length}</span>
-        </header>
+      {/* Seção de Jornadas */}
+      <div className="entity-children-section">
+        <div className="entity-children-header">
+          <div className="entity-children-title-group">
+            <GitBranch size={20} />
+            <h2 className="entity-children-title">Jornadas</h2>
+            <span className="entity-children-badge">{dominio.jornadas.length}</span>
+          </div>
+          <button className="entity-add-btn">
+            <Plus size={20} />
+            <span>Adicionar jornada</span>
+          </button>
+        </div>
 
-        {dominio.jornadas.length > 0 ? (
-          <div className="detail-grid">
-            {dominio.jornadas.map((jornada) => (
-              <JornadaCard
-                key={jornada.id}
-                jornada={jornada}
-                onClick={() => onSelectJornada(jornada)}
-              />
-            ))}
+        {/* Toolbar de busca e filtro */}
+        <div className="entity-toolbar">
+          <div className="entity-search">
+            <Search size={14} className="entity-search-icon" />
+            <input
+              type="text"
+              placeholder="Pesquisar nome ou código da jornada"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="entity-search-input"
+            />
+          </div>
+          <div className="entity-filter-wrapper">
+            <button
+              className="entity-filter-btn"
+              onClick={() => setShowFilterDropdown(!showFilterDropdown)}
+            >
+              <span>Filtrar</span>
+              <Filter size={16} />
+            </button>
+            {showFilterDropdown && (
+              <div className="entity-filter-dropdown">
+                <button
+                  className={`entity-filter-option ${statusFilter === 'todos' ? 'active' : ''}`}
+                  onClick={() => { setStatusFilter('todos'); setShowFilterDropdown(false); }}
+                >
+                  Todos
+                </button>
+                <button
+                  className={`entity-filter-option ${statusFilter === 'atualizado' ? 'active' : ''}`}
+                  onClick={() => { setStatusFilter('atualizado'); setShowFilterDropdown(false); }}
+                >
+                  Atualizados
+                </button>
+                <button
+                  className={`entity-filter-option ${statusFilter === 'desatualizado' ? 'active' : ''}`}
+                  onClick={() => { setStatusFilter('desatualizado'); setShowFilterDropdown(false); }}
+                >
+                  Desatualizados
+                </button>
+                <button
+                  className={`entity-filter-option ${statusFilter === 'em_aprovacao' ? 'active' : ''}`}
+                  onClick={() => { setStatusFilter('em_aprovacao'); setShowFilterDropdown(false); }}
+                >
+                  Em aprovação
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Lista de Jornadas */}
+        {filteredJornadas.length > 0 ? (
+          <div className="entity-children-list">
+            {filteredJornadas.map(jornada => {
+              const cardProps = getJornadaCardProps(jornada);
+              return (
+                <ProcessCard
+                  key={jornada.id}
+                  {...cardProps}
+                  onClick={() => onSelectJornada(jornada)}
+                />
+              );
+            })}
           </div>
         ) : (
-          <div className="detail-empty">
-            <GitBranch className="detail-empty-icon" />
-            <h3 className="detail-empty-title">Nenhuma jornada cadastrada</h3>
-            <p className="detail-empty-desc">
-              Este domínio ainda não possui jornadas vinculadas.
+          <div className="entity-empty">
+            <GitBranch className="entity-empty-icon" />
+            <h3 className="entity-empty-title">Nenhuma jornada encontrada</h3>
+            <p className="entity-empty-desc">
+              {searchTerm
+                ? 'Nenhuma jornada corresponde aos critérios de busca.'
+                : 'Este domínio ainda não possui jornadas vinculadas.'}
             </p>
           </div>
         )}
-      </section>
+      </div>
     </div>
   );
 }

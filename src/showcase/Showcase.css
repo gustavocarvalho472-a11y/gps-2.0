@@ -1,0 +1,159 @@
+/**
+ * GPS 2.0 - Showcase Styles
+ */
+
+/* Index Page */
+.showcase-index {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #F5EDFF 0%, #E8DEFF 100%);
+  padding: 48px 24px;
+}
+
+.showcase-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.showcase-header h1 {
+  font-family: 'Axiforma', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #282733;
+  margin: 0 0 12px 0;
+}
+
+.showcase-header p {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 16px;
+  color: #64627F;
+  margin: 0;
+}
+
+.showcase-header strong {
+  color: #9755FE;
+}
+
+/* Grid of screens */
+.showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.showcase-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  text-decoration: none;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.showcase-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #9755FE 0%, #8038F0 100%);
+}
+
+.showcase-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(151, 85, 254, 0.2);
+}
+
+.showcase-card h2 {
+  font-family: 'Axiforma', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #282733;
+  margin: 0 0 8px 0;
+}
+
+.showcase-card p {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  color: #64627F;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.showcase-card-arrow {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  font-size: 24px;
+  color: #9755FE;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: all 0.2s ease;
+}
+
+.showcase-card:hover .showcase-card-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Footer */
+.showcase-footer {
+  text-align: center;
+  margin-top: 48px;
+}
+
+.showcase-footer p {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  color: #838199;
+}
+
+/* Page wrapper */
+.showcase-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.showcase-page-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 24px;
+  background: white;
+  border-bottom: 1px solid #EFEFF2;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.showcase-back-link {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #9755FE;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.showcase-back-link:hover {
+  color: #8038F0;
+}
+
+.showcase-page-title {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #64627F;
+}
+
+/* Wrapper simula área de conteúdo sem sidebar */
+.showcase-wrapper {
+  flex: 1;
+  background: #F6F6F6;
+  overflow: auto;
+}

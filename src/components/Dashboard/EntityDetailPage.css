@@ -1,0 +1,804 @@
+/**
+ * GPS 2.0 - Entity Detail Page Styles
+ * Novo layout seguindo o Figma para Domínio, Jornada e Macroprocesso
+ */
+
+/* ===== Page Container ===== */
+.entity-detail-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-height: 100%;
+  width: 100%;
+  background: #F6F6F6;
+  padding: 24px;
+  box-sizing: border-box;
+  animation: entityPageEnter 0.3s ease-out;
+}
+
+@keyframes entityPageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== Header Navigation ===== */
+.entity-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.entity-back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: white;
+  border: 1px solid #EFEFF2;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.entity-back-btn:hover {
+  border-color: #9755FE;
+  color: #9755FE;
+}
+
+.entity-back-btn svg {
+  color: #64627F;
+}
+
+.entity-back-btn:hover svg {
+  color: #9755FE;
+}
+
+.entity-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  color: #64627F;
+}
+
+.entity-breadcrumb svg {
+  width: 16px;
+  height: 16px;
+  color: #B8B6C7;
+}
+
+.entity-breadcrumb-current {
+  font-weight: 500;
+  color: #282733;
+}
+
+/* ===== Main Card ===== */
+.entity-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0px 4px 16px rgba(33, 37, 41, 0.06);
+}
+
+/* Card Header */
+.entity-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.entity-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.entity-card-type {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #8038F0;
+  letter-spacing: -0.7px;
+}
+
+.entity-card-title {
+  font-family: 'Axiforma', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: #282733;
+  letter-spacing: -1.4px;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.entity-card-code {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #838199;
+  letter-spacing: -0.7px;
+}
+
+.entity-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Status Tags */
+.entity-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 20px;
+  letter-spacing: -0.6px;
+}
+
+.entity-tag--atualizado {
+  background: #E6F9F0;
+  color: #059669;
+}
+
+.entity-tag--desatualizado {
+  background: #FEE2E2;
+  color: #DC2626;
+}
+
+.entity-tag--em_aprovacao {
+  background: #FEF3C7;
+  color: #D97706;
+}
+
+.entity-tag--critico {
+  background: #FEE2E2;
+  color: #DC2626;
+}
+
+.entity-more-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: #F6F6F6;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.entity-more-btn:hover {
+  background: #EFEFF2;
+}
+
+.entity-more-btn svg {
+  color: #64627F;
+}
+
+/* Hierarchy Section */
+.entity-hierarchy {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #EFEFF2;
+  margin-bottom: 20px;
+}
+
+.entity-hierarchy-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.entity-hierarchy-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.entity-hierarchy-icon--dominio {
+  background: #F5EDFF;
+}
+
+.entity-hierarchy-icon--dominio svg {
+  color: #9755FE;
+}
+
+.entity-hierarchy-icon--jornada {
+  background: #E0F2FE;
+}
+
+.entity-hierarchy-icon--jornada svg {
+  color: #0284C7;
+}
+
+.entity-hierarchy-icon--bu {
+  background: #F0FDF4;
+}
+
+.entity-hierarchy-icon--bu svg {
+  color: #059669;
+}
+
+.entity-hierarchy-icon--vp {
+  background: #FEF3C7;
+}
+
+.entity-hierarchy-icon--vp svg {
+  color: #D97706;
+}
+
+.entity-hierarchy-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.entity-hierarchy-label {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: #838199;
+  letter-spacing: -0.55px;
+  text-transform: uppercase;
+}
+
+.entity-hierarchy-value {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #282733;
+  letter-spacing: -0.7px;
+}
+
+/* Responsável Section */
+.entity-responsavel-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #EFEFF2;
+  margin-bottom: 16px;
+}
+
+.entity-responsavel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.entity-avatar {
+  width: 44px !important;
+  height: 44px !important;
+}
+
+.entity-avatar [data-slot="fallback"] {
+  font-size: 14px;
+  font-weight: 600;
+  background: #F5EDFF;
+  color: #9755FE;
+}
+
+.entity-responsavel-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.entity-responsavel-label {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: #838199;
+  letter-spacing: -0.55px;
+  text-transform: uppercase;
+}
+
+.entity-responsavel-name {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #282733;
+  letter-spacing: -0.8px;
+}
+
+.entity-responsavel-details {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #838199;
+  letter-spacing: -0.65px;
+}
+
+.entity-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: white;
+  border: 1px solid #9755FE;
+  border-radius: 20px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #9755FE;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.entity-action-btn:hover {
+  background: #F5EDFF;
+}
+
+.entity-action-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Metrics Section (for BU) */
+.entity-metrics {
+  display: flex;
+  gap: 32px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #EFEFF2;
+  margin-bottom: 20px;
+}
+
+.entity-metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.entity-metric-value {
+  font-family: 'Axiforma', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #9755FE;
+  letter-spacing: -1.2px;
+}
+
+.entity-metric-label {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #838199;
+  letter-spacing: -0.6px;
+}
+
+/* Card Footer with dates */
+.entity-footer {
+  display: flex;
+  gap: 24px;
+}
+
+.entity-date {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #838199;
+  letter-spacing: -0.6px;
+}
+
+/* ===== Children Section ===== */
+.entity-children-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.entity-children-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.entity-children-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.entity-children-title-group svg {
+  width: 20px;
+  height: 20px;
+  color: #9755FE;
+}
+
+.entity-children-title {
+  font-family: 'Axiforma', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #282733;
+  letter-spacing: -0.9px;
+  margin: 0;
+}
+
+.entity-children-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 8px;
+  background: #F6F6F6;
+  border-radius: 12px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #64627F;
+}
+
+.entity-add-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px 8px 16px;
+  background: #9755FE;
+  color: white;
+  border: none;
+  border-radius: 24px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0px 4px 16px rgba(33, 37, 41, 0.12);
+  transition: background 0.2s;
+}
+
+.entity-add-btn:hover {
+  background: #8038F0;
+}
+
+/* Search and Filter toolbar */
+.entity-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.entity-search {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: white;
+  border: 1px solid #EFEFF2;
+  border-radius: 50px;
+  padding: 5px 9px;
+}
+
+.entity-search-icon {
+  color: #64627F;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+}
+
+.entity-search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #282733;
+  letter-spacing: -0.7px;
+  background: transparent;
+}
+
+.entity-search-input::placeholder {
+  color: #64627F;
+}
+
+.entity-filter-wrapper {
+  position: relative;
+}
+
+.entity-filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: white;
+  border: 1px solid #EFEFF2;
+  border-radius: 50px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #64627F;
+  letter-spacing: -0.7px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.entity-filter-btn:hover {
+  border-color: #9755FE;
+}
+
+.entity-filter-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: white;
+  border: 1px solid #EFEFF2;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  min-width: 160px;
+  overflow: hidden;
+}
+
+.entity-filter-option {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  text-align: left;
+  background: none;
+  border: none;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  color: #64627F;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.entity-filter-option:hover {
+  background: #F7F7F7;
+}
+
+.entity-filter-option.active {
+  background: #F5EDFF;
+  color: #9755FE;
+  font-weight: 500;
+}
+
+/* Children cards list */
+.entity-children-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Empty state */
+.entity-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  background: white;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.entity-empty-icon {
+  width: 48px;
+  height: 48px;
+  color: #B8B6C7;
+  margin-bottom: 16px;
+}
+
+.entity-empty-title {
+  font-family: 'Axiforma', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #64627F;
+  margin: 0 0 8px 0;
+}
+
+.entity-empty-desc {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  color: #838199;
+  margin: 0;
+  max-width: 320px;
+}
+
+/* ===== BU Dominio Cards Grid ===== */
+.bu-dominio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.bu-dominio-card {
+  display: flex;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.bu-dominio-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.bu-dominio-card-accent {
+  width: 4px;
+  background: linear-gradient(180deg, #9755FE 0%, #8038F0 100%);
+  flex-shrink: 0;
+}
+
+.bu-dominio-card-content {
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bu-dominio-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bu-dominio-card-code {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #838199;
+  letter-spacing: -0.6px;
+}
+
+.bu-dominio-card-chevron {
+  color: #B8B6C7;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.bu-dominio-card:hover .bu-dominio-card-chevron {
+  transform: translateX(4px);
+  color: #9755FE;
+}
+
+.bu-dominio-card-title {
+  font-family: 'Axiforma', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #282733;
+  letter-spacing: -0.8px;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.bu-dominio-card-responsavel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bu-dominio-card-avatar {
+  width: 28px !important;
+  height: 28px !important;
+}
+
+.bu-dominio-card-avatar [data-slot="fallback"] {
+  font-size: 10px;
+  font-weight: 600;
+  background: #F5EDFF;
+  color: #9755FE;
+}
+
+.bu-dominio-card-responsavel-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.bu-dominio-card-responsavel-name {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #282733;
+  letter-spacing: -0.65px;
+}
+
+.bu-dominio-card-responsavel-role {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: #838199;
+  letter-spacing: -0.55px;
+}
+
+.bu-dominio-card-stats {
+  display: flex;
+  gap: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #EFEFF2;
+}
+
+.bu-dominio-card-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.bu-dominio-card-stat-value {
+  font-family: 'Axiforma', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #9755FE;
+  letter-spacing: -0.9px;
+}
+
+.bu-dominio-card-stat-label {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  color: #838199;
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .entity-detail-page {
+    padding: 16px;
+  }
+
+  .entity-card-header {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .entity-card-actions {
+    align-self: flex-start;
+  }
+
+  .entity-hierarchy {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .entity-metrics {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .entity-metric {
+    flex: 1;
+    min-width: calc(50% - 8px);
+  }
+
+  .entity-responsavel-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .entity-children-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .entity-toolbar {
+    flex-direction: column;
+  }
+
+  .bu-dominio-grid {
+    grid-template-columns: 1fr;
+  }
+}
