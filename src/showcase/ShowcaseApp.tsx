@@ -1,14 +1,15 @@
 /**
  * GPS 2.0 - Showcase App
- * Aplicação para visualizar telas individuais para exportação para Figma
+ * Aplicação com fluxo completo de navegação para exportação para Figma
  */
 
-import { HashRouter, Routes, Route, Link } from 'react-router-dom';
+import { HashRouter, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { BUDetailPage } from '../components/Dashboard/BUDetailPage';
 import { DominioDetailPage } from '../components/Dashboard/DominioDetailPage';
 import { JornadaDetailPage } from '../components/Dashboard/JornadaDetailPage';
 import { MacroDetailPage } from '../components/Dashboard/MacroDetailPage';
 import { businessUnits } from '../data/organizationData';
+import type { Dominio, Jornada, Macroprocesso } from '../types';
 import './Showcase.css';
 
 // Mock data - pegar primeira BU com todos os níveis
@@ -39,7 +40,7 @@ function ShowcaseIndex() {
     <div className="showcase-index">
       <header className="showcase-header">
         <h1>GPS 2.0 - Showcase de Telas</h1>
-        <p>Clique em uma tela para visualizar. Use a extensão <strong>html.to.design</strong> para converter para Figma.</p>
+        <p>Navegue pelas telas como no sistema real. Use a extensão <strong>html.to.design</strong> para converter para Figma.</p>
       </header>
 
       <div className="showcase-grid">
@@ -59,87 +60,120 @@ function ShowcaseIndex() {
   );
 }
 
-// Componente com botão de voltar
-function ShowcasePage({ children, title }: { children: React.ReactNode; title: string }) {
+// Componente com toolbar de navegação
+function ShowcaseToolbar({ title }: { title: string }) {
+  return (
+    <div className="showcase-page-toolbar">
+      <Link to="/" className="showcase-back-link">← Índice</Link>
+      <span className="showcase-page-title">{title}</span>
+    </div>
+  );
+}
+
+// ===== PÁGINAS COM NAVEGAÇÃO REAL =====
+
+function BUDetailShowcase() {
+  const navigate = useNavigate();
+
+  const handleSelectDominio = (dominio: Dominio) => {
+    // Navega para o domínio selecionado (por enquanto sempre vai para o primeiro)
+    navigate('/dominio-detail');
+    console.log('Navegando para domínio:', dominio.nome);
+  };
+
   return (
     <div className="showcase-page">
-      <div className="showcase-page-toolbar">
-        <Link to="/" className="showcase-back-link">← Voltar ao índice</Link>
-        <span className="showcase-page-title">{title}</span>
-      </div>
+      <ShowcaseToolbar title="BU Detail Page" />
       <ShowcaseWrapper>
-        {children}
+        <BUDetailPage
+          bu={mockBU}
+          onBack={() => navigate('/')}
+          onSelectDominio={handleSelectDominio}
+        />
+      </ShowcaseWrapper>
+    </div>
+  );
+}
+
+function DominioDetailShowcase() {
+  const navigate = useNavigate();
+
+  const handleSelectJornada = (jornada: Jornada) => {
+    navigate('/jornada-detail');
+    console.log('Navegando para jornada:', jornada.nome);
+  };
+
+  return (
+    <div className="showcase-page">
+      <ShowcaseToolbar title="Domínio Detail Page" />
+      <ShowcaseWrapper>
+        <DominioDetailPage
+          bu={mockBU}
+          dominio={mockDominio}
+          onBack={() => navigate('/bu-detail')}
+          onSelectJornada={handleSelectJornada}
+        />
+      </ShowcaseWrapper>
+    </div>
+  );
+}
+
+function JornadaDetailShowcase() {
+  const navigate = useNavigate();
+
+  const handleSelectMacro = (macro: Macroprocesso) => {
+    navigate('/macro-detail');
+    console.log('Navegando para macro:', macro.nome);
+  };
+
+  return (
+    <div className="showcase-page">
+      <ShowcaseToolbar title="Jornada Detail Page" />
+      <ShowcaseWrapper>
+        <JornadaDetailPage
+          bu={mockBU}
+          dominio={mockDominio}
+          jornada={mockJornada}
+          onBack={() => navigate('/dominio-detail')}
+          onSelectMacro={handleSelectMacro}
+        />
+      </ShowcaseWrapper>
+    </div>
+  );
+}
+
+function MacroDetailShowcase() {
+  const navigate = useNavigate();
+
+  return (
+    <div className="showcase-page">
+      <ShowcaseToolbar title="Macroprocesso Detail Page" />
+      <ShowcaseWrapper>
+        <MacroDetailPage
+          bu={mockBU}
+          dominio={mockDominio}
+          jornada={mockJornada}
+          macro={mockMacro}
+          onBack={() => navigate('/jornada-detail')}
+          onSelectProcesso={(processo) => {
+            console.log('Processo selecionado:', processo.nome);
+            alert(`Processo: ${processo.nome}\n(Modal seria aberto aqui)`);
+          }}
+        />
       </ShowcaseWrapper>
     </div>
   );
 }
 
 export function ShowcaseApp() {
-  // Dummy handlers que não fazem nada (apenas para visualização)
-  const noop = () => {};
-
   return (
     <HashRouter>
       <Routes>
         <Route path="/" element={<ShowcaseIndex />} />
-
-        <Route
-          path="/bu-detail"
-          element={
-            <ShowcasePage title="BU Detail Page">
-              <BUDetailPage
-                bu={mockBU}
-                onBack={noop}
-                onSelectDominio={noop}
-              />
-            </ShowcasePage>
-          }
-        />
-
-        <Route
-          path="/dominio-detail"
-          element={
-            <ShowcasePage title="Domínio Detail Page">
-              <DominioDetailPage
-                bu={mockBU}
-                dominio={mockDominio}
-                onBack={noop}
-                onSelectJornada={noop}
-              />
-            </ShowcasePage>
-          }
-        />
-
-        <Route
-          path="/jornada-detail"
-          element={
-            <ShowcasePage title="Jornada Detail Page">
-              <JornadaDetailPage
-                bu={mockBU}
-                dominio={mockDominio}
-                jornada={mockJornada}
-                onBack={noop}
-                onSelectMacro={noop}
-              />
-            </ShowcasePage>
-          }
-        />
-
-        <Route
-          path="/macro-detail"
-          element={
-            <ShowcasePage title="Macroprocesso Detail Page">
-              <MacroDetailPage
-                bu={mockBU}
-                dominio={mockDominio}
-                jornada={mockJornada}
-                macro={mockMacro}
-                onBack={noop}
-                onSelectProcesso={noop}
-              />
-            </ShowcasePage>
-          }
-        />
+        <Route path="/bu-detail" element={<BUDetailShowcase />} />
+        <Route path="/dominio-detail" element={<DominioDetailShowcase />} />
+        <Route path="/jornada-detail" element={<JornadaDetailShowcase />} />
+        <Route path="/macro-detail" element={<MacroDetailShowcase />} />
       </Routes>
     </HashRouter>
   );

@@ -14,7 +14,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src')
     }
   },
-  // Base path for GitHub Pages (repo name)
+  // Base path for GitHub Pages
   base: '/gps-2.0/',
   build: {
     outDir: 'dist-showcase',
