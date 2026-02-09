@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { BUCard } from './BUCard';
+import { MetricsCards, createGlobalMetrics } from './MetricsCards';
 import { businessUnits, vps, getVPById, totaisGlobais } from '../../data/organizationData';
 import type {
   BusinessUnit, DominioCompleto, JornadaCompleta,
@@ -539,6 +540,9 @@ export function StructureView({ onSelectBU, onSelectDominio, onSelectJornada, on
             </p>
           </div>
         </header>
+
+        {/* Metrics Cards - Big Numbers */}
+        <MetricsCards metrics={createGlobalMetrics(totaisGlobais)} />
 
         {/* Filters */}
         <div className="structure-filters">

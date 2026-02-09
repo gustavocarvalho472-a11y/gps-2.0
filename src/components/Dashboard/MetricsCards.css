@@ -1,0 +1,261 @@
+/**
+ * GPS 2.0 - Metrics Cards Styles
+ * Dashboard-style KPI cards
+ */
+
+.metrics-cards {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.metrics-cards--compact {
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+/* Responsivo */
+@media (max-width: 1400px) {
+  .metrics-cards {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (max-width: 1200px) {
+  .metrics-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .metrics-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .metrics-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Card Base */
+.metric-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Compact variant */
+.metrics-cards--compact .metric-card {
+  padding: 16px;
+  gap: 12px;
+}
+
+/* Icon */
+.metric-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.metrics-cards--compact .metric-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+}
+
+.metric-card-icon svg {
+  color: white;
+}
+
+/* Content */
+.metric-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.metric-card-value {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--color-text-primary);
+}
+
+.metrics-cards--compact .metric-card-value {
+  font-size: 22px;
+}
+
+.metric-card-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.metrics-cards--compact .metric-card-label {
+  font-size: 12px;
+}
+
+/* Trend indicator */
+.metric-card-trend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 6px;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.metric-card-trend--up {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.metric-card-trend--down {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.metric-card-trend--neutral {
+  background: rgba(107, 114, 128, 0.1);
+  color: #6b7280;
+}
+
+/* Color Variants */
+
+/* Purple - BUs */
+.metric-card--purple .metric-card-icon {
+  background: linear-gradient(135deg, var(--color-primary-40) 0%, var(--color-primary-50) 100%);
+}
+
+.metric-card--purple::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary-40) 0%, var(--color-primary-30) 100%);
+}
+
+/* Blue - Domínios */
+.metric-card--blue .metric-card-icon {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+.metric-card--blue::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%);
+}
+
+/* Green - Jornadas */
+.metric-card--green .metric-card-icon {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.metric-card--green::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+}
+
+/* Orange - Macroprocessos */
+.metric-card--orange .metric-card-icon {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+.metric-card--orange::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
+}
+
+/* Red - Processos */
+.metric-card--red .metric-card-icon {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.metric-card--red::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ef4444 0%, #f87171 100%);
+}
+
+/* Subtle decorative background */
+.metric-card::after {
+  content: '';
+  position: absolute;
+  right: -20px;
+  bottom: -20px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  opacity: 0.03;
+  pointer-events: none;
+}
+
+.metric-card--purple::after {
+  background: var(--color-primary-40);
+}
+
+.metric-card--blue::after {
+  background: #3b82f6;
+}
+
+.metric-card--green::after {
+  background: #10b981;
+}
+
+.metric-card--orange::after {
+  background: #f59e0b;
+}
+
+.metric-card--red::after {
+  background: #ef4444;
+}
