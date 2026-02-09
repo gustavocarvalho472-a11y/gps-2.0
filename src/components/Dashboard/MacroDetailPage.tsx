@@ -6,6 +6,7 @@
 import { useState } from 'react';
 import { ArrowLeft, ChevronRight, Route, GitBranch, Building2, Users, MoreHorizontal, Eye, FileText, Search, Filter, Plus } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { MetricsCards, type MetricItem } from './MetricsCards';
 import { ProcessCard, type StatusType, type HierarchyItem, type ResponsavelInfo } from '../shared';
 import type { BusinessUnit, DominioCompleto, JornadaCompleta, MacroprocessoCompleto, Processo } from '../../types';
 import './EntityDetailPage.css';
@@ -29,6 +30,15 @@ export function MacroDetailPage({ bu, dominio, jornada, macro, onBack, onSelectP
 
   // Mock de VP (pode vir do backend)
   const vpNome = '(VPTECH) EQUIPE PÓS E OPM';
+
+  // Contar processos por status
+  const processosAtualizados = macro.processos.filter(p => p.status === 'ativo').length;
+  const processosDesatualizados = macro.processos.filter(p => p.status !== 'ativo').length;
+
+  // Métricas do Macroprocesso para os cards de big numbers
+  const macroMetrics: MetricItem[] = [
+    { id: 'processos', label: 'Processos', value: macro.totalProcessos, icon: 'processo' },
+  ];
 
   // Filtrar processos
   const filteredProcessos = macro.processos.filter(processo => {
@@ -92,6 +102,9 @@ export function MacroDetailPage({ bu, dominio, jornada, macro, onBack, onSelectP
           <span className="entity-breadcrumb-current">{macro.nome}</span>
         </nav>
       </header>
+
+      {/* Metrics Cards - Big Numbers */}
+      <MetricsCards metrics={macroMetrics} />
 
       {/* Card Principal */}
       <div className="entity-card">

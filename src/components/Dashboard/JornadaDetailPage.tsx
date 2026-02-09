@@ -6,6 +6,7 @@
 import { useState } from 'react';
 import { ArrowLeft, ChevronRight, Route, Building2, Users, MoreHorizontal, Eye, Boxes, Search, Filter, Plus } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { MetricsCards, type MetricItem } from './MetricsCards';
 import { ProcessCard, type StatusType, type HierarchyItem, type ResponsavelInfo } from '../shared';
 import type { BusinessUnit, DominioCompleto, JornadaCompleta, MacroprocessoCompleto } from '../../types';
 import './EntityDetailPage.css';
@@ -28,6 +29,12 @@ export function JornadaDetailPage({ bu, dominio, jornada, onBack, onSelectMacro 
 
   // Mock de VP (pode vir do backend)
   const vpNome = '(VPTECH) EQUIPE PÓS E OPM';
+
+  // Métricas da Jornada para os cards de big numbers
+  const jornadaMetrics: MetricItem[] = [
+    { id: 'macros', label: 'Macroprocessos', value: jornada.totalMacroprocessos, icon: 'macro' },
+    { id: 'processos', label: 'Processos', value: jornada.totalProcessos, icon: 'processo' },
+  ];
 
   // Filtrar macroprocessos
   const filteredMacros = jornada.macroprocessos.filter(macro => {
@@ -76,6 +83,9 @@ export function JornadaDetailPage({ bu, dominio, jornada, onBack, onSelectMacro 
           <span className="entity-breadcrumb-current">{jornada.nome}</span>
         </nav>
       </header>
+
+      {/* Metrics Cards - Big Numbers */}
+      <MetricsCards metrics={jornadaMetrics} />
 
       {/* Card Principal */}
       <div className="entity-card">

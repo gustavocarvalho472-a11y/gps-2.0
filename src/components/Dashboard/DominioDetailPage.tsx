@@ -6,6 +6,7 @@
 import { useState } from 'react';
 import { ArrowLeft, ChevronRight, Building2, Users, MoreHorizontal, Eye, GitBranch, Search, Filter, Plus } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { MetricsCards, type MetricItem } from './MetricsCards';
 import { ProcessCard, type StatusType, type ResponsavelInfo } from '../shared';
 import type { BusinessUnit, DominioCompleto, JornadaCompleta } from '../../types';
 import './EntityDetailPage.css';
@@ -27,6 +28,13 @@ export function DominioDetailPage({ bu, dominio, onBack, onSelectJornada }: Domi
 
   // Mock de VP (pode vir do backend)
   const vpNome = '(VPTECH) EQUIPE PÓS E OPM';
+
+  // Métricas do Domínio para os cards de big numbers
+  const dominioMetrics: MetricItem[] = [
+    { id: 'jornadas', label: 'Jornadas', value: dominio.totalJornadas, icon: 'jornada' },
+    { id: 'macros', label: 'Macroprocessos', value: dominio.totalMacroprocessos, icon: 'macro' },
+    { id: 'processos', label: 'Processos', value: dominio.totalProcessos, icon: 'processo' },
+  ];
 
   // Filtrar jornadas
   const filteredJornadas = dominio.jornadas.filter(jornada => {
@@ -70,6 +78,9 @@ export function DominioDetailPage({ bu, dominio, onBack, onSelectJornada }: Domi
           <span className="entity-breadcrumb-current">{dominio.nome}</span>
         </nav>
       </header>
+
+      {/* Metrics Cards - Big Numbers */}
+      <MetricsCards metrics={dominioMetrics} />
 
       {/* Card Principal */}
       <div className="entity-card">

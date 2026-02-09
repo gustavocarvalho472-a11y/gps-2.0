@@ -6,6 +6,7 @@
 import { useState } from 'react';
 import { ArrowLeft, ChevronRight, Users, MoreHorizontal, Eye, Layers, Search, Filter, Plus } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { MetricsCards, type MetricItem } from './MetricsCards';
 import type { BusinessUnit, DominioCompleto } from '../../types';
 import type { StatusType } from '../shared';
 import './EntityDetailPage.css';
@@ -75,6 +76,14 @@ export function BUDetailPage({ bu, onBack, onSelectDominio }: BUDetailPageProps)
   // Determinar status da BU (mock - pode vir do backend)
   const buStatus: StatusType = 'atualizado';
 
+  // Métricas da BU para os cards de big numbers
+  const buMetrics: MetricItem[] = [
+    { id: 'dominios', label: 'Domínios', value: bu.totalDominios, icon: 'dominio' },
+    { id: 'jornadas', label: 'Jornadas', value: bu.totalJornadas, icon: 'jornada' },
+    { id: 'macros', label: 'Macroprocessos', value: bu.totalMacroprocessos, icon: 'macro' },
+    { id: 'processos', label: 'Processos', value: bu.totalProcessos, icon: 'processo' },
+  ];
+
   // Mock de VP (pode vir do backend)
   const vpNome = '(VPTECH) EQUIPE PÓS E OPM';
 
@@ -99,6 +108,9 @@ export function BUDetailPage({ bu, onBack, onSelectDominio }: BUDetailPageProps)
           <span className="entity-breadcrumb-current">{bu.nome}</span>
         </nav>
       </header>
+
+      {/* Metrics Cards - Big Numbers */}
+      <MetricsCards metrics={buMetrics} />
 
       {/* Card Principal */}
       <div className="entity-card">
