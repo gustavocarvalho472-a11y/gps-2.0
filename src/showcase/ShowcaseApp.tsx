@@ -11,6 +11,7 @@ import { BUDetailPage } from '../components/Dashboard/BUDetailPage';
 import { DominioDetailPage } from '../components/Dashboard/DominioDetailPage';
 import { JornadaDetailPage } from '../components/Dashboard/JornadaDetailPage';
 import { MacroDetailPage } from '../components/Dashboard/MacroDetailPage';
+import { ProcessoPage } from '../components/Cadastros/ProcessoPage';
 import { PlaceholderPage } from '../components/PlaceholderPage';
 
 const initialFilters: FilterState = {
@@ -29,6 +30,7 @@ interface DrillDownState {
   dominio: DominioCompleto | null;
   jornada: JornadaCompleta | null;
   macro: MacroprocessoCompleto | null;
+  processo: Processo | null;
 }
 
 export function ShowcaseApp() {
@@ -41,6 +43,7 @@ export function ShowcaseApp() {
     dominio: null,
     jornada: null,
     macro: null,
+    processo: null,
   });
 
   const handlePageChange = (page: PageType) => {
@@ -48,7 +51,7 @@ export function ShowcaseApp() {
   };
 
   const handleSelectBU = (bu: BusinessUnit) => {
-    setDrillDown({ bu, dominio: null, jornada: null, macro: null });
+    setDrillDown({ bu, dominio: null, jornada: null, macro: null, processo: null });
     setActivePage('bu-detail');
   };
 
@@ -57,7 +60,8 @@ export function ShowcaseApp() {
       bu: bu || prev.bu,
       dominio,
       jornada: null,
-      macro: null
+      macro: null,
+      processo: null
     }));
     setActivePage('dominio-detail');
   };
@@ -67,7 +71,8 @@ export function ShowcaseApp() {
       bu: bu || prev.bu,
       dominio: dominio || prev.dominio,
       jornada,
-      macro: null
+      macro: null,
+      processo: null
     }));
     setActivePage('jornada-detail');
   };
@@ -77,33 +82,40 @@ export function ShowcaseApp() {
       bu: bu || prev.bu,
       dominio: dominio || prev.dominio,
       jornada: jornada || prev.jornada,
-      macro
+      macro,
+      processo: null
     }));
     setActivePage('macro-detail');
   };
 
   const handleBackToStructure = () => {
-    setDrillDown({ bu: null, dominio: null, jornada: null, macro: null });
+    setDrillDown({ bu: null, dominio: null, jornada: null, macro: null, processo: null });
     setActivePage('estrutura');
   };
 
   const handleBackToBU = () => {
-    setDrillDown(prev => ({ ...prev, dominio: null, jornada: null, macro: null }));
+    setDrillDown(prev => ({ ...prev, dominio: null, jornada: null, macro: null, processo: null }));
     setActivePage('bu-detail');
   };
 
   const handleBackToDominio = () => {
-    setDrillDown(prev => ({ ...prev, jornada: null, macro: null }));
+    setDrillDown(prev => ({ ...prev, jornada: null, macro: null, processo: null }));
     setActivePage('dominio-detail');
   };
 
   const handleBackToJornada = () => {
-    setDrillDown(prev => ({ ...prev, macro: null }));
+    setDrillDown(prev => ({ ...prev, macro: null, processo: null }));
     setActivePage('jornada-detail');
   };
 
+  const handleBackToMacro = () => {
+    setDrillDown(prev => ({ ...prev, processo: null }));
+    setActivePage('macro-detail');
+  };
+
   const handleSelectProcesso = (processo: Processo) => {
-    alert(`Processo: ${processo.nome}\n(Modal seria aberto aqui)`);
+    setDrillDown(prev => ({ ...prev, processo }));
+    setActivePage('processo-detail');
   };
 
   const renderContent = () => {
@@ -179,6 +191,22 @@ export function ShowcaseApp() {
             macro={drillDown.macro}
             onBack={handleBackToJornada}
             onSelectProcesso={handleSelectProcesso}
+          />
+        ) : (
+          <StructureView
+            onSelectBU={handleSelectBU}
+            onSelectDominio={handleSelectDominio}
+            onSelectJornada={handleSelectJornada}
+            onSelectMacro={handleSelectMacro}
+            onSelectProcesso={handleSelectProcesso}
+          />
+        );
+
+      case 'processo-detail':
+        return drillDown.processo ? (
+          <ProcessoPage
+            processo={drillDown.processo}
+            onBack={handleBackToMacro}
           />
         ) : (
           <StructureView
