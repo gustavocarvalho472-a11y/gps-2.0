@@ -10,10 +10,12 @@
   gap: 24px;
   min-height: 100%;
   width: 100%;
+  max-width: 100%;
   background: #F6F6F6;
   padding: 24px;
   box-sizing: border-box;
   animation: entityPageEnter 0.3s ease-out;
+  overflow-x: hidden;
 }
 
 @keyframes entityPageEnter {
@@ -78,6 +80,85 @@
 .entity-breadcrumb-current {
   font-weight: 500;
   color: #282733;
+}
+
+/* ===== Context Header (BU context) ===== */
+.entity-context {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: white;
+  border: 1px solid #EFEFF2;
+  border-radius: 8px;
+}
+
+.entity-context-icon {
+  color: var(--color-primary-40);
+}
+
+.entity-context-label {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #64627F;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.entity-context-value {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #282733;
+}
+
+/* ===== Hero Section (H1) ===== */
+.entity-hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px;
+  background: white;
+  border: 1px solid #EFEFF2;
+  border-radius: 12px;
+}
+
+.entity-hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.entity-hero-type {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-primary-40);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.entity-hero-title {
+  font-family: 'Axiforma', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #282733;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.entity-hero-code {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  color: #64627F;
+}
+
+.entity-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 /* ===== Main Card ===== */
@@ -401,6 +482,9 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  min-width: 0;
+  max-width: 100%;
+  /* overflow visible para permitir scroll horizontal em filhos */
 }
 
 .entity-children-header {
@@ -470,7 +554,16 @@
 .entity-toolbar {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.entity-toolbar-left {
+  display: flex;
+  align-items: center;
   gap: 10px;
+  flex: 1;
 }
 
 .entity-search {
@@ -575,6 +668,8 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  min-width: 0;
+  max-width: 100%;
 }
 
 /* Empty state */

@@ -1,0 +1,729 @@
+/**
+ * GPS 2.0 - SIPOC Views Styles
+ * Visualizações SIPOC: Matriz, Detalhe, Conexões
+ */
+
+/* ========================================
+   SIPOC MODE TOGGLE
+   ======================================== */
+
+.sipoc-mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  background: #F4F4F6;
+  border-radius: 10px;
+}
+
+.sipoc-mode-btn {
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #838199;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sipoc-mode-btn:hover {
+  color: #5C5B6B;
+}
+
+.sipoc-mode-btn--active {
+  background: #FFFFFF;
+  color: #3C3B4C;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================
+   SIPOC VIEW CONTAINER
+   ======================================== */
+
+.sipoc-view {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.sipoc-view-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.sipoc-view-content {
+  width: 100%;
+}
+
+/* ========================================
+   SIPOC MATRIZ VIEW
+   ======================================== */
+
+.sipoc-matriz {
+  width: 100%;
+  background: #FFFFFF;
+  border-radius: 12px;
+  border: 1px solid #EEEEF0;
+  overflow: hidden;
+}
+
+.sipoc-matriz-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.sipoc-matriz-table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: collapse;
+}
+
+.sipoc-matriz-th {
+  padding: 14px 16px;
+  text-align: left;
+  background: #FAFAFA;
+  border-bottom: 1px solid #EEEEF0;
+  border-top: 4px solid transparent;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #5C5B6B;
+}
+
+.sipoc-matriz-th--processo {
+  min-width: 200px;
+  border-top-color: #9755FE;
+}
+
+.sipoc-matriz-th-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.sipoc-matriz-row {
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.sipoc-matriz-row:hover {
+  background: #FAFAFA;
+}
+
+.sipoc-matriz-row--hover {
+  background: #F8F8FA !important;
+}
+
+.sipoc-matriz-td {
+  padding: 16px;
+  border-bottom: 1px solid #EEEEF0;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 13px;
+  color: #3C3B4C;
+  vertical-align: top;
+  transition: background 0.15s ease;
+}
+
+.sipoc-matriz-td--processo {
+  background: #FAFAFA;
+  border-right: 1px solid #EEEEF0;
+}
+
+.sipoc-matriz-processo-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sipoc-matriz-processo-codigo {
+  font-size: 11px;
+  font-weight: 600;
+  color: #9755FE;
+  text-transform: uppercase;
+}
+
+.sipoc-matriz-processo-nome {
+  font-size: 14px;
+  font-weight: 600;
+  color: #3C3B4C;
+}
+
+.sipoc-matriz-processo-dono {
+  font-size: 12px;
+  color: #838199;
+}
+
+.sipoc-matriz-td--steps {
+  padding: 12px 16px;
+}
+
+.sipoc-matriz-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sipoc-matriz-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.sipoc-matriz-step-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: #3B82F6;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ========================================
+   SIPOC DETALHE VIEW
+   ======================================== */
+
+.sipoc-detalhe {
+  display: flex;
+  gap: 24px;
+  min-height: 500px;
+}
+
+/* Sidebar */
+.sipoc-detalhe-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background: #FFFFFF;
+  border: 1px solid #EEEEF0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.sipoc-detalhe-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid #EEEEF0;
+}
+
+.sipoc-detalhe-sidebar-title {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #3C3B4C;
+}
+
+.sipoc-detalhe-sidebar-count {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #838199;
+  padding: 2px 8px;
+  background: #F4F4F6;
+  border-radius: 100px;
+}
+
+.sipoc-detalhe-sidebar-list {
+  display: flex;
+  flex-direction: column;
+  max-height: 450px;
+  overflow-y: auto;
+}
+
+.sipoc-detalhe-sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border-bottom: 1px solid #F4F4F6;
+}
+
+.sipoc-detalhe-sidebar-item:hover {
+  background: #FAFAFA;
+}
+
+.sipoc-detalhe-sidebar-item--active {
+  background: #F8F4FF;
+  border-left: 3px solid #9755FE;
+}
+
+.sipoc-detalhe-sidebar-item-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: #F4F4F6;
+  color: #5C5B6B;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.sipoc-detalhe-sidebar-item--active .sipoc-detalhe-sidebar-item-num {
+  background: #9755FE;
+  color: white;
+}
+
+.sipoc-detalhe-sidebar-item-nome {
+  flex: 1;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #3C3B4C;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sipoc-detalhe-sidebar-item svg {
+  color: #9755FE;
+  flex-shrink: 0;
+}
+
+/* Main Content */
+.sipoc-detalhe-main {
+  flex: 1;
+  background: #FFFFFF;
+  border: 1px solid #EEEEF0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.sipoc-detalhe-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #EEEEF0;
+  background: #FAFAFA;
+}
+
+.sipoc-detalhe-header-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sipoc-detalhe-header-codigo {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: #9755FE;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sipoc-detalhe-header-nome {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #3C3B4C;
+  margin: 0;
+}
+
+.sipoc-detalhe-header-responsavel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.sipoc-detalhe-header-avatar {
+  width: 36px;
+  height: 36px;
+}
+
+.sipoc-detalhe-header-responsavel-nome {
+  display: block;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #3C3B4C;
+}
+
+.sipoc-detalhe-header-responsavel-cargo {
+  display: block;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  color: #838199;
+}
+
+.sipoc-detalhe-header-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.sipoc-detalhe-header-meta-item {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 13px;
+  color: #5C5B6B;
+}
+
+.sipoc-detalhe-header-meta-item strong {
+  color: #3C3B4C;
+}
+
+.sipoc-detalhe-header-status {
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.sipoc-detalhe-header-status--ativo {
+  background: #DCFCE7;
+  color: #16A34A;
+}
+
+.sipoc-detalhe-header-status--em_revisao {
+  background: #FEF3C7;
+  color: #D97706;
+}
+
+.sipoc-detalhe-header-status--inativo {
+  background: #FEE2E2;
+  color: #DC2626;
+}
+
+/* SIPOC Blocks */
+.sipoc-detalhe-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+}
+
+.sipoc-detalhe-block {
+  background: #FFFFFF;
+  border: 1px solid #EEEEF0;
+  border-left-width: 4px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.sipoc-detalhe-block-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.sipoc-detalhe-block-content {
+  padding: 16px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  color: #3C3B4C;
+  line-height: 1.5;
+}
+
+/* Timeline for Process Steps */
+.sipoc-detalhe-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.sipoc-detalhe-timeline-item {
+  display: flex;
+  gap: 16px;
+  position: relative;
+}
+
+.sipoc-detalhe-timeline-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sipoc-detalhe-timeline-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: #3B82F6;
+  color: white;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 50%;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.sipoc-detalhe-timeline-line {
+  width: 2px;
+  flex: 1;
+  min-height: 20px;
+  background: #E0E7FF;
+  margin: 4px 0;
+}
+
+.sipoc-detalhe-timeline-text {
+  flex: 1;
+  padding: 4px 0 20px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  color: #3C3B4C;
+  line-height: 1.5;
+}
+
+.sipoc-detalhe-timeline-item:last-child .sipoc-detalhe-timeline-text {
+  padding-bottom: 0;
+}
+
+/* Arrow between blocks */
+.sipoc-detalhe-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #D0D0D8;
+}
+
+/* Empty state */
+.sipoc-detalhe-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  color: #838199;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+}
+
+/* ========================================
+   SIPOC CONEXOES VIEW
+   ======================================== */
+
+.sipoc-conexoes {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.sipoc-conexoes-chain {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.sipoc-conexoes-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Process Strip */
+.sipoc-conexoes-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.5fr 1fr 1fr;
+  gap: 0;
+  width: 100%;
+  background: #FFFFFF;
+  border: 1px solid #EEEEF0;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sipoc-conexoes-strip:hover {
+  border-color: #D0D0D8;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.sipoc-conexoes-strip--hover {
+  border-color: #9755FE;
+  box-shadow: 0 4px 16px rgba(151, 85, 254, 0.15);
+  transform: scale(1.01);
+}
+
+.sipoc-conexoes-strip--neighbor {
+  border-color: #C4B5FD;
+  background: #FAFAFA;
+}
+
+.sipoc-conexoes-strip-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+  border-right: 1px solid #EEEEF0;
+}
+
+.sipoc-conexoes-strip-col:last-child {
+  border-right: none;
+}
+
+.sipoc-conexoes-strip-label {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sipoc-conexoes-strip-value {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  color: #3C3B4C;
+  line-height: 1.4;
+}
+
+.sipoc-conexoes-strip-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 16px;
+  background: #F8F8FA;
+  border-right: 1px solid #EEEEF0;
+}
+
+.sipoc-conexoes-strip-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  background: #9755FE;
+  color: white;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 100px;
+}
+
+.sipoc-conexoes-strip-nome {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #3C3B4C;
+  text-align: center;
+}
+
+/* Connection Pill */
+.sipoc-conexoes-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #F4F4F6;
+  border-radius: 100px;
+  margin: 12px 0;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #5C5B6B;
+}
+
+.sipoc-conexoes-pill svg {
+  color: #9755FE;
+}
+
+/* Summary Cards */
+.sipoc-conexoes-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.sipoc-conexoes-summary-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: #FFFFFF;
+  border: 1px solid #EEEEF0;
+  border-radius: 12px;
+}
+
+.sipoc-conexoes-summary-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sipoc-conexoes-summary-value {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #3C3B4C;
+}
+
+.sipoc-conexoes-summary-label {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  color: #838199;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 1024px) {
+  .sipoc-conexoes-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sipoc-conexoes-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .sipoc-conexoes-strip-col {
+    border-right: none;
+    border-bottom: 1px solid #EEEEF0;
+  }
+
+  .sipoc-conexoes-strip-center {
+    border-right: none;
+    border-bottom: 1px solid #EEEEF0;
+  }
+}
+
+@media (max-width: 768px) {
+  .sipoc-detalhe {
+    flex-direction: column;
+  }
+
+  .sipoc-detalhe-sidebar {
+    width: 100%;
+  }
+
+  .sipoc-detalhe-sidebar-list {
+    max-height: 200px;
+  }
+
+  .sipoc-conexoes-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .sipoc-matriz-table {
+    min-width: 700px;
+  }
+}

@@ -1,0 +1,1309 @@
+/**
+ * GPS 2.0 - Organogram View Styles
+ * Visualização hierárquica em TELA CHEIA com zoom e pan
+ * Cards com Nome, Cargo/Área, Artefato e Métricas
+ */
+
+/* ========================================
+   PREVIEW CARD (Non-fullscreen mode)
+   ======================================== */
+
+.organogram-preview {
+  width: 100%;
+  padding: 20px;
+}
+
+.organogram-preview-card {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 32px 40px;
+  background: linear-gradient(135deg, #FFFFFF 0%, #FAFAFA 100%);
+  border: 1px solid #EEEEF0;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.organogram-preview-card:hover {
+  border-color: #9755FE;
+  box-shadow: 0 8px 32px rgba(151, 85, 254, 0.15);
+  transform: translateY(-2px);
+}
+
+.organogram-preview-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #F8F4FF 0%, #EDE9FE 100%);
+  border-radius: 16px;
+  color: #9755FE;
+  flex-shrink: 0;
+}
+
+.organogram-preview-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.organogram-preview-title {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #3C3B4C;
+  margin: 0 0 8px 0;
+}
+
+.organogram-preview-description {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 14px;
+  color: #838199;
+  margin: 0 0 12px 0;
+  line-height: 1.5;
+}
+
+.organogram-preview-stats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #9755FE;
+}
+
+.organogram-preview-expand {
+  color: #838199;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.organogram-preview-card:hover .organogram-preview-expand {
+  color: #9755FE;
+  transform: scale(1.1);
+}
+
+/* ========================================
+   FULLSCREEN CONTAINER
+   ======================================== */
+
+.organogram-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #F5F5F7;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  animation: fadeInFullscreen 0.3s ease;
+}
+
+@keyframes fadeInFullscreen {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ========================================
+   FULLSCREEN HEADER
+   ======================================== */
+
+.organogram-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  background: #FFFFFF;
+  border-bottom: 1px solid #EEEEF0;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.organogram-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.organogram-header-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 0 40px;
+}
+
+.organogram-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.organogram-header-divider {
+  width: 1px;
+  height: 24px;
+  background: #EEEEF0;
+  margin: 0 8px;
+}
+
+.organogram-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 1px solid #EEEEF0;
+  background: #FFFFFF;
+  border-radius: 8px;
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #5C5B6B;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.organogram-back-btn:hover {
+  background: #F8F4FF;
+  border-color: #9755FE;
+  color: #9755FE;
+}
+
+.organogram-title {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #3C3B4C;
+  margin: 0;
+}
+
+.organogram-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 16px;
+  background: #F5F5F7;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.organogram-search:focus-within {
+  background: #FFFFFF;
+  border-color: #9755FE;
+  box-shadow: 0 0 0 3px rgba(151, 85, 254, 0.1);
+}
+
+.organogram-search svg {
+  color: #838199;
+  flex-shrink: 0;
+}
+
+.organogram-search input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 14px;
+  color: #3C3B4C;
+  outline: none;
+}
+
+.organogram-search input::placeholder {
+  color: #A8A8B3;
+}
+
+.organogram-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid #EEEEF0;
+  background: #FFFFFF;
+  color: #5C5B6B;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.organogram-action-btn:hover {
+  background: #F8F4FF;
+  border-color: #9755FE;
+  color: #9755FE;
+}
+
+.organogram-close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  background: #FEE2E2;
+  color: #EF4444;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.organogram-close-btn:hover {
+  background: #FECACA;
+}
+
+/* Layout Toggle in Header */
+.organogram-header .organogram-layout-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.organogram-header .organogram-layout-label {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 12px;
+  color: #838199;
+}
+
+.organogram-header .organogram-layout-switch {
+  display: flex;
+  align-items: center;
+  background: #F0F0F2;
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.organogram-header .organogram-layout-btn {
+  padding: 6px 12px;
+  border: none;
+  background: transparent;
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 12px;
+  color: #838199;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.organogram-header .organogram-layout-btn--active {
+  background: #FFFFFF;
+  color: #3C3B4C;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================
+   LEGEND BAR
+   ======================================== */
+
+.organogram-legend-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  background: #FFFFFF;
+  border-bottom: 1px solid #EEEEF0;
+  flex-shrink: 0;
+}
+
+.organogram-legend-items {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.organogram-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: #5C5B6B;
+}
+
+.organogram-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* ========================================
+   CANVAS (Fullscreen)
+   ======================================== */
+
+.organogram-fullscreen .organogram-canvas {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  cursor: grab;
+  background:
+    radial-gradient(circle, #E0E0E5 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-color: #F5F5F7;
+}
+
+.organogram-fullscreen .organogram-canvas--dragging {
+  cursor: grabbing;
+}
+
+.organogram-fullscreen .organogram-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  justify-content: center;
+  padding: 100px;
+  transform-origin: center center;
+  min-width: max-content;
+}
+
+/* ========================================
+   ZOOM CONTROLS (Fullscreen)
+   ======================================== */
+
+.organogram-fullscreen .organogram-zoom-controls {
+  position: fixed;
+  bottom: 80px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #FFFFFF;
+  padding: 8px 12px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+}
+
+.organogram-fullscreen .organogram-zoom-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  background: #FFFFFF;
+  color: #5C5B6B;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.organogram-fullscreen .organogram-zoom-btn:hover {
+  background: #F8F4FF;
+  color: #9755FE;
+}
+
+.organogram-fullscreen .organogram-zoom-divider {
+  width: 1px;
+  height: 24px;
+  background: #EEEEF0;
+  margin: 0 6px;
+}
+
+.organogram-fullscreen .organogram-zoom-level {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #3C3B4C;
+  min-width: 48px;
+  text-align: center;
+}
+
+/* ========================================
+   HELP TEXT
+   ======================================== */
+
+.organogram-help {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  background: rgba(60, 59, 76, 0.9);
+  color: #FFFFFF;
+  border-radius: 100px;
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 12px;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+
+.organogram-help span {
+  opacity: 0.9;
+}
+
+/* ========================================
+   EMPTY STATE
+   ======================================== */
+
+.organogram-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  color: #838199;
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 16px;
+}
+
+/* ========================================
+   ORG TREE STRUCTURE
+   ======================================== */
+
+.org-tree {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.org-tree--vertical {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.org-tree-root {
+  display: flex;
+  justify-content: center;
+}
+
+.org-tree--vertical .org-tree-root {
+  flex-direction: column;
+}
+
+/* Tree Children Container */
+.org-tree-children {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 0;
+  position: relative;
+  padding-top: 24px;
+}
+
+.org-tree-children--vertical {
+  flex-direction: column;
+  padding-top: 0;
+  padding-left: 24px;
+  margin-top: 0;
+}
+
+.org-tree-children--root {
+  padding-top: 32px;
+}
+
+.org-tree-children--root::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 32px;
+  background: #D0D0D8;
+  transform: translateX(-50%);
+}
+
+.org-tree-children--vertical.org-tree-children--root::before {
+  top: 50%;
+  left: 0;
+  width: 24px;
+  height: 2px;
+  transform: translateY(-50%);
+}
+
+/* Tree Node */
+.org-tree-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.org-tree-node--vertical {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.org-tree-connector {
+  width: 2px;
+  height: 24px;
+  background: #D0D0D8;
+}
+
+.org-tree-node--vertical .org-tree-connector {
+  width: 24px;
+  height: 2px;
+  margin-top: 30px;
+}
+
+.org-tree-branch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.org-tree-node--vertical .org-tree-branch {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+/* Horizontal connector for siblings */
+.org-tree-children > .org-tree-node:not(:only-child)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  height: 2px;
+  background: #D0D0D8;
+}
+
+.org-tree-children--vertical > .org-tree-node::before {
+  display: none;
+}
+
+.org-tree-children > .org-tree-node:first-child:not(:only-child)::before {
+  left: 50%;
+  right: -4px;
+}
+
+.org-tree-children > .org-tree-node:last-child:not(:only-child)::before {
+  left: -4px;
+  right: 50%;
+}
+
+.org-tree-children > .org-tree-node:not(:first-child):not(:last-child)::before {
+  left: -4px;
+  right: -4px;
+}
+
+/* ========================================
+   ORG CARD - NOVO DESIGN
+   Cards com Nome, Cargo, Artefato e Métricas
+   ======================================== */
+
+.org-card {
+  display: flex;
+  align-items: stretch;
+  background: #FFFFFF;
+  border: 1px solid #EEEEF0;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  transition: all 0.2s ease;
+  min-width: 220px;
+  max-width: 280px;
+}
+
+.org-card:hover {
+  border-color: #D0D0D8;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.org-card--ceo {
+  border-left: 4px solid #7C3AED;
+  min-width: 240px;
+}
+
+.org-card--vp {
+  border-left: 4px solid #7C3AED;
+}
+
+.org-card--bu {
+  border-left: 4px solid #9755FE;
+}
+
+.org-card--dominio {
+  border-left: 4px solid #0EA5E9;
+}
+
+.org-card--jornada {
+  border-left: 4px solid #22C55E;
+}
+
+.org-card--macro {
+  border-left: 4px solid #F59E0B;
+}
+
+.org-card--processo {
+  border-left: 4px solid #EC4899;
+}
+
+.org-card-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  flex: 1;
+  text-align: left;
+  min-width: 0;
+}
+
+.org-card-content:hover {
+  background: #FAFAFA;
+}
+
+.org-card-avatar {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.org-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.org-card-type-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.org-card-type {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.org-card-name {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #3C3B4C;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.org-card-cargo {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: #838199;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.org-card-artefato {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 10px;
+  color: #5C5B6B;
+  line-height: 1.4;
+  margin-top: 2px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.org-card-metrics {
+  color: #838199;
+}
+
+.org-card-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  padding: 0;
+  border: none;
+  border-left: 1px solid #EEEEF0;
+  background: #FAFAFA;
+  color: #838199;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.org-card-toggle:hover {
+  background: #F0F0F2;
+  color: #9755FE;
+}
+
+.org-card-toggle--expanded {
+  background: #F8F4FF;
+  color: #9755FE;
+}
+
+.org-card-toggle svg {
+  transition: transform 0.2s ease;
+}
+
+.org-card-toggle--expanded svg {
+  transform: rotate(180deg);
+}
+
+.org-tree--vertical .org-card-toggle--expanded svg {
+  transform: rotate(90deg);
+}
+
+/* ========================================
+   PROFILE MODAL - Modal de Perfil Detalhado
+   Similar ao Meu Portal da Cogna
+   ======================================== */
+
+.profile-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.profile-modal {
+  background: #FFFFFF;
+  border-radius: 16px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #EEEEF0;
+  border-left: 4px solid #9755FE;
+}
+
+.profile-modal-header-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile-modal-type {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.profile-modal-codigo {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: #838199;
+  padding: 3px 8px;
+  background: #F5F5F7;
+  border-radius: 4px;
+}
+
+.profile-modal-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile-modal-status {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 100px;
+}
+
+.profile-modal-status--ativo {
+  background: #DCFCE7;
+  color: #16A34A;
+}
+
+.profile-modal-status--inativo {
+  background: #FEE2E2;
+  color: #DC2626;
+}
+
+.profile-modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #838199;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.profile-modal-close:hover {
+  background: #F0F0F2;
+  color: #3C3B4C;
+}
+
+.profile-modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* Hero - Foto e Info */
+.profile-modal-hero {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.profile-modal-avatar {
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.profile-modal-person {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.profile-modal-name {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #3C3B4C;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.profile-modal-cargo {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #5C5B6B;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.profile-modal-matricula {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 12px;
+  color: #9755FE;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+/* Artefato Info */
+.profile-modal-artefato {
+  background: #F8F4FF;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  border: 1px solid #EDE9FE;
+}
+
+.profile-modal-artefato-header {
+  margin-bottom: 8px;
+}
+
+.profile-modal-artefato-label {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #9755FE;
+}
+
+.profile-modal-artefato-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.profile-modal-artefato-nome {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #3C3B4C;
+}
+
+.profile-modal-artefato-metrics {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 13px;
+  color: #5C5B6B;
+}
+
+/* Sections */
+.profile-modal-section {
+  margin-bottom: 16px;
+}
+
+.profile-modal-section--full {
+  background: #F5F5F7;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.profile-modal-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 14px;
+  color: #3C3B4C;
+}
+
+.profile-modal-row svg {
+  color: #838199;
+  flex-shrink: 0;
+}
+
+.profile-modal-row--block {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.profile-modal-row--block div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.profile-modal-row-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #838199;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.profile-modal-row-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: #3C3B4C;
+}
+
+/* Grid de Info */
+.profile-modal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.profile-modal-info-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px;
+  background: #FAFAFA;
+  border-radius: 10px;
+}
+
+.profile-modal-info-card--light {
+  background: #F5F5F7;
+}
+
+.profile-modal-info-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFFFFF;
+  border-radius: 8px;
+  color: #838199;
+  flex-shrink: 0;
+}
+
+.profile-modal-info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.profile-modal-info-label {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #838199;
+}
+
+.profile-modal-info-value {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #3C3B4C;
+}
+
+/* Birthday */
+.profile-modal-birthday {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #FEF3C7;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.profile-modal-birthday svg {
+  color: #F59E0B;
+}
+
+.profile-modal-birthday div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.profile-modal-birthday-label {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: #92400E;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.profile-modal-birthday-value {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #92400E;
+}
+
+/* Stats Grid */
+.profile-modal-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #EEEEF0;
+}
+
+.profile-modal-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 10px;
+  background: #FAFAFA;
+  border-radius: 10px;
+}
+
+.profile-modal-stat-value {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #3C3B4C;
+}
+
+.profile-modal-stat-label {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #838199;
+  text-align: center;
+}
+
+/* Footer */
+.profile-modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid #EEEEF0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.profile-modal-action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: none;
+  background: #9755FE;
+  color: #FFFFFF;
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.profile-modal-action:hover {
+  background: #7C3AED;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 1200px) {
+  .organogram-header-center {
+    padding: 0 20px;
+  }
+
+  .organogram-search {
+    max-width: 300px;
+  }
+
+  .org-card {
+    min-width: 200px;
+    max-width: 240px;
+  }
+
+  .org-card-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .org-card-name {
+    font-size: 12px;
+  }
+
+  .org-card-content {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .organogram-preview-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px;
+  }
+
+  .organogram-preview-stats {
+    justify-content: center;
+  }
+
+  .organogram-header {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+
+  .organogram-header-left {
+    flex: 1;
+  }
+
+  .organogram-header-center {
+    order: 3;
+    flex: 0 0 100%;
+    padding: 0;
+  }
+
+  .organogram-search {
+    max-width: 100%;
+  }
+
+  .organogram-header-right {
+    gap: 6px;
+  }
+
+  .organogram-header .organogram-layout-toggle {
+    display: none;
+  }
+
+  .organogram-title {
+    font-size: 16px;
+  }
+
+  .organogram-fullscreen .organogram-zoom-controls {
+    bottom: 70px;
+    right: 16px;
+    padding: 6px 10px;
+  }
+
+  .organogram-fullscreen .organogram-zoom-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .organogram-help {
+    font-size: 11px;
+    padding: 8px 16px;
+  }
+
+  .profile-modal {
+    margin: 16px;
+    max-height: calc(100vh - 32px);
+  }
+
+  .profile-modal-hero {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .profile-modal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-modal-avatar {
+    width: 80px;
+    height: 80px;
+  }
+}

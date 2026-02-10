@@ -1,0 +1,96 @@
+/**
+ * GPS 2.0 - Layout Switcher Styles
+ * Componente para alternar entre visualizações
+ * Estilo padronizado consistente com outras páginas
+ */
+
+.layout-switcher {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.layout-switcher-label {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #64627F;
+}
+
+/* Options Container */
+.layout-switcher-options {
+  display: flex;
+  background: white;
+  border: 1px solid #EFEFF2;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Individual Option Button */
+.layout-switcher-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: transparent;
+  border: none;
+  border-right: 1px solid #EFEFF2;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #64627F;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.layout-switcher-option:last-child {
+  border-right: none;
+}
+
+.layout-switcher-option:hover {
+  background: #F7F7F7;
+  color: #9755FE;
+}
+
+/* Active State */
+.layout-switcher-option--active {
+  background: #F5EDFF;
+  color: #9755FE;
+}
+
+.layout-switcher-option--active:hover {
+  background: #F5EDFF;
+}
+
+/* Focus State */
+.layout-switcher-option:focus-visible {
+  outline: 2px solid #9755FE;
+  outline-offset: -2px;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .layout-switcher {
+    flex-wrap: wrap;
+  }
+
+  .layout-switcher-options {
+    flex-wrap: wrap;
+  }
+
+  .layout-switcher-option {
+    flex: 1;
+    justify-content: center;
+    min-width: 80px;
+  }
+}
+
+@media (max-width: 400px) {
+  .layout-switcher-option span {
+    display: none;
+  }
+
+  .layout-switcher-option {
+    padding: 10px 14px;
+  }
+}

@@ -1,10 +1,10 @@
 /**
  * GPS 2.0 - Jornada Detail Page
- * Página de detalhe de Jornada seguindo novo design Figma
+ * Página de detalhe de Jornada com layout: BU context → H1 → Metrics Cards
  */
 
 import { useState } from 'react';
-import { ArrowLeft, ChevronRight, Route, Building2, Users, MoreHorizontal, Eye, Boxes, Search, Filter, Plus } from 'lucide-react';
+import { ArrowLeft, Building2, Route, Users, MoreHorizontal, Eye, Boxes, Search, Filter, Plus } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { MetricsCards, type MetricItem } from './MetricsCards';
 import { ProcessCard, type StatusType, type HierarchyItem, type ResponsavelInfo } from '../shared';
@@ -25,13 +25,15 @@ export function JornadaDetailPage({ bu, dominio, jornada, onBack, onSelectMacro 
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
 
   // Determinar status da jornada (mock - pode vir do backend)
-  const jornadaStatus: StatusType = 'desatualizado';
+  const jornadaStatus = 'desatualizado' as StatusType;
 
   // Mock de VP (pode vir do backend)
   const vpNome = '(VPTECH) EQUIPE PÓS E OPM';
 
-  // Métricas da Jornada para os cards de big numbers
-  const jornadaMetrics: MetricItem[] = [
+  // Métricas completas da hierarquia
+  const hierarchyMetrics: MetricItem[] = [
+    { id: 'dominio', label: 'Domínio', value: 1, icon: 'dominio' },
+    { id: 'jornada', label: 'Jornada', value: 1, icon: 'jornada' },
     { id: 'macros', label: 'Macroprocessos', value: jornada.totalMacroprocessos, icon: 'macro' },
     { id: 'processos', label: 'Processos', value: jornada.totalProcessos, icon: 'processo' },
   ];
@@ -70,43 +72,40 @@ export function JornadaDetailPage({ bu, dominio, jornada, onBack, onSelectMacro 
 
   return (
     <div className="entity-detail-page">
-      {/* Header com Breadcrumb */}
+      {/* Header com contexto da BU */}
       <header className="entity-header">
         <button className="entity-back-btn" onClick={onBack}>
           <ArrowLeft size={16} />
         </button>
-        <nav className="entity-breadcrumb">
-          <span>Cadastros</span>
-          <ChevronRight size={16} />
-          <span>Jornadas</span>
-          <ChevronRight size={16} />
-          <span className="entity-breadcrumb-current">{jornada.nome}</span>
-        </nav>
+        <div className="entity-context">
+          <Building2 size={16} className="entity-context-icon" />
+          <span className="entity-context-label">BU</span>
+          <span className="entity-context-value">{bu.nome}</span>
+        </div>
       </header>
 
-      {/* Metrics Cards - Big Numbers */}
-      <MetricsCards metrics={jornadaMetrics} />
-
-      {/* Card Principal */}
-      <div className="entity-card">
-        {/* Cabeçalho do Card */}
-        <div className="entity-card-header">
-          <div className="entity-card-info">
-            <span className="entity-card-type">Jornada</span>
-            <h1 className="entity-card-title">{jornada.nome}</h1>
-            <span className="entity-card-code">{jornada.codigo}</span>
-          </div>
-
-          <div className="entity-card-actions">
-            <span className={`entity-tag entity-tag--${jornadaStatus}`}>
-              {jornadaStatus === 'atualizado' ? 'Atualizado' : jornadaStatus === 'em_aprovacao' ? 'Em aprovação' : 'Desatualizado'}
-            </span>
-            <button className="entity-more-btn">
-              <MoreHorizontal size={18} />
-            </button>
-          </div>
+      {/* H1 - Título Principal */}
+      <div className="entity-hero">
+        <div className="entity-hero-content">
+          <span className="entity-hero-type">Jornada</span>
+          <h1 className="entity-hero-title">{jornada.nome}</h1>
+          <span className="entity-hero-code">{jornada.codigo}</span>
         </div>
+        <div className="entity-hero-actions">
+          <span className={`entity-tag entity-tag--${jornadaStatus}`}>
+            {jornadaStatus === 'atualizado' ? 'Atualizado' : jornadaStatus === 'em_aprovacao' ? 'Em aprovação' : 'Desatualizado'}
+          </span>
+          <button className="entity-more-btn">
+            <MoreHorizontal size={18} />
+          </button>
+        </div>
+      </div>
 
+      {/* Metrics Cards - Hierarquia completa */}
+      <MetricsCards metrics={hierarchyMetrics} />
+
+      {/* Card de Detalhes */}
+      <div className="entity-card">
         {/* Hierarquia */}
         <div className="entity-hierarchy">
           <div className="entity-hierarchy-item">

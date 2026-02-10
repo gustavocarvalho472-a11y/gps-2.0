@@ -1,15 +1,20 @@
 /**
  * GPS 2.0 - Processo List Page (Cadastros)
  * Página de listagem de processos seguindo design do Figma
+ * Toggle de views: Cards, Tabela
+ * (SIPOC está na página de detalhe do processo individual)
  */
 
 import { useState } from 'react';
 import {
   ChevronRight, ChevronLeft, ChevronsLeft, ChevronsRight,
-  Search, Filter, Plus
+  Search, Filter, Plus, LayoutGrid, List
 } from 'lucide-react';
 import { MetricCard, ProcessCard, type StatusType, type HierarchyItem, type ResponsavelInfo } from '../shared';
 import './ProcessoListPage.css';
+
+// View mode types
+type ProcessoViewMode = 'cards' | 'tabela';
 
 interface ProcessoItem {
   id: string;
@@ -108,7 +113,14 @@ export function ProcessoListPage({ onBack: _onBack, onAddNew, onSelectProcesso }
   const [statusFilter, setStatusFilter] = useState<string>('todos');
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [viewMode, setViewMode] = useState<ProcessoViewMode>('cards');
   const itemsPerPage = 5;
+
+  // View mode options
+  const viewModes = [
+    { id: 'cards' as ProcessoViewMode, label: 'Cards', icon: <LayoutGrid size={16} /> },
+    { id: 'tabela' as ProcessoViewMode, label: 'Tabela', icon: <List size={16} /> },
+  ];
 
   // Filtra os processos
   const filteredProcessos = mockProcessos.filter(processo => {
@@ -158,77 +170,140 @@ export function ProcessoListPage({ onBack: _onBack, onAddNew, onSelectProcesso }
         <MetricCard label="Processos em aprovação" value={emAprovacao} />
       </div>
 
-      {/* Search and Filter */}
+      {/* Toolbar: Search e Filter */}
       <div className="processo-list-toolbar">
-        <div className="processo-list-search">
-          <Search size={14} className="processo-list-search-icon" />
-          <input
-            type="text"
-            placeholder="Pesquisar nome ou código do processo"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="processo-list-search-input"
-          />
-        </div>
-        <div className="processo-list-filter-wrapper">
-          <button
-            className="processo-list-filter-btn"
-            onClick={() => setShowFilterDropdown(!showFilterDropdown)}
-          >
-            <span>Filtrar</span>
-            <Filter size={16} />
-          </button>
-          {showFilterDropdown && (
-            <div className="processo-list-filter-dropdown">
-              <button
-                className={`processo-filter-option ${statusFilter === 'todos' ? 'active' : ''}`}
-                onClick={() => { setStatusFilter('todos'); setShowFilterDropdown(false); }}
-              >
-                Todos
-              </button>
-              <button
-                className={`processo-filter-option ${statusFilter === 'atualizado' ? 'active' : ''}`}
-                onClick={() => { setStatusFilter('atualizado'); setShowFilterDropdown(false); }}
-              >
-                Atualizados
-              </button>
-              <button
-                className={`processo-filter-option ${statusFilter === 'desatualizado' ? 'active' : ''}`}
-                onClick={() => { setStatusFilter('desatualizado'); setShowFilterDropdown(false); }}
-              >
-                Desatualizados
-              </button>
-              <button
-                className={`processo-filter-option ${statusFilter === 'em_aprovacao' ? 'active' : ''}`}
-                onClick={() => { setStatusFilter('em_aprovacao'); setShowFilterDropdown(false); }}
-              >
-                Em aprovação
-              </button>
-            </div>
-          )}
+        <div className="processo-list-toolbar-left">
+          <div className="processo-list-search">
+            <Search size={14} className="processo-list-search-icon" />
+            <input
+              type="text"
+              placeholder="Pesquisar nome ou código do processo"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="processo-list-search-input"
+            />
+          </div>
+          <div className="processo-list-filter-wrapper">
+            <button
+              className="processo-list-filter-btn"
+              onClick={() => setShowFilterDropdown(!showFilterDropdown)}
+            >
+              <span>Filtrar</span>
+              <Filter size={16} />
+            </button>
+            {showFilterDropdown && (
+              <div className="processo-list-filter-dropdown">
+                <button
+                  className={`processo-filter-option ${statusFilter === 'todos' ? 'active' : ''}`}
+                  onClick={() => { setStatusFilter('todos'); setShowFilterDropdown(false); }}
+                >
+                  Todos
+                </button>
+                <button
+                  className={`processo-filter-option ${statusFilter === 'atualizado' ? 'active' : ''}`}
+                  onClick={() => { setStatusFilter('atualizado'); setShowFilterDropdown(false); }}
+                >
+                  Atualizados
+                </button>
+                <button
+                  className={`processo-filter-option ${statusFilter === 'desatualizado' ? 'active' : ''}`}
+                  onClick={() => { setStatusFilter('desatualizado'); setShowFilterDropdown(false); }}
+                >
+                  Desatualizados
+                </button>
+                <button
+                  className={`processo-filter-option ${statusFilter === 'em_aprovacao' ? 'active' : ''}`}
+                  onClick={() => { setStatusFilter('em_aprovacao'); setShowFilterDropdown(false); }}
+                >
+                  Em aprovação
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* List of Cards */}
-      <div className="processo-list-cards">
-        {paginatedProcessos.map(processo => (
-          <ProcessCard
-            key={processo.id}
-            codigo={processo.codigo}
-            nome={processo.nome}
-            status={processo.status}
-            criticidade={processo.criticidade}
-            showCriticidade={true}
-            dataCriacao={processo.dataCriacao}
-            dataAtualizacao={processo.dataAtualizacao}
-            hierarchy={getHierarchy(processo)}
-            responsavel={processo.responsavel}
-            onClick={() => onSelectProcesso?.(processo)}
-          />
-        ))}
+      {/* View Mode Toggle - linha separada */}
+      <div className="processo-list-view-toggle">
+        <span className="processo-list-view-label">Visualização</span>
+        <div className="processo-list-view-options">
+          {viewModes.map((mode) => (
+            <button
+              key={mode.id}
+              className={`processo-list-view-btn ${viewMode === mode.id ? 'processo-list-view-btn--active' : ''}`}
+              onClick={() => setViewMode(mode.id)}
+              title={mode.label}
+            >
+              {mode.icon}
+              <span>{mode.label}</span>
+            </button>
+          ))}
+        </div>
       </div>
 
-      {/* Pagination */}
+      {/* Content based on view mode */}
+      {viewMode === 'cards' && (
+        <>
+          <div className="processo-list-cards">
+            {paginatedProcessos.map(processo => (
+              <ProcessCard
+                key={processo.id}
+                codigo={processo.codigo}
+                nome={processo.nome}
+                status={processo.status}
+                criticidade={processo.criticidade}
+                showCriticidade={true}
+                dataCriacao={processo.dataCriacao}
+                dataAtualizacao={processo.dataAtualizacao}
+                hierarchy={getHierarchy(processo)}
+                responsavel={processo.responsavel}
+                onClick={() => onSelectProcesso?.(processo)}
+              />
+            ))}
+          </div>
+        </>
+      )}
+
+      {viewMode === 'tabela' && (
+        <div className="processo-list-table-wrapper">
+          <table className="processo-list-table">
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Nome</th>
+                <th>Status</th>
+                <th>Domínio</th>
+                <th>Jornada</th>
+                <th>Macroprocesso</th>
+                <th>Responsável</th>
+                <th>Atualização</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredProcessos.map(processo => (
+                <tr key={processo.id} onClick={() => onSelectProcesso?.(processo)}>
+                  <td className="processo-table-codigo">{processo.codigo}</td>
+                  <td className="processo-table-nome">{processo.nome}</td>
+                  <td>
+                    <span className={`processo-table-status processo-table-status--${processo.status}`}>
+                      {processo.status === 'atualizado' ? 'Atualizado' :
+                       processo.status === 'desatualizado' ? 'Desatualizado' : 'Em aprovação'}
+                    </span>
+                  </td>
+                  <td>{processo.dominio.nome}</td>
+                  <td>{processo.jornada.nome}</td>
+                  <td>{processo.macroprocesso.nome}</td>
+                  <td>{processo.responsavel.nome}</td>
+                  <td>{processo.dataAtualizacao}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* Pagination (only for cards view) */}
+      {viewMode === 'cards' && (
       <div className="processo-list-pagination">
         <button
           className="processo-pagination-nav"
@@ -272,6 +347,7 @@ export function ProcessoListPage({ onBack: _onBack, onAddNew, onSelectProcesso }
           <ChevronsRight size={20} />
         </button>
       </div>
+      )}
     </div>
   );
 }

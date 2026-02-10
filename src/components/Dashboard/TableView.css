@@ -1,0 +1,160 @@
+/**
+ * GPS 2.0 - Table View Styles
+ * Visualização em tabela das Business Units
+ * Tema claro seguindo o design system do GPS
+ */
+
+.table-view {
+  width: 100%;
+}
+
+.table-view-container {
+  background: #FFFFFF;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.05);
+}
+
+.table-view-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+/* Header */
+.table-view-table thead {
+  background: #FAFAFA;
+}
+
+.table-view-table th {
+  padding: 16px 20px;
+  text-align: left;
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #838199;
+  border-bottom: 1px solid #EEEEF0;
+}
+
+.table-view-table th:first-child {
+  padding-left: 24px;
+}
+
+.table-view-table th:last-child {
+  width: 48px;
+  padding-right: 24px;
+}
+
+/* Body Rows */
+.table-view-row {
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.table-view-row:hover {
+  background: #F8F8FA;
+}
+
+.table-view-row:not(:last-child) td {
+  border-bottom: 1px solid #EEEEF0;
+}
+
+.table-view-table td {
+  padding: 20px;
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 14px;
+  color: #5C5B6B;
+  vertical-align: middle;
+}
+
+.table-view-table td:first-child {
+  padding-left: 24px;
+}
+
+.table-view-table td:last-child {
+  padding-right: 24px;
+}
+
+/* Cell Variants */
+.table-view-cell-name {
+  width: 15%;
+}
+
+.table-view-bu-name {
+  font-weight: 600;
+  color: #3C3B4C;
+  font-size: 15px;
+}
+
+.table-view-cell-vp,
+.table-view-cell-responsavel {
+  width: 15%;
+}
+
+.table-view-cell-number {
+  width: 10%;
+  text-align: center;
+  font-weight: 500;
+  color: #3C3B4C;
+}
+
+.table-view-cell-processos {
+  color: #9755FE;
+  font-weight: 600;
+}
+
+.table-view-cell-status {
+  width: 12%;
+}
+
+.table-view-cell-action {
+  width: 48px;
+  text-align: right;
+}
+
+.table-view-chevron {
+  color: #838199;
+  opacity: 0;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.table-view-row:hover .table-view-chevron {
+  opacity: 1;
+  transform: translateX(2px);
+}
+
+/* Empty State */
+.table-view-empty {
+  padding: 48px 24px;
+  text-align: center;
+  color: #838199;
+  background: #FFFFFF;
+  border-radius: 16px;
+  box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .table-view-table th,
+  .table-view-table td {
+    padding: 14px 12px;
+    font-size: 13px;
+  }
+
+  .table-view-cell-vp,
+  .table-view-cell-responsavel {
+    width: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .table-view-container {
+    overflow-x: auto;
+  }
+
+  .table-view-table {
+    min-width: 700px;
+  }
+}

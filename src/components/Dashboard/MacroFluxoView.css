@@ -1,0 +1,649 @@
+/**
+ * GPS 2.0 - Macro Fluxo View Styles
+ * Visualização horizontal de fluxo de processos - Design Clean
+ */
+
+/* ===== View Toggle ===== */
+.macro-view-toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.macro-view-label {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #64627F;
+}
+
+.macro-view-options {
+  display: flex;
+  background: white;
+  border: 1px solid #EFEFF2;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.macro-view-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: transparent;
+  border: none;
+  border-right: 1px solid #EFEFF2;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #64627F;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.macro-view-btn:last-child {
+  border-right: none;
+}
+
+.macro-view-btn:hover {
+  background: #F7F7F7;
+  color: #9755FE;
+}
+
+.macro-view-btn--active {
+  background: #F5EDFF;
+  color: #9755FE;
+}
+
+.macro-view-btn--active:hover {
+  background: #F5EDFF;
+}
+
+/* ===== Toolbar Layout ===== */
+.entity-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+/* ===== Table View ===== */
+.macro-table-wrapper {
+  background: white;
+  border-radius: 12px;
+  overflow-x: auto;
+  box-shadow: 0px 2px 8px rgba(33, 37, 41, 0.06);
+  max-width: 100%;
+}
+
+.macro-table {
+  width: 100%;
+  min-width: 700px;
+  border-collapse: collapse;
+}
+
+.macro-table th {
+  padding: 14px 16px;
+  text-align: left;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #64627F;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: #F9F9FA;
+  border-bottom: 1px solid #EFEFF2;
+}
+
+.macro-table td {
+  padding: 16px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  color: #282733;
+  border-bottom: 1px solid #EFEFF2;
+}
+
+.macro-table tr:last-child td {
+  border-bottom: none;
+}
+
+.macro-table tbody tr {
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.macro-table tbody tr:hover {
+  background: #F9F9FA;
+}
+
+.macro-table-codigo {
+  font-weight: 600;
+  color: #9755FE;
+}
+
+.macro-table-nome {
+  font-weight: 500;
+}
+
+.macro-table-status {
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.macro-table-status--atualizado {
+  background: #E6F9F0;
+  color: #059669;
+}
+
+.macro-table-status--desatualizado {
+  background: #FEE2E2;
+  color: #DC2626;
+}
+
+.macro-table-complexidade {
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.macro-table-complexidade--alta {
+  background: #FEE2E2;
+  color: #DC2626;
+}
+
+.macro-table-complexidade--media {
+  background: #FEF3C7;
+  color: #D97706;
+}
+
+.macro-table-complexidade--baixa {
+  background: #E6F9F0;
+  color: #059669;
+}
+
+/* ===== FLUXO VIEW - HORIZONTAL CLEAN ===== */
+
+.macro-fluxo {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Header Simples */
+.macro-fluxo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #EFEFF2;
+}
+
+.macro-fluxo-header-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.macro-fluxo-title {
+  font-family: var(--font-family-primary, 'Axiforma'), sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #282733;
+  margin: 0;
+}
+
+.macro-fluxo-subtitle {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 13px;
+  color: #838199;
+  margin: 0;
+}
+
+.macro-fluxo-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: #F5EDFF;
+  color: #9755FE;
+  border-radius: 20px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* === Cadeia Horizontal === */
+.macro-fluxo-chain {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  overflow-x: auto;
+  padding: 24px 0 16px;
+  scrollbar-width: thin;
+  scrollbar-color: #D4D4D8 transparent;
+}
+
+.macro-fluxo-chain::-webkit-scrollbar {
+  height: 6px;
+}
+
+.macro-fluxo-chain::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.macro-fluxo-chain::-webkit-scrollbar-thumb {
+  background: #D4D4D8;
+  border-radius: 3px;
+}
+
+/* Wrapper do Step */
+.macro-fluxo-step {
+  display: flex;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+/* Wrapper para badge + card */
+.macro-fluxo-card-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Badge numérico */
+.macro-fluxo-card-badge {
+  position: absolute;
+  top: -12px;
+  left: -8px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #9755FE;
+  color: white;
+  border-radius: 50%;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  z-index: 1;
+  box-shadow: 0 2px 6px rgba(151, 85, 254, 0.3);
+}
+
+.macro-fluxo-card-badge--external {
+  background: #F59E0B;
+  box-shadow: 0 2px 6px rgba(245, 158, 11, 0.3);
+}
+
+/* Card do Processo - Com I/O */
+.macro-fluxo-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 220px;
+  padding: 16px;
+  background: white;
+  border: 1px solid #EFEFF2;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.macro-fluxo-card:hover {
+  background: #FAFAFA;
+  border-color: #D4B8FF;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(151, 85, 254, 0.15);
+}
+
+.macro-fluxo-card--external {
+  background: #FFFEFB;
+  border-color: #FDE68A;
+}
+
+.macro-fluxo-card--external:hover {
+  background: #FFFBEB;
+  border-color: #F59E0B;
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.15);
+}
+
+/* Card Header */
+.macro-fluxo-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.macro-fluxo-card-name {
+  font-family: var(--font-family-primary, 'Axiforma'), sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #282733;
+  margin: 0;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.macro-fluxo-card-owner-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.macro-fluxo-card-avatar {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F5EDFF;
+  color: #9755FE;
+  border-radius: 50%;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.macro-fluxo-card-avatar--external {
+  background: #FEF3C7;
+  color: #B45309;
+}
+
+.macro-fluxo-card-owner {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  color: #64627F;
+}
+
+/* Input/Output Section */
+.macro-fluxo-card-io {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.macro-fluxo-io-label {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  color: #2563EB;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.macro-fluxo-io-label--output {
+  color: #059669;
+}
+
+.macro-fluxo-io-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.macro-fluxo-io-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 11px;
+  color: #64627F;
+  line-height: 1.3;
+}
+
+.macro-fluxo-io-item::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2563EB;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.macro-fluxo-io-item--output::before {
+  background: #059669;
+}
+
+/* Connection tag para externos */
+.macro-fluxo-connection-tag {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: #F5EDFF;
+  border: 1px dashed #9755FE;
+  border-radius: 8px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 11px;
+}
+
+.macro-fluxo-connection-tag span {
+  color: #838199;
+}
+
+.macro-fluxo-connection-tag strong {
+  color: #9755FE;
+  font-weight: 600;
+}
+
+.macro-fluxo-connection-tag--alimenta {
+  background: #ECFDF5;
+  border-color: #059669;
+}
+
+.macro-fluxo-connection-tag--alimenta strong {
+  color: #059669;
+}
+
+.macro-fluxo-connection-tag--recebe {
+  background: #EEF2FF;
+  border-color: #6366F1;
+}
+
+.macro-fluxo-connection-tag--recebe strong {
+  color: #6366F1;
+}
+
+/* Status Badge */
+.macro-fluxo-card-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.macro-fluxo-card-status--atualizado {
+  background: #ECFDF5;
+  color: #059669;
+}
+
+.macro-fluxo-card-status--em_revisao,
+.macro-fluxo-card-status--desatualizado {
+  background: #FEF2F2;
+  color: #DC2626;
+}
+
+.macro-fluxo-card-status--em_aprovacao {
+  background: #FEF3C7;
+  color: #D97706;
+}
+
+/* Area tag para externos */
+.macro-fluxo-card-area {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  background: #FEF3C7;
+  color: #B45309;
+  border-radius: 4px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  width: fit-content;
+}
+
+/* Seta de Conexão */
+.macro-fluxo-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  color: #9755FE;
+  flex-shrink: 0;
+  align-self: center;
+  margin-top: 40px;
+}
+
+.macro-fluxo-arrow--external {
+  color: #F59E0B;
+}
+
+.macro-fluxo-arrow svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* === Seção Externa === */
+.macro-fluxo-external-section {
+  padding-top: 20px;
+  border-top: 1px solid #EFEFF2;
+}
+
+.macro-fluxo-section-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #838199;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.macro-fluxo-section-label svg {
+  color: #F59E0B;
+}
+
+/* === Legenda Compacta === */
+.macro-fluxo-legend {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #EFEFF2;
+}
+
+.macro-fluxo-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  color: #64627F;
+}
+
+.macro-fluxo-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.macro-fluxo-legend-dot--interno {
+  background: #F5EDFF;
+  border: 2px solid #9755FE;
+}
+
+.macro-fluxo-legend-dot--externo {
+  background: #FEF3C7;
+  border: 2px solid #F59E0B;
+}
+
+.macro-fluxo-legend-dot--input {
+  background: #2563EB;
+}
+
+.macro-fluxo-legend-dot--output {
+  background: #059669;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .entity-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .entity-toolbar-left {
+    flex-direction: column;
+  }
+
+  .macro-view-toggle {
+    justify-content: center;
+  }
+
+  .macro-fluxo {
+    padding: 16px;
+  }
+
+  .macro-fluxo-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .macro-fluxo-chain {
+    padding: 12px 0;
+  }
+
+  .macro-fluxo-card {
+    width: 180px;
+    padding: 12px;
+  }
+
+  .macro-fluxo-card-name {
+    font-size: 13px;
+  }
+
+  .macro-fluxo-io-item {
+    font-size: 10px;
+  }
+
+  .macro-fluxo-arrow {
+    padding: 0 8px;
+  }
+
+  .macro-fluxo-legend {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+}

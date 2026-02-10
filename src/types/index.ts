@@ -82,6 +82,15 @@ export interface MacroprocessoCompleto {
   totalProcessos: number;
 }
 
+// SIPOC - Metodologia de análise de processos
+export interface ProcessSIPOC {
+  supplier: string;       // Fornecedor - quem fornece os insumos
+  input: string;          // Entrada - o que entra no processo
+  processSteps: string[]; // Etapas - lista ordenada de steps do processo
+  output: string;         // Saída - o que o processo produz
+  customer: string;       // Cliente - quem recebe o resultado
+}
+
 export interface Processo {
   id: string;
   codigo: string;
@@ -93,6 +102,10 @@ export interface Processo {
   automatizacao?: number; // 0-100%
   analitico?: number; // 0-100%
   fte?: number;
+  // SIPOC data
+  sipoc?: ProcessSIPOC;
+  ferramentas?: string[]; // ferramentas utilizadas
+  area?: string;          // departamento/área
 }
 
 // Legacy types for ArquiteturaView

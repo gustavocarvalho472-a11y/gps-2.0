@@ -6,3 +6,7 @@ export { ArquiteturaView } from './ArquiteturaView';
 export { BottomBar } from './BottomBar';
 export { StructureView } from './StructureView';
 export { HomeView } from './HomeView';
+export { ViewToggle, type ViewMode } from './ViewToggle';
+export { TableView } from './TableView';
+export { OrganogramView } from './OrganogramView';
+export { MetricsCards, createGlobalMetrics } from './MetricsCards';

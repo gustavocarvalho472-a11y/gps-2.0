@@ -12,6 +12,9 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { BUCard } from './BUCard';
 import { MetricsCards, createGlobalMetrics } from './MetricsCards';
+import { ViewToggle, type ViewMode } from './ViewToggle';
+import { TableView } from './TableView';
+import { OrganogramView } from './OrganogramView';
 import { businessUnits, vps, getVPById, totaisGlobais } from '../../data/organizationData';
 import type {
   BusinessUnit, DominioCompleto, JornadaCompleta,
@@ -440,6 +443,7 @@ export function StructureView({ onSelectBU, onSelectDominio, onSelectJornada, on
   const [search, setSearch] = useState('');
   const [selectedVP, setSelectedVP] = useState<string | null>(null);
   const [expandedBU, setExpandedBU] = useState<string | null>(null);
+  const [activeView, setActiveView] = useState<ViewMode>('cards');
 
   // Detail Panel state
   const [panelOpen, setPanelOpen] = useState(false);
@@ -572,23 +576,52 @@ export function StructureView({ onSelectBU, onSelectDominio, onSelectJornada, on
           </div>
         </div>
 
-        {/* BU Grid */}
-        <div className="structure-grid">
-          {filteredBUs.map(bu => (
-            <BUCard
-              key={bu.id}
-              bu={bu}
-              isExpanded={expandedBU === bu.id}
-              onToggle={() => setExpandedBU(expandedBU === bu.id ? null : bu.id)}
-              onShowDetails={handleShowDetails}
-            />
-          ))}
+        {/* Layout Switcher */}
+        <div className="structure-view-toggle">
+          <ViewToggle
+            activeView={activeView}
+            onViewChange={setActiveView}
+            showOrganograma={true}
+            totalItems={filteredBUs.length}
+          />
         </div>
 
-        {filteredBUs.length === 0 && (
-          <div className="structure-empty">
-            <p>Nenhuma BU encontrada</p>
-          </div>
+        {/* Content based on active view */}
+        {activeView === 'cards' ? (
+          <>
+            {/* BU Grid */}
+            <div className="structure-grid">
+              {filteredBUs.map(bu => (
+                <BUCard
+                  key={bu.id}
+                  bu={bu}
+                  isExpanded={expandedBU === bu.id}
+                  onToggle={() => setExpandedBU(expandedBU === bu.id ? null : bu.id)}
+                  onShowDetails={handleShowDetails}
+                />
+              ))}
+            </div>
+
+            {filteredBUs.length === 0 && (
+              <div className="structure-empty">
+                <p>Nenhuma BU encontrada</p>
+              </div>
+            )}
+          </>
+        ) : activeView === 'tabela' ? (
+          <TableView
+            businessUnits={filteredBUs}
+            onSelectBU={onSelectBU}
+          />
+        ) : (
+          <OrganogramView
+            businessUnits={filteredBUs}
+            onSelectBU={onSelectBU}
+            onSelectDominio={onSelectDominio}
+            onSelectJornada={onSelectJornada}
+            onSelectMacro={onSelectMacro}
+            onSelectProcesso={onSelectProcesso}
+          />
         )}
       </div>
 

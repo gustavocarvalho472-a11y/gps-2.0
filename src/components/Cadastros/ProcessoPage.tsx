@@ -1,10 +1,15 @@
 /**
  * GPS 2.0 - Processo Page (Cadastros)
  * Página de visualização detalhada de um processo
+ * Inclui abas: Fluxo BPMN, Lista de Atividades, SIPOC
  */
 
 import { useState } from 'react';
-import { ArrowLeft, ChevronRight, Route, GitBranch, Boxes, Building2, Users, MoreHorizontal, Eye, Workflow, CheckCircle2, Circle, List, FileText } from 'lucide-react';
+import {
+  ArrowLeft, ChevronRight, Route, GitBranch, Boxes, Building2, Users,
+  MoreHorizontal, Eye, Workflow, CheckCircle2, Circle, List, FileText,
+  ClipboardList, ArrowRight, Package, Box, UserCheck
+} from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import type { ProcessoDetalhado } from '../../types';
 import './ProcessoPage.css';
@@ -40,8 +45,35 @@ const mockListaAtividades = [
   { id: 10, codigo: 'ATI-010', nome: 'Arquivar documentos', tipo: 'atividade', status: 'atualizado', responsavel: 'Analista de Documentação' },
 ];
 
+// Mock data SIPOC
+const mockSIPOC = {
+  supplier: 'Cliente, Sistema de CRM, Equipe Comercial',
+  input: 'Solicitação de crédito, Dados cadastrais, Documentos pessoais',
+  processSteps: [
+    'Receber solicitação do cliente',
+    'Validar dados cadastrais no sistema',
+    'Verificar documentação e compliance',
+    'Analisar perfil de crédito',
+    'Aprovar ou rejeitar proposta',
+    'Gerar contrato e coletar assinaturas',
+    'Registrar operação no sistema',
+    'Notificar cliente sobre resultado'
+  ],
+  output: 'Contrato assinado, Operação registrada, Notificação enviada',
+  customer: 'Cliente final, Área Financeira, Compliance'
+};
+
+// Cores SIPOC
+const SIPOC_COLORS = {
+  S: { bg: '#EEF2FF', border: '#818CF8', text: '#4338CA' },
+  I: { bg: '#FFFBEB', border: '#F59E0B', text: '#B45309' },
+  P: { bg: '#EFF6FF', border: '#3B82F6', text: '#1D4ED8' },
+  O: { bg: '#ECFDF5', border: '#10B981', text: '#047857' },
+  C: { bg: '#FDF2F8', border: '#F472B6', text: '#BE185D' },
+};
+
 export function ProcessoPage({ processo, onBack }: ProcessoPageProps) {
-  const [activeTab, setActiveTab] = useState<'bpmn' | 'lista'>('bpmn');
+  const [activeTab, setActiveTab] = useState<'bpmn' | 'lista' | 'sipoc'>('bpmn');
 
   // Determinar tags de status
   const isAtualizado = processo.status === 'ativo';
@@ -199,22 +231,32 @@ export function ProcessoPage({ processo, onBack }: ProcessoPageProps) {
         </div>
       </div>
 
-      {/* Tabs de visualização */}
-      <div className="processo-tabs">
-        <button
-          className={`processo-tab ${activeTab === 'bpmn' ? 'processo-tab--active' : ''}`}
-          onClick={() => setActiveTab('bpmn')}
-        >
-          <Workflow size={18} />
-          Fluxo BPMN
-        </button>
-        <button
-          className={`processo-tab ${activeTab === 'lista' ? 'processo-tab--active' : ''}`}
-          onClick={() => setActiveTab('lista')}
-        >
-          <List size={18} />
-          Lista de Atividades
-        </button>
+      {/* Toggle de visualização - layout consistente com outras páginas */}
+      <div className="processo-view-toggle">
+        <span className="processo-view-label">Visualização</span>
+        <div className="processo-view-options">
+          <button
+            className={`processo-view-btn ${activeTab === 'bpmn' ? 'processo-view-btn--active' : ''}`}
+            onClick={() => setActiveTab('bpmn')}
+          >
+            <Workflow size={16} />
+            <span>Fluxo BPMN</span>
+          </button>
+          <button
+            className={`processo-view-btn ${activeTab === 'lista' ? 'processo-view-btn--active' : ''}`}
+            onClick={() => setActiveTab('lista')}
+          >
+            <List size={16} />
+            <span>Lista de Atividades</span>
+          </button>
+          <button
+            className={`processo-view-btn ${activeTab === 'sipoc' ? 'processo-view-btn--active' : ''}`}
+            onClick={() => setActiveTab('sipoc')}
+          >
+            <ClipboardList size={16} />
+            <span>SIPOC</span>
+          </button>
+        </div>
       </div>
 
       {/* Conteúdo das tabs */}
@@ -347,6 +389,142 @@ export function ProcessoPage({ processo, onBack }: ProcessoPageProps) {
             <div className="lista-legend-item">
               <span className="lista-status-indicator lista-status-indicator--desatualizado"></span>
               <span>Desatualizado</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* SIPOC Tab */}
+      {activeTab === 'sipoc' && (
+        <div className="processo-sipoc-section">
+          <div className="processo-section-header">
+            <ClipboardList size={20} />
+            <h2>Análise SIPOC</h2>
+          </div>
+          <p className="processo-section-desc">
+            Visualização SIPOC (Supplier, Input, Process, Output, Customer) do processo.
+          </p>
+
+          {/* SIPOC Blocks */}
+          <div className="sipoc-blocks">
+            {/* S - Supplier */}
+            <div className="sipoc-block" style={{ borderLeftColor: SIPOC_COLORS.S.border }}>
+              <div className="sipoc-block-header" style={{ backgroundColor: SIPOC_COLORS.S.bg }}>
+                <Users size={20} style={{ color: SIPOC_COLORS.S.text }} />
+                <div className="sipoc-block-title">
+                  <span className="sipoc-block-letter" style={{ color: SIPOC_COLORS.S.text }}>S</span>
+                  <span className="sipoc-block-name">Fornecedor (Supplier)</span>
+                </div>
+              </div>
+              <div className="sipoc-block-content">
+                <p>{mockSIPOC.supplier}</p>
+              </div>
+            </div>
+
+            <div className="sipoc-arrow">
+              <ArrowRight size={24} />
+            </div>
+
+            {/* I - Input */}
+            <div className="sipoc-block" style={{ borderLeftColor: SIPOC_COLORS.I.border }}>
+              <div className="sipoc-block-header" style={{ backgroundColor: SIPOC_COLORS.I.bg }}>
+                <Package size={20} style={{ color: SIPOC_COLORS.I.text }} />
+                <div className="sipoc-block-title">
+                  <span className="sipoc-block-letter" style={{ color: SIPOC_COLORS.I.text }}>I</span>
+                  <span className="sipoc-block-name">Entrada (Input)</span>
+                </div>
+              </div>
+              <div className="sipoc-block-content">
+                <p>{mockSIPOC.input}</p>
+              </div>
+            </div>
+
+            <div className="sipoc-arrow">
+              <ArrowRight size={24} />
+            </div>
+
+            {/* P - Process */}
+            <div className="sipoc-block sipoc-block--process" style={{ borderLeftColor: SIPOC_COLORS.P.border }}>
+              <div className="sipoc-block-header" style={{ backgroundColor: SIPOC_COLORS.P.bg }}>
+                <Workflow size={20} style={{ color: SIPOC_COLORS.P.text }} />
+                <div className="sipoc-block-title">
+                  <span className="sipoc-block-letter" style={{ color: SIPOC_COLORS.P.text }}>P</span>
+                  <span className="sipoc-block-name">Processo (Process)</span>
+                </div>
+              </div>
+              <div className="sipoc-block-content">
+                <div className="sipoc-process-steps">
+                  {mockSIPOC.processSteps.map((step, idx) => (
+                    <div key={idx} className="sipoc-step">
+                      <div className="sipoc-step-marker">
+                        <span className="sipoc-step-num">{idx + 1}</span>
+                        {idx < mockSIPOC.processSteps.length - 1 && <div className="sipoc-step-line" />}
+                      </div>
+                      <span className="sipoc-step-text">{step}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="sipoc-arrow">
+              <ArrowRight size={24} />
+            </div>
+
+            {/* O - Output */}
+            <div className="sipoc-block" style={{ borderLeftColor: SIPOC_COLORS.O.border }}>
+              <div className="sipoc-block-header" style={{ backgroundColor: SIPOC_COLORS.O.bg }}>
+                <Box size={20} style={{ color: SIPOC_COLORS.O.text }} />
+                <div className="sipoc-block-title">
+                  <span className="sipoc-block-letter" style={{ color: SIPOC_COLORS.O.text }}>O</span>
+                  <span className="sipoc-block-name">Saída (Output)</span>
+                </div>
+              </div>
+              <div className="sipoc-block-content">
+                <p>{mockSIPOC.output}</p>
+              </div>
+            </div>
+
+            <div className="sipoc-arrow">
+              <ArrowRight size={24} />
+            </div>
+
+            {/* C - Customer */}
+            <div className="sipoc-block" style={{ borderLeftColor: SIPOC_COLORS.C.border }}>
+              <div className="sipoc-block-header" style={{ backgroundColor: SIPOC_COLORS.C.bg }}>
+                <UserCheck size={20} style={{ color: SIPOC_COLORS.C.text }} />
+                <div className="sipoc-block-title">
+                  <span className="sipoc-block-letter" style={{ color: SIPOC_COLORS.C.text }}>C</span>
+                  <span className="sipoc-block-name">Cliente (Customer)</span>
+                </div>
+              </div>
+              <div className="sipoc-block-content">
+                <p>{mockSIPOC.customer}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* SIPOC Legend */}
+          <div className="sipoc-legend">
+            <div className="sipoc-legend-item">
+              <span className="sipoc-legend-dot" style={{ backgroundColor: SIPOC_COLORS.S.border }}></span>
+              <span>Supplier - Quem fornece os insumos</span>
+            </div>
+            <div className="sipoc-legend-item">
+              <span className="sipoc-legend-dot" style={{ backgroundColor: SIPOC_COLORS.I.border }}></span>
+              <span>Input - O que entra no processo</span>
+            </div>
+            <div className="sipoc-legend-item">
+              <span className="sipoc-legend-dot" style={{ backgroundColor: SIPOC_COLORS.P.border }}></span>
+              <span>Process - Etapas executadas</span>
+            </div>
+            <div className="sipoc-legend-item">
+              <span className="sipoc-legend-dot" style={{ backgroundColor: SIPOC_COLORS.O.border }}></span>
+              <span>Output - O que o processo produz</span>
+            </div>
+            <div className="sipoc-legend-item">
+              <span className="sipoc-legend-dot" style={{ backgroundColor: SIPOC_COLORS.C.border }}></span>
+              <span>Customer - Quem recebe o resultado</span>
             </div>
           </div>
         </div>

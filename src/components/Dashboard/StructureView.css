@@ -58,6 +58,12 @@
   margin: 0.25rem 0 0 0;
 }
 
+.structure-header-right {
+  display: flex;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
 /* ===== Filters ===== */
 .structure-filters {
   display: flex;
@@ -127,6 +133,12 @@
 .structure-filter-select:focus {
   outline: none;
   border-color: var(--color-primary-40);
+}
+
+/* ===== View Toggle ===== */
+.structure-view-toggle {
+  display: flex;
+  margin-top: -0.5rem;
 }
 
 /* ===== Grid ===== */

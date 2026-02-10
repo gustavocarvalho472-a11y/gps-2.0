@@ -1,10 +1,10 @@
 /**
  * GPS 2.0 - Domínio Detail Page
- * Página de detalhe de Domínio seguindo novo design Figma
+ * Página de detalhe de Domínio com layout: BU context → H1 → Metrics Cards
  */
 
 import { useState } from 'react';
-import { ArrowLeft, ChevronRight, Building2, Users, MoreHorizontal, Eye, GitBranch, Search, Filter, Plus } from 'lucide-react';
+import { ArrowLeft, Building2, Users, MoreHorizontal, Eye, GitBranch, Search, Filter, Plus } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { MetricsCards, type MetricItem } from './MetricsCards';
 import { ProcessCard, type StatusType, type ResponsavelInfo } from '../shared';
@@ -24,13 +24,14 @@ export function DominioDetailPage({ bu, dominio, onBack, onSelectJornada }: Domi
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
 
   // Determinar status do domínio (mock - pode vir do backend)
-  const dominioStatus: StatusType = 'desatualizado';
+  const dominioStatus = 'desatualizado' as StatusType;
 
   // Mock de VP (pode vir do backend)
   const vpNome = '(VPTECH) EQUIPE PÓS E OPM';
 
-  // Métricas do Domínio para os cards de big numbers
-  const dominioMetrics: MetricItem[] = [
+  // Métricas completas da hierarquia
+  const hierarchyMetrics: MetricItem[] = [
+    { id: 'dominio', label: 'Domínio', value: 1, icon: 'dominio' },
     { id: 'jornadas', label: 'Jornadas', value: dominio.totalJornadas, icon: 'jornada' },
     { id: 'macros', label: 'Macroprocessos', value: dominio.totalMacroprocessos, icon: 'macro' },
     { id: 'processos', label: 'Processos', value: dominio.totalProcessos, icon: 'processo' },
@@ -40,7 +41,6 @@ export function DominioDetailPage({ bu, dominio, onBack, onSelectJornada }: Domi
   const filteredJornadas = dominio.jornadas.filter(jornada => {
     const matchesSearch = jornada.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
       jornada.codigo.toLowerCase().includes(searchTerm.toLowerCase());
-    // Para filtro de status, como não temos no tipo atual, sempre retorna true
     const matchesStatus = statusFilter === 'todos' || true;
     return matchesSearch && matchesStatus;
   });
@@ -56,52 +56,49 @@ export function DominioDetailPage({ bu, dominio, onBack, onSelectJornada }: Domi
     return {
       codigo: jornada.codigo,
       nome: jornada.nome,
-      status: 'desatualizado' as StatusType, // Mock - pode vir do backend
-      dataCriacao: '01/08/2026', // Mock
-      dataAtualizacao: '01/09/2026', // Mock
+      status: 'desatualizado' as StatusType,
+      dataCriacao: '01/08/2026',
+      dataAtualizacao: '01/09/2026',
       responsavel
     };
   };
 
   return (
     <div className="entity-detail-page">
-      {/* Header com Breadcrumb */}
+      {/* Header com contexto da BU */}
       <header className="entity-header">
         <button className="entity-back-btn" onClick={onBack}>
           <ArrowLeft size={16} />
         </button>
-        <nav className="entity-breadcrumb">
-          <span>Cadastros</span>
-          <ChevronRight size={16} />
-          <span>Domínios</span>
-          <ChevronRight size={16} />
-          <span className="entity-breadcrumb-current">{dominio.nome}</span>
-        </nav>
+        <div className="entity-context">
+          <Building2 size={16} className="entity-context-icon" />
+          <span className="entity-context-label">BU</span>
+          <span className="entity-context-value">{bu.nome}</span>
+        </div>
       </header>
 
-      {/* Metrics Cards - Big Numbers */}
-      <MetricsCards metrics={dominioMetrics} />
-
-      {/* Card Principal */}
-      <div className="entity-card">
-        {/* Cabeçalho do Card */}
-        <div className="entity-card-header">
-          <div className="entity-card-info">
-            <span className="entity-card-type">Domínio</span>
-            <h1 className="entity-card-title">{dominio.nome}</h1>
-            <span className="entity-card-code">{dominio.codigo}</span>
-          </div>
-
-          <div className="entity-card-actions">
-            <span className={`entity-tag entity-tag--${dominioStatus}`}>
-              {dominioStatus === 'atualizado' ? 'Atualizado' : dominioStatus === 'em_aprovacao' ? 'Em aprovação' : 'Desatualizado'}
-            </span>
-            <button className="entity-more-btn">
-              <MoreHorizontal size={18} />
-            </button>
-          </div>
+      {/* H1 - Título Principal */}
+      <div className="entity-hero">
+        <div className="entity-hero-content">
+          <span className="entity-hero-type">Domínio</span>
+          <h1 className="entity-hero-title">{dominio.nome}</h1>
+          <span className="entity-hero-code">{dominio.codigo}</span>
         </div>
+        <div className="entity-hero-actions">
+          <span className={`entity-tag entity-tag--${dominioStatus}`}>
+            {dominioStatus === 'atualizado' ? 'Atualizado' : dominioStatus === 'em_aprovacao' ? 'Em aprovação' : 'Desatualizado'}
+          </span>
+          <button className="entity-more-btn">
+            <MoreHorizontal size={18} />
+          </button>
+        </div>
+      </div>
 
+      {/* Metrics Cards - Hierarquia completa */}
+      <MetricsCards metrics={hierarchyMetrics} />
+
+      {/* Card de Detalhes */}
+      <div className="entity-card">
         {/* Hierarquia */}
         <div className="entity-hierarchy">
           <div className="entity-hierarchy-item">
