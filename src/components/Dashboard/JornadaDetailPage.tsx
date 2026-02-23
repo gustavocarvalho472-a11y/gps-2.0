@@ -4,9 +4,8 @@
  */
 
 import { useState } from 'react';
-import { ArrowLeft, Building2, Route, Users, MoreHorizontal, Eye, Boxes, Search, Filter, Plus } from 'lucide-react';
+import { ArrowLeft, Building2, Route, Users, MoreHorizontal, Clock, Boxes, Search, Filter, Plus } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { MetricsCards, type MetricItem } from './MetricsCards';
 import { ProcessCard, type StatusType, type HierarchyItem, type ResponsavelInfo } from '../shared';
 import type { BusinessUnit, DominioCompleto, JornadaCompleta, MacroprocessoCompleto } from '../../types';
 import './EntityDetailPage.css';
@@ -29,14 +28,6 @@ export function JornadaDetailPage({ bu, dominio, jornada, onBack, onSelectMacro 
 
   // Mock de VP (pode vir do backend)
   const vpNome = '(VPTECH) EQUIPE PÓS E OPM';
-
-  // Métricas completas da hierarquia
-  const hierarchyMetrics: MetricItem[] = [
-    { id: 'dominio', label: 'Domínio', value: 1, icon: 'dominio' },
-    { id: 'jornada', label: 'Jornada', value: 1, icon: 'jornada' },
-    { id: 'macros', label: 'Macroprocessos', value: jornada.totalMacroprocessos, icon: 'macro' },
-    { id: 'processos', label: 'Processos', value: jornada.totalProcessos, icon: 'processo' },
-  ];
 
   // Filtrar macroprocessos
   const filteredMacros = jornada.macroprocessos.filter(macro => {
@@ -84,28 +75,25 @@ export function JornadaDetailPage({ bu, dominio, jornada, onBack, onSelectMacro 
         </div>
       </header>
 
-      {/* H1 - Título Principal */}
-      <div className="entity-hero">
-        <div className="entity-hero-content">
-          <span className="entity-hero-type">Jornada</span>
-          <h1 className="entity-hero-title">{jornada.nome}</h1>
-          <span className="entity-hero-code">{jornada.codigo}</span>
-        </div>
-        <div className="entity-hero-actions">
-          <span className={`entity-tag entity-tag--${jornadaStatus}`}>
-            {jornadaStatus === 'atualizado' ? 'Atualizado' : jornadaStatus === 'em_aprovacao' ? 'Em aprovação' : 'Desatualizado'}
-          </span>
-          <button className="entity-more-btn">
-            <MoreHorizontal size={18} />
-          </button>
-        </div>
-      </div>
-
-      {/* Metrics Cards - Hierarquia completa */}
-      <MetricsCards metrics={hierarchyMetrics} />
-
       {/* Card de Detalhes */}
       <div className="entity-card">
+        {/* Cabeçalho: Tipo, Título, Código + Status + More */}
+        <div className="entity-card-header">
+          <div className="entity-card-info">
+            <span className="entity-card-type">Jornada</span>
+            <h1 className="entity-card-title">{jornada.nome}</h1>
+            <span className="entity-card-code">{jornada.codigo}</span>
+          </div>
+          <div className="entity-card-actions">
+            <span className={`entity-tag entity-tag--${jornadaStatus}`}>
+              {jornadaStatus === 'atualizado' ? 'Atualizado' : jornadaStatus === 'em_aprovacao' ? 'Em aprovação' : 'Desatualizado'}
+            </span>
+            <button className="entity-more-btn">
+              <MoreHorizontal size={18} />
+            </button>
+          </div>
+        </div>
+
         {/* Hierarquia */}
         <div className="entity-hierarchy">
           <div className="entity-hierarchy-item">
@@ -142,12 +130,14 @@ export function JornadaDetailPage({ bu, dominio, jornada, onBack, onSelectMacro 
         {/* Responsável e Ações */}
         <div className="entity-responsavel-section">
           <div className="entity-responsavel">
-            <Avatar className="entity-avatar">
-              <AvatarImage src={jornada.responsavel.foto} alt={jornada.responsavel.nome} />
-              <AvatarFallback>
-                {jornada.responsavel.nome.split(' ').map(n => n[0]).join('').slice(0, 2)}
-              </AvatarFallback>
-            </Avatar>
+            <div className="entity-avatar-border">
+              <Avatar className="entity-avatar">
+                <AvatarImage src={jornada.responsavel.foto} alt={jornada.responsavel.nome} />
+                <AvatarFallback>
+                  {jornada.responsavel.nome.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                </AvatarFallback>
+              </Avatar>
+            </div>
             <div className="entity-responsavel-info">
               <span className="entity-responsavel-label">Responsável</span>
               <span className="entity-responsavel-name">{jornada.responsavel.nome}</span>
@@ -159,8 +149,8 @@ export function JornadaDetailPage({ bu, dominio, jornada, onBack, onSelectMacro 
           </div>
 
           <button className="entity-action-btn">
-            <Eye size={16} />
-            Visualizar aprovações
+            <Clock size={16} />
+            Visualizar histórico
           </button>
         </div>
 

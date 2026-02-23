@@ -1,0 +1,505 @@
+/**
+ * GPS 2.0 - Cadeia de Valor View Styles
+ */
+
+.cadeia-de-valor {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: white;
+  border: 1px solid #EFEFF2;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* ─── Summary Card ──────────────────────────────────────────────────── */
+.cadeia-summary-card {
+  padding: 24px 24px 0;
+}
+
+.cadeia-summary-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.cadeia-summary-top-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cadeia-summary-eyebrow {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: #838199;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.cadeia-summary-title {
+  font-family: 'Axiforma', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #282733;
+  letter-spacing: -1.2px;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.cadeia-summary-code {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 13px;
+  color: #838199;
+  letter-spacing: -0.65px;
+}
+
+.cadeia-summary-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.6px;
+  flex-shrink: 0;
+}
+
+.cadeia-summary-status--desatualizado {
+  background: #FEE2E2;
+  color: #DC2626;
+}
+
+.cadeia-summary-status--atualizado {
+  background: #E6F9F0;
+  color: #059669;
+}
+
+.cadeia-summary-status--em_aprovacao {
+  background: #FEF3C7;
+  color: #D97706;
+}
+
+/* BU + VP chips */
+.cadeia-summary-chips {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.cadeia-summary-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: #F7F7F7;
+  border-radius: 20px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #282733;
+  letter-spacing: -0.6px;
+}
+
+.cadeia-summary-chip svg {
+  color: #64627F;
+  flex-shrink: 0;
+}
+
+/* Stats row */
+.cadeia-summary-stats {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 20px;
+}
+
+.cadeia-summary-stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+}
+
+.cadeia-summary-stat:first-child {
+  padding-left: 0;
+}
+
+.cadeia-summary-stat-value {
+  font-family: 'Axiforma', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #9755FE;
+  letter-spacing: -1px;
+}
+
+.cadeia-summary-stat-label {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #838199;
+  letter-spacing: -0.65px;
+}
+
+.cadeia-summary-stat-divider {
+  width: 1px;
+  height: 32px;
+  background: #EFEFF2;
+  flex-shrink: 0;
+}
+
+.cadeia-summary-divider {
+  height: 3px;
+  background: linear-gradient(90deg, #9755FE 0%, #C4A0FF 100%);
+  margin: 0 -24px;
+  margin-top: 0;
+}
+
+/* ─── Jornadas List ─────────────────────────────────────────────────── */
+.cadeia-jornadas {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Jornada Section ───────────────────────────────────────────────── */
+.cadeia-jornada-section {
+  border-bottom: 1px solid #EFEFF2;
+}
+
+.cadeia-jornada-section:last-child {
+  border-bottom: none;
+}
+
+/* Jornada header row */
+.cadeia-jornada-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px 16px;
+}
+
+.cadeia-jornada-row-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.cadeia-jornada-row-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: #F5EDFF;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.cadeia-jornada-row-icon svg {
+  color: #9755FE;
+}
+
+.cadeia-jornada-row-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.cadeia-jornada-row-label {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: #838199;
+  letter-spacing: -0.55px;
+  text-transform: uppercase;
+}
+
+.cadeia-jornada-row-name {
+  font-family: 'Axiforma', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: #282733;
+  letter-spacing: -0.85px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Status badge */
+.cadeia-jornada-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.6px;
+  flex-shrink: 0;
+}
+
+.cadeia-jornada-badge--desatualizado {
+  background: #FEE2E2;
+  color: #DC2626;
+}
+
+.cadeia-jornada-badge--atualizado {
+  background: #E6F9F0;
+  color: #059669;
+}
+
+.cadeia-jornada-badge--em_aprovacao {
+  background: #FEF3C7;
+  color: #D97706;
+}
+
+/* Responsável on the right */
+.cadeia-jornada-row-right {
+  flex-shrink: 0;
+}
+
+.cadeia-jornada-responsavel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cadeia-jornada-avatar-wrap {
+  border-left: 2px solid #9755FE;
+  padding: 3px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.cadeia-jornada-avatar {
+  width: 34px !important;
+  height: 34px !important;
+}
+
+.cadeia-jornada-avatar [data-slot="fallback"] {
+  font-size: 12px;
+  font-weight: 600;
+  background: #F5EDFF;
+  color: #9755FE;
+}
+
+.cadeia-jornada-resp-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.cadeia-jornada-resp-name {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #282733;
+  letter-spacing: -0.7px;
+  white-space: nowrap;
+}
+
+.cadeia-jornada-resp-role {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #838199;
+  letter-spacing: -0.6px;
+  white-space: nowrap;
+}
+
+/* ─── Macros List ───────────────────────────────────────────────────── */
+.cadeia-macros-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 24px 20px;
+}
+
+/* ─── Macroprocesso Block ───────────────────────────────────────────── */
+.cadeia-macro-block {
+  background: #FAFAFA;
+  border: 1px solid #EFEFF2;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.cadeia-macro-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #F6F6F6;
+  border-bottom: 1px solid #EFEFF2;
+  gap: 12px;
+}
+
+.cadeia-macro-block-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.cadeia-macro-block-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: #F0E4FF;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+
+.cadeia-macro-block-icon svg {
+  color: #8038F0;
+}
+
+.cadeia-macro-block-label {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: #838199;
+  letter-spacing: -0.55px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.cadeia-macro-block-name {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #282733;
+  letter-spacing: -0.7px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cadeia-macro-block-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  background: #E8D8FF;
+  border-radius: 11px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: #8038F0;
+  flex-shrink: 0;
+}
+
+/* ─── Processos Grid ────────────────────────────────────────────────── */
+.cadeia-macro-block-processos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+  padding: 10px;
+}
+
+/* ─── Processo Mini Card ────────────────────────────────────────────── */
+.cadeia-proc-card {
+  background: white;
+  border: 1px solid #EFEFF2;
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  cursor: default;
+}
+
+.cadeia-proc-card:hover {
+  border-color: #D8C4FF;
+  box-shadow: 0 2px 8px rgba(151, 85, 254, 0.08);
+}
+
+.cadeia-proc-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.cadeia-proc-code {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: #838199;
+  letter-spacing: -0.55px;
+}
+
+.cadeia-proc-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 20px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+}
+
+.cadeia-proc-status--ativo {
+  background: #E6F9F0;
+  color: #059669;
+}
+
+.cadeia-proc-status--inativo {
+  background: #F3F4F6;
+  color: #6B7280;
+}
+
+.cadeia-proc-status--em_revisao {
+  background: #FEF3C7;
+  color: #D97706;
+}
+
+.cadeia-proc-name {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #282733;
+  letter-spacing: -0.65px;
+  margin: 0;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ─── Responsive ────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .cadeia-jornada-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .cadeia-jornada-row-name {
+    white-space: normal;
+  }
+
+  .cadeia-macro-block-processos {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cadeia-summary-stats {
+    flex-wrap: wrap;
+  }
+}

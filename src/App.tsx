@@ -388,6 +388,7 @@ function App() {
       activeView={activeView}
       onPageChange={handlePageChange}
       onViewChange={setActiveView}
+      hideCadeia={true}
       filters={filters}
       onFilterChange={setFilters}
     >

@@ -6,66 +6,14 @@
 import { useState } from 'react';
 import { ArrowLeft, ChevronRight, Users, MoreHorizontal, Eye, Layers, Search, Filter, Plus } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { MetricsCards, type MetricItem } from './MetricsCards';
+import { ProcessCard, type StatusType, type ResponsavelInfo } from '../shared';
 import type { BusinessUnit, DominioCompleto } from '../../types';
-import type { StatusType } from '../shared';
 import './EntityDetailPage.css';
 
 interface BUDetailPageProps {
   bu: BusinessUnit;
   onBack: () => void;
   onSelectDominio: (dominio: DominioCompleto) => void;
-}
-
-// Card de Domínio específico para BU (mostra estatísticas)
-function DominioCard({
-  dominio,
-  onClick,
-}: {
-  dominio: DominioCompleto;
-  onClick: () => void;
-}) {
-  return (
-    <article className="bu-dominio-card" onClick={onClick}>
-      <div className="bu-dominio-card-accent" />
-      <div className="bu-dominio-card-content">
-        <div className="bu-dominio-card-header">
-          <span className="bu-dominio-card-code">{dominio.codigo}</span>
-          <ChevronRight size={16} className="bu-dominio-card-chevron" />
-        </div>
-
-        <h3 className="bu-dominio-card-title">{dominio.nome}</h3>
-
-        <div className="bu-dominio-card-responsavel">
-          <Avatar className="bu-dominio-card-avatar">
-            <AvatarImage src={dominio.responsavel.foto} alt={dominio.responsavel.nome} />
-            <AvatarFallback>
-              {dominio.responsavel.nome.split(' ').map(n => n[0]).join('').slice(0, 2)}
-            </AvatarFallback>
-          </Avatar>
-          <div className="bu-dominio-card-responsavel-info">
-            <span className="bu-dominio-card-responsavel-name">{dominio.responsavel.nome}</span>
-            <span className="bu-dominio-card-responsavel-role">{dominio.responsavel.cargo}</span>
-          </div>
-        </div>
-
-        <div className="bu-dominio-card-stats">
-          <div className="bu-dominio-card-stat">
-            <span className="bu-dominio-card-stat-value">{dominio.totalJornadas}</span>
-            <span className="bu-dominio-card-stat-label">Jornadas</span>
-          </div>
-          <div className="bu-dominio-card-stat">
-            <span className="bu-dominio-card-stat-value">{dominio.totalMacroprocessos}</span>
-            <span className="bu-dominio-card-stat-label">Macroprocessos</span>
-          </div>
-          <div className="bu-dominio-card-stat">
-            <span className="bu-dominio-card-stat-value">{dominio.totalProcessos}</span>
-            <span className="bu-dominio-card-stat-label">Processos</span>
-          </div>
-        </div>
-      </div>
-    </article>
-  );
 }
 
 export function BUDetailPage({ bu, onBack, onSelectDominio }: BUDetailPageProps) {
@@ -75,14 +23,6 @@ export function BUDetailPage({ bu, onBack, onSelectDominio }: BUDetailPageProps)
 
   // Determinar status da BU (mock - pode vir do backend)
   const buStatus: StatusType = 'atualizado';
-
-  // Métricas da BU para os cards de big numbers
-  const buMetrics: MetricItem[] = [
-    { id: 'dominios', label: 'Domínios', value: bu.totalDominios, icon: 'dominio' },
-    { id: 'jornadas', label: 'Jornadas', value: bu.totalJornadas, icon: 'jornada' },
-    { id: 'macros', label: 'Macroprocessos', value: bu.totalMacroprocessos, icon: 'macro' },
-    { id: 'processos', label: 'Processos', value: bu.totalProcessos, icon: 'processo' },
-  ];
 
   // Mock de VP (pode vir do backend)
   const vpNome = '(VPTECH) EQUIPE PÓS E OPM';
@@ -94,6 +34,24 @@ export function BUDetailPage({ bu, onBack, onSelectDominio }: BUDetailPageProps)
     const matchesStatus = statusFilter === 'todos' || true;
     return matchesSearch && matchesStatus;
   });
+
+  const getDominioCardProps = (dominio: DominioCompleto) => {
+    const responsavel: ResponsavelInfo = {
+      nome: dominio.responsavel.nome,
+      cargo: dominio.responsavel.cargo || 'Domain Owner',
+      equipe: dominio.responsavel.area || vpNome,
+      foto: dominio.responsavel.foto,
+    };
+
+    return {
+      codigo: dominio.codigo,
+      nome: dominio.nome,
+      status: 'desatualizado' as StatusType,
+      dataCriacao: '01/08/2026',
+      dataAtualizacao: '01/09/2026',
+      responsavel,
+    };
+  };
 
   return (
     <div className="entity-detail-page">
@@ -108,9 +66,6 @@ export function BUDetailPage({ bu, onBack, onSelectDominio }: BUDetailPageProps)
           <span className="entity-breadcrumb-current">{bu.nome}</span>
         </nav>
       </header>
-
-      {/* Metrics Cards - Big Numbers */}
-      <MetricsCards metrics={buMetrics} />
 
       {/* Card Principal */}
       <div className="entity-card">
@@ -264,14 +219,17 @@ export function BUDetailPage({ bu, onBack, onSelectDominio }: BUDetailPageProps)
 
         {/* Lista de Domínios */}
         {filteredDominios.length > 0 ? (
-          <div className="bu-dominio-grid">
-            {filteredDominios.map(dominio => (
-              <DominioCard
-                key={dominio.id}
-                dominio={dominio}
-                onClick={() => onSelectDominio(dominio)}
-              />
-            ))}
+          <div className="entity-children-list">
+            {filteredDominios.map(dominio => {
+              const cardProps = getDominioCardProps(dominio);
+              return (
+                <ProcessCard
+                  key={dominio.id}
+                  {...cardProps}
+                  onClick={() => onSelectDominio(dominio)}
+                />
+              );
+            })}
           </div>
         ) : (
           <div className="entity-empty">

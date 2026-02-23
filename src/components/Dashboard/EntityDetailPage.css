@@ -90,7 +90,7 @@
   padding: 8px 16px;
   background: white;
   border: 1px solid #EFEFF2;
-  border-radius: 8px;
+  border-radius: 12px;
 }
 
 .entity-context-icon {
@@ -174,7 +174,8 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 20px;
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
 .entity-card-info {
@@ -290,40 +291,40 @@
   justify-content: center;
   width: 28px;
   height: 28px;
-  border-radius: 6px;
+  border-radius: 8px;
   flex-shrink: 0;
 }
 
 .entity-hierarchy-icon--dominio {
-  background: #F5EDFF;
+  background: #E0ECFA;
 }
 
 .entity-hierarchy-icon--dominio svg {
-  color: #9755FE;
+  color: #3F6E9F;
 }
 
 .entity-hierarchy-icon--jornada {
-  background: #E0F2FE;
+  background: #F5EDFF;
 }
 
 .entity-hierarchy-icon--jornada svg {
-  color: #0284C7;
+  color: #9755FE;
 }
 
 .entity-hierarchy-icon--bu {
-  background: #F0FDF4;
+  background: #F7F7F7;
 }
 
 .entity-hierarchy-icon--bu svg {
-  color: #059669;
+  color: #64627F;
 }
 
 .entity-hierarchy-icon--vp {
-  background: #FEF3C7;
+  background: #F7F7F7;
 }
 
 .entity-hierarchy-icon--vp svg {
-  color: #D97706;
+  color: #64627F;
 }
 
 .entity-hierarchy-info {
@@ -406,24 +407,34 @@
   letter-spacing: -0.65px;
 }
 
+.entity-avatar-border {
+  border-left: 2.5px solid #9755FE;
+  padding: 5px;
+  border-radius: 36px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
 .entity-action-btn {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 16px;
-  background: white;
-  border: 1px solid #9755FE;
-  border-radius: 20px;
+  padding: 8px 20px;
+  background: #F9F4FF;
+  border: none;
+  border-radius: 24px;
   font-family: 'Avenir LT Std', sans-serif;
   font-size: 14px;
   font-weight: 500;
   color: #9755FE;
   cursor: pointer;
   transition: all 0.15s;
+  white-space: nowrap;
 }
 
 .entity-action-btn:hover {
-  background: #F5EDFF;
+  background: #F0E4FF;
 }
 
 .entity-action-btn svg {
@@ -475,6 +486,78 @@
   font-weight: 400;
   color: #838199;
   letter-spacing: -0.6px;
+}
+
+/* ===== Tab Bar ===== */
+.entity-tabs-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.entity-tabs {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: white;
+  border: 1px solid #EFEFF2;
+  border-radius: 50px;
+  padding: 4px;
+}
+
+.entity-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  background: none;
+  border: none;
+  border-radius: 50px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #64627F;
+  letter-spacing: -0.7px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.entity-tab:hover {
+  color: #282733;
+  background: #F6F6F6;
+}
+
+.entity-tab--active {
+  background: #9755FE;
+  color: white;
+  font-weight: 500;
+}
+
+.entity-tab--active:hover {
+  background: #8038F0;
+  color: white;
+}
+
+.entity-tab-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.entity-tab:not(.entity-tab--active) .entity-tab-count {
+  background: #F6F6F6;
+  color: #64627F;
 }
 
 /* ===== Children Section ===== */

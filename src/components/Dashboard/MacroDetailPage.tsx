@@ -6,11 +6,10 @@
 
 import { useState } from 'react';
 import {
-  ArrowLeft, Route, GitBranch, Building2, Users, MoreHorizontal, Eye, FileText,
+  ArrowLeft, Route, GitBranch, Building2, Users, MoreHorizontal, Clock, FileText,
   Search, Filter, Plus, LayoutGrid, List, Workflow, ArrowRight, ExternalLink
 } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { MetricsCards, type MetricItem } from './MetricsCards';
 import { ProcessCard, type StatusType, type HierarchyItem, type ResponsavelInfo } from '../shared';
 import type { BusinessUnit, DominioCompleto, JornadaCompleta, MacroprocessoCompleto, Processo } from '../../types';
 import './EntityDetailPage.css';
@@ -142,14 +141,6 @@ export function MacroDetailPage({ bu, dominio, jornada, macro, onBack, onSelectP
   // Mock de VP (pode vir do backend)
   const vpNome = '(VPTECH) EQUIPE PÓS E OPM';
 
-  // Métricas completas da hierarquia
-  const hierarchyMetrics: MetricItem[] = [
-    { id: 'dominio', label: 'Domínio', value: 1, icon: 'dominio' },
-    { id: 'jornada', label: 'Jornada', value: 1, icon: 'jornada' },
-    { id: 'macro', label: 'Macroprocesso', value: 1, icon: 'macro' },
-    { id: 'processos', label: 'Processos', value: macro.totalProcessos, icon: 'processo' },
-  ];
-
   // Filtrar processos
   const filteredProcessos = macro.processos.filter(processo => {
     const matchesSearch = processo.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -211,28 +202,25 @@ export function MacroDetailPage({ bu, dominio, jornada, macro, onBack, onSelectP
         </div>
       </header>
 
-      {/* H1 - Título Principal */}
-      <div className="entity-hero">
-        <div className="entity-hero-content">
-          <span className="entity-hero-type">Macroprocesso</span>
-          <h1 className="entity-hero-title">{macro.nome}</h1>
-          <span className="entity-hero-code">{macro.codigo}</span>
-        </div>
-        <div className="entity-hero-actions">
-          <span className={`entity-tag entity-tag--${macroStatus}`}>
-            {macroStatus === 'atualizado' ? 'Atualizado' : macroStatus === 'em_aprovacao' ? 'Em aprovação' : 'Desatualizado'}
-          </span>
-          <button className="entity-more-btn">
-            <MoreHorizontal size={18} />
-          </button>
-        </div>
-      </div>
-
-      {/* Metrics Cards - Hierarquia completa */}
-      <MetricsCards metrics={hierarchyMetrics} />
-
       {/* Card de Detalhes */}
       <div className="entity-card">
+        {/* Cabeçalho: Tipo, Título, Código + Status + More */}
+        <div className="entity-card-header">
+          <div className="entity-card-info">
+            <span className="entity-card-type">Macroprocesso</span>
+            <h1 className="entity-card-title">{macro.nome}</h1>
+            <span className="entity-card-code">{macro.codigo}</span>
+          </div>
+          <div className="entity-card-actions">
+            <span className={`entity-tag entity-tag--${macroStatus}`}>
+              {macroStatus === 'atualizado' ? 'Atualizado' : macroStatus === 'em_aprovacao' ? 'Em aprovação' : 'Desatualizado'}
+            </span>
+            <button className="entity-more-btn">
+              <MoreHorizontal size={18} />
+            </button>
+          </div>
+        </div>
+
         {/* Hierarquia */}
         <div className="entity-hierarchy">
           <div className="entity-hierarchy-item">
@@ -279,12 +267,14 @@ export function MacroDetailPage({ bu, dominio, jornada, macro, onBack, onSelectP
         {/* Responsável e Ações */}
         <div className="entity-responsavel-section">
           <div className="entity-responsavel">
-            <Avatar className="entity-avatar">
-              <AvatarImage src={macro.responsavel.foto} alt={macro.responsavel.nome} />
-              <AvatarFallback>
-                {macro.responsavel.nome.split(' ').map(n => n[0]).join('').slice(0, 2)}
-              </AvatarFallback>
-            </Avatar>
+            <div className="entity-avatar-border">
+              <Avatar className="entity-avatar">
+                <AvatarImage src={macro.responsavel.foto} alt={macro.responsavel.nome} />
+                <AvatarFallback>
+                  {macro.responsavel.nome.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                </AvatarFallback>
+              </Avatar>
+            </div>
             <div className="entity-responsavel-info">
               <span className="entity-responsavel-label">Responsável</span>
               <span className="entity-responsavel-name">{macro.responsavel.nome}</span>
@@ -296,8 +286,8 @@ export function MacroDetailPage({ bu, dominio, jornada, macro, onBack, onSelectP
           </div>
 
           <button className="entity-action-btn">
-            <Eye size={16} />
-            Visualizar aprovações
+            <Clock size={16} />
+            Visualizar histórico
           </button>
         </div>
 
