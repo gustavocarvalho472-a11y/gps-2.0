@@ -35,11 +35,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build showcase
-        run: npm run build:showcase
-
-      - name: Rename showcase.html to index.html
-        run: mv ./dist-showcase/showcase.html ./dist-showcase/index.html
+      - name: Build app
+        run: npx vite build --base=/gps-2.0/
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -47,7 +44,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist-showcase'
+          path: './dist'
 
   deploy:
     environment:
