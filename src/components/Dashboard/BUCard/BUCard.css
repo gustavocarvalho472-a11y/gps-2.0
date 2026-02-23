@@ -339,7 +339,7 @@
   justify-content: center;
   width: 28px;
   height: 28px;
-  border-radius: 6px;
+  border-radius: 8px;
   flex-shrink: 0;
 }
 
@@ -388,7 +388,7 @@
   height: 24px;
   background: var(--figma-primary-95);
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   color: var(--figma-primary-50);
   transition: all 0.15s ease;

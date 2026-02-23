@@ -18,7 +18,7 @@ import { OrganogramView } from './OrganogramView';
 import { businessUnits, vps, getVPById, totaisGlobais } from '../../data/organizationData';
 import type {
   BusinessUnit, DominioCompleto, JornadaCompleta,
-  MacroprocessoCompleto, DetailType, Processo
+  MacroprocessoCompleto, DetailType, Processo, VP
 } from '../../types';
 import './StructureView.css';
 
@@ -54,13 +54,17 @@ interface DetailPanelProps {
   onNavigateToProcesso?: (processo: Processo, bu?: BusinessUnit, dominio?: DominioCompleto, jornada?: JornadaCompleta, macro?: MacroprocessoCompleto) => void;
   // Open full page handler
   onOpenPage?: () => void;
+  // Drill-down within panel
+  onDrillDown?: (type: DetailType, data: any, breadcrumb: { type: DetailType; nome: string }[]) => void;
 }
 
-function DetailPanel({ isOpen, type, data, breadcrumb, onClose, parentBU, parentDominio, parentJornada, parentMacro: _parentMacro, onNavigateToBU: _onNavigateToBU, onNavigateToDominio, onNavigateToJornada, onNavigateToMacro, onNavigateToProcesso, onOpenPage }: DetailPanelProps) {
+function DetailPanel({ isOpen, type, data, breadcrumb, onClose, parentBU, parentDominio, parentJornada, parentMacro: _parentMacro, onNavigateToBU, onNavigateToDominio, onNavigateToJornada, onNavigateToMacro, onNavigateToProcesso, onOpenPage, onDrillDown }: DetailPanelProps) {
   if (!isOpen || !data || !type) return null;
 
   const getIcon = () => {
     switch (type) {
+      case 'ceo': return <Users />;
+      case 'vp': return <Users />;
       case 'bu': return <Building2 />;
       case 'dominio': return <Route />;
       case 'jornada': return <GitBranch />;
@@ -71,6 +75,157 @@ function DetailPanel({ isOpen, type, data, breadcrumb, onClose, parentBU, parent
 
   const renderContent = () => {
     switch (type) {
+      case 'ceo': {
+        const ceoData = data as any;
+        const activeVPs = vps.filter(vp => businessUnits.some(bu => bu.vpId === vp.id));
+        const totalProcs = businessUnits.reduce((acc, bu) => acc + bu.totalProcessos, 0);
+        return (
+          <>
+            {/* CEO Photo & Info */}
+            <div className="panel-section">
+              <div className="panel-owner-card">
+                <Avatar className="panel-owner-avatar">
+                  <AvatarImage src={ceoData.foto} alt={ceoData.nome} />
+                  <AvatarFallback>{ceoData.nome?.split(' ').map((n: string) => n[0]).join('').slice(0, 2)}</AvatarFallback>
+                </Avatar>
+                <div className="panel-owner-info">
+                  <p className="panel-owner-name">{ceoData.nome}</p>
+                  <p className="panel-owner-role">{ceoData.cargo || ceoData.area}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Stats */}
+            <div className="panel-stats-grid panel-stats-grid--3">
+              <div className="panel-stat-card panel-stat-card--dominio">
+                <div className="panel-stat-card-icon">
+                  <Users size={20} />
+                </div>
+                <div className="panel-stat-card-info">
+                  <span className="panel-stat-card-value">{activeVPs.length}</span>
+                  <span className="panel-stat-card-label">VPs</span>
+                </div>
+              </div>
+              <div className="panel-stat-card panel-stat-card--jornada">
+                <div className="panel-stat-card-icon">
+                  <Building2 size={20} />
+                </div>
+                <div className="panel-stat-card-info">
+                  <span className="panel-stat-card-value">{businessUnits.length}</span>
+                  <span className="panel-stat-card-label">Business Units</span>
+                </div>
+              </div>
+              <div className="panel-stat-card panel-stat-card--processo">
+                <div className="panel-stat-card-icon">
+                  <FileText size={20} />
+                </div>
+                <div className="panel-stat-card-info">
+                  <span className="panel-stat-card-value">{totalProcs}</span>
+                  <span className="panel-stat-card-label">Processos</span>
+                </div>
+              </div>
+            </div>
+
+            {/* VPs Cards */}
+            <div className="panel-section">
+              <h4 className="panel-section-title">Vice-Presidentes ({activeVPs.length})</h4>
+              <div className="panel-cards">
+                {activeVPs.map(vp => {
+                  const vpBUs = businessUnits.filter(bu => bu.vpId === vp.id);
+                  const vpProcs = vpBUs.reduce((acc, bu) => acc + bu.totalProcessos, 0);
+                  return (
+                    <button
+                      key={vp.id}
+                      className="panel-item-card panel-item-card--dominio"
+                      onClick={() => {
+                        const vpWithTotals = { ...vp, totalBUs: vpBUs.length, totalProcessos: vpProcs, bus: vpBUs };
+                        onDrillDown?.('vp', vpWithTotals, [{ type: 'vp', nome: vp.nome }]);
+                      }}
+                    >
+                      <div className="panel-item-card-icon" style={{ backgroundColor: '#F5EDFF', color: '#7C3AED' }}>
+                        <Users size={16} />
+                      </div>
+                      <div className="panel-item-card-content">
+                        <span className="panel-item-card-name">{vp.nome}</span>
+                        <span className="panel-item-card-meta">{vpBUs.length} BUs · {vpProcs} processos</span>
+                      </div>
+                      <ChevronRight className="panel-item-card-arrow" />
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </>
+        );
+      }
+      case 'vp': {
+        const vpData = data as VP & { totalBUs?: number; totalProcessos?: number; bus?: BusinessUnit[] };
+        const vpBUs = vpData.bus || businessUnits.filter(bu => bu.vpId === vpData.id);
+        const totalBUs = vpData.totalBUs || vpBUs.length;
+        const totalProcs = vpData.totalProcessos || vpBUs.reduce((acc, bu) => acc + bu.totalProcessos, 0);
+        return (
+          <>
+            {/* VP Photo & Info */}
+            <div className="panel-section">
+              <div className="panel-owner-card">
+                <Avatar className="panel-owner-avatar">
+                  <AvatarImage src={vpData.foto} alt={vpData.nome} />
+                  <AvatarFallback>{vpData.nome.split(' ').map(n => n[0]).join('').slice(0, 2)}</AvatarFallback>
+                </Avatar>
+                <div className="panel-owner-info">
+                  <p className="panel-owner-name">{vpData.nome}</p>
+                  <p className="panel-owner-role">{vpData.cargo}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Stats */}
+            <div className="panel-stats-grid panel-stats-grid--2">
+              <div className="panel-stat-card panel-stat-card--dominio">
+                <div className="panel-stat-card-icon">
+                  <Building2 size={20} />
+                </div>
+                <div className="panel-stat-card-info">
+                  <span className="panel-stat-card-value">{totalBUs}</span>
+                  <span className="panel-stat-card-label">Business Units</span>
+                </div>
+              </div>
+              <div className="panel-stat-card panel-stat-card--processo">
+                <div className="panel-stat-card-icon">
+                  <FileText size={20} />
+                </div>
+                <div className="panel-stat-card-info">
+                  <span className="panel-stat-card-value">{totalProcs}</span>
+                  <span className="panel-stat-card-label">Processos</span>
+                </div>
+              </div>
+            </div>
+
+            {/* BUs Cards */}
+            <div className="panel-section">
+              <h4 className="panel-section-title">Business Units ({vpBUs.length})</h4>
+              <div className="panel-cards">
+                {vpBUs.map(bu => (
+                  <button
+                    key={bu.id}
+                    className="panel-item-card panel-item-card--dominio"
+                    onClick={() => onNavigateToBU?.(bu)}
+                  >
+                    <div className="panel-item-card-icon" style={{ backgroundColor: bu.cor + '20', color: bu.cor }}>
+                      <Building2 size={16} />
+                    </div>
+                    <div className="panel-item-card-content">
+                      <span className="panel-item-card-name">{bu.nome}</span>
+                      <span className="panel-item-card-meta">{bu.totalProcessos} processos</span>
+                    </div>
+                    <ChevronRight className="panel-item-card-arrow" />
+                  </button>
+                ))}
+              </div>
+            </div>
+          </>
+        );
+      }
       case 'bu': {
         const bu = data as BusinessUnit;
         const vp = getVPById(bu.vpId);
@@ -480,7 +635,12 @@ export function StructureView({ onSelectBU, onSelectDominio, onSelectJornada, on
     setPanelOpen(true);
 
     // Update parent context based on type and provided context
-    if (type === 'bu') {
+    if (type === 'ceo' || type === 'vp') {
+      setParentBU(null);
+      setParentDominio(null);
+      setParentJornada(null);
+      setParentMacro(null);
+    } else if (type === 'bu') {
       setParentBU(data as BusinessUnit);
       setParentDominio(null);
       setParentJornada(null);
@@ -539,9 +699,6 @@ export function StructureView({ onSelectBU, onSelectDominio, onSelectJornada, on
           <div className="structure-header-left">
             <span className="structure-badge">GPS 2.0</span>
             <h1 className="structure-title">Estrutura Organizacional</h1>
-            <p className="structure-subtitle">
-              {totaisGlobais.totalBUs} Business Units · {totaisGlobais.totalDominios} Domínios · {totaisGlobais.totalProcessos.toLocaleString('pt-BR')} Processos
-            </p>
           </div>
         </header>
 
@@ -608,19 +765,26 @@ export function StructureView({ onSelectBU, onSelectDominio, onSelectJornada, on
               </div>
             )}
           </>
-        ) : activeView === 'tabela' ? (
-          <TableView
+        ) : activeView === 'organograma' ? (
+          <OrganogramView
             businessUnits={filteredBUs}
+            asInline={true}
             onSelectBU={onSelectBU}
+            onSelectDominio={onSelectDominio}
+            onSelectJornada={onSelectJornada}
+            onSelectMacro={onSelectMacro}
+            onSelectProcesso={onSelectProcesso}
+            onShowDetails={handleShowDetails}
           />
         ) : (
-          <OrganogramView
+          <TableView
             businessUnits={filteredBUs}
             onSelectBU={onSelectBU}
             onSelectDominio={onSelectDominio}
             onSelectJornada={onSelectJornada}
             onSelectMacro={onSelectMacro}
             onSelectProcesso={onSelectProcesso}
+            onShowDetails={handleShowDetails}
           />
         )}
       </div>
@@ -636,12 +800,13 @@ export function StructureView({ onSelectBU, onSelectDominio, onSelectJornada, on
         parentDominio={parentDominio}
         parentJornada={parentJornada}
         parentMacro={parentMacro}
-        onNavigateToBU={onSelectBU}
+        onNavigateToBU={(bu) => handleShowDetails('bu', bu, [{ type: 'bu', nome: bu.nome }])}
         onNavigateToDominio={onSelectDominio}
         onNavigateToJornada={onSelectJornada}
         onNavigateToMacro={onSelectMacro}
         onNavigateToProcesso={onSelectProcesso}
         onOpenPage={handleOpenPage}
+        onDrillDown={handleShowDetails}
       />
 
       {/* Overlay */}

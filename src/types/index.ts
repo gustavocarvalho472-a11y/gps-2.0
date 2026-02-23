@@ -20,6 +20,7 @@ export interface VP {
   cargo: string;
   foto?: string;
   cor: string; // Cor do VP para identificação visual
+  equipe?: Responsavel[]; // Pessoas no time direto (não donos de BU)
 }
 
 // Categoria de BU
@@ -36,6 +37,7 @@ export interface BusinessUnit {
   vpId: string; // ID do VP responsável
   responsavel: Responsavel;
   dominios: DominioCompleto[];
+  equipe?: Responsavel[]; // Pessoas no time da BU (não donos de domínio)
   // Métricas agregadas
   totalDominios: number;
   totalJornadas: number;
@@ -51,6 +53,7 @@ export interface DominioCompleto {
   descricao?: string;
   responsavel: Responsavel;
   jornadas: JornadaCompleta[];
+  equipe?: Responsavel[]; // Pessoas no domínio (não donos de jornada)
   // Métricas
   totalJornadas: number;
   totalMacroprocessos: number;
@@ -65,6 +68,7 @@ export interface JornadaCompleta {
   descricao?: string;
   responsavel: Responsavel;
   macroprocessos: MacroprocessoCompleto[];
+  equipe?: Responsavel[]; // Pessoas na jornada (não donos de macro)
   // Métricas
   totalMacroprocessos: number;
   totalProcessos: number;
@@ -78,6 +82,7 @@ export interface MacroprocessoCompleto {
   descricao?: string;
   responsavel: Responsavel;
   processos: Processo[];
+  equipe?: Responsavel[]; // Pessoas no macro (não donos de processo)
   // Métricas
   totalProcessos: number;
 }
@@ -180,7 +185,7 @@ export interface DonoJornada {
 }
 
 // Detail Panel - Para o modal lateral
-export type DetailType = 'bu' | 'dominio' | 'jornada' | 'macro' | 'processo';
+export type DetailType = 'ceo' | 'vp' | 'bu' | 'dominio' | 'jornada' | 'macro' | 'processo';
 
 export interface DetailPanelState {
   isOpen: boolean;

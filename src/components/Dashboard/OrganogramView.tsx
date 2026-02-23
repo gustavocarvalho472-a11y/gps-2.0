@@ -8,12 +8,12 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import {
   ChevronDown, ChevronRight, X, ZoomIn, ZoomOut, Maximize2, Minimize2,
   Building2, Route, GitBranch, Boxes, FileText, ExternalLink, Search, Home,
-  Mail, Calendar, MapPin, Briefcase, Clock, Cake, Users
+  Mail, Calendar, MapPin, Briefcase, Clock, Cake, Users, ChevronsDown, ChevronsUp
 } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import type {
   BusinessUnit, DominioCompleto, JornadaCompleta,
-  MacroprocessoCompleto, Processo, VP
+  MacroprocessoCompleto, Processo, VP, Responsavel, DetailType
 } from '../../types';
 import { vps } from '../../data/organizationData';
 import './OrganogramView.css';
@@ -25,6 +25,15 @@ interface OrganogramViewProps {
   onSelectJornada?: (jornada: JornadaCompleta) => void;
   onSelectMacro?: (macro: MacroprocessoCompleto) => void;
   onSelectProcesso?: (processo: Processo) => void;
+  onShowDetails?: (
+    type: DetailType,
+    data: any,
+    breadcrumb: { type: DetailType; nome: string }[],
+    context?: { bu?: BusinessUnit; dominio?: DominioCompleto; jornada?: JornadaCompleta }
+  ) => void;
+  asModal?: boolean;
+  asInline?: boolean;
+  onClose?: () => void;
 }
 
 // CEO Data
@@ -303,22 +312,18 @@ function ProfileModal({ isOpen, onClose, type, data, onOpenFullPage }: ProfileMo
 }
 
 // ========================================
-// ORG NODE CARD - Novo design
+// ORG NODE CARD - Design baseado no Figma
 // ========================================
 interface OrgNodeCardProps {
   tipo: 'ceo' | 'vp' | 'bu' | 'dominio' | 'jornada' | 'macro' | 'processo';
-  // Dados da pessoa
   pessoaNome: string;
   pessoaCargo?: string;
   pessoaFoto?: string;
-  // Dados do artefato
   artefatoCodigo?: string;
   artefatoNome?: string;
-  // Métricas
   totalJornadas?: number;
   totalMacros?: number;
   totalProcessos?: number;
-  // Outros
   cor?: string;
   isExpanded?: boolean;
   hasChildren?: boolean;
@@ -328,90 +333,185 @@ interface OrgNodeCardProps {
 }
 
 function OrgNodeCard({
-  tipo, pessoaNome, pessoaCargo, pessoaFoto, artefatoCodigo, artefatoNome,
-  totalJornadas, totalMacros, totalProcessos, cor,
-  isExpanded, hasChildren, onToggle, onClick, layout
+  tipo, pessoaNome, pessoaCargo, pessoaFoto, artefatoNome,
+  cor, isExpanded, hasChildren, onToggle, onClick, layout
 }: OrgNodeCardProps) {
-  const typeColors: Record<string, string> = {
+  // Border-left colors per Figma
+  const borderColors: Record<string, string> = {
     ceo: '#7C3AED',
     vp: '#7C3AED',
     bu: cor || '#9755FE',
-    dominio: '#0EA5E9',
-    jornada: '#22C55E',
-    macro: '#F59E0B',
-    processo: '#EC4899',
+    dominio: '#5E89BA',
+    jornada: '#9755FE',
+    macro: '#FFAD01',
+    processo: '#8038F0',
   };
 
-  const typeLabels: Record<string, string> = {
-    ceo: 'PRESIDÊNCIA',
-    vp: 'VP',
-    bu: 'BU',
-    dominio: 'DOMÍNIO',
-    jornada: 'JORNADA',
-    macro: 'MACRO',
-    processo: 'PROCESSO',
+  // Card background - quase branco com leve contraste ao board
+  const bgColors: Record<string, string> = {
+    ceo: '#FFFFFF',
+    vp: '#FFFFFF',
+    bu: '#FFFFFF',
+    dominio: '#FFFFFF',
+    jornada: '#FFFFFF',
+    macro: '#FFFFFF',
+    processo: '#FFFFFF',
   };
 
-  const bgColor = typeColors[tipo] || '#9755FE';
+  const ownershipLabels: Record<string, string> = {
+    ceo: 'Presidência',
+    vp: 'Vice-Presidência',
+    bu: 'Business Unit',
+    dominio: 'Domínio',
+    jornada: 'Jornada',
+    macro: 'Macroprocesso',
+    processo: 'Processo',
+  };
 
-  // Montar string de métricas
-  const metricsItems: string[] = [];
-  if (totalJornadas !== undefined && totalJornadas > 0) {
-    metricsItems.push(`${totalJornadas} jornadas`);
-  }
-  if (totalMacros !== undefined && totalMacros > 0) {
-    metricsItems.push(`${totalMacros} macros`);
-  }
-  if (totalProcessos !== undefined && totalProcessos > 0) {
-    metricsItems.push(`${totalProcessos} processos`);
-  }
+  const ownershipIcons: Record<string, React.ReactNode> = {
+    ceo: <Users size={20} />,
+    vp: <Users size={20} />,
+    bu: <Building2 size={20} />,
+    dominio: <Route size={20} />,
+    jornada: <GitBranch size={20} />,
+    macro: <Boxes size={20} />,
+    processo: <FileText size={20} />,
+  };
+
+  // Icon square bg colors per Figma
+  const iconBgColors: Record<string, string> = {
+    ceo: '#F5EDFF',
+    vp: '#F5EDFF',
+    bu: '#F5EDFF',
+    dominio: '#E0ECFA',
+    jornada: '#F5EDFF',
+    macro: '#FFFCDE',
+    processo: '#EBDDFF',
+  };
+
+  // Icon colors per Figma
+  const iconColors: Record<string, string> = {
+    ceo: '#7C3AED',
+    vp: '#7C3AED',
+    bu: '#9755FE',
+    dominio: '#5E89BA',
+    jornada: '#9755FE',
+    macro: '#FFAD01',
+    processo: '#8038F0',
+  };
+
+  const isDono = pessoaNome !== 'Não definido';
+
+  const ownerLabel = tipo === 'vp'
+    ? 'Vice-Presidente'
+    : isDono
+      ? `Dono ${tipo === 'bu' || tipo === 'jornada' ? 'da' : 'do'} ${ownershipLabels[tipo]}`
+      : 'Dono não atribuído';
 
   return (
-    <div className={`org-card org-card--${tipo} ${layout === 'vertical' ? 'org-card--vertical' : ''}`}>
-      <button
-        className="org-card-content"
-        onClick={onClick}
-        type="button"
-      >
+    <div
+      className={`org-card ${layout === 'vertical' ? 'org-card--vertical' : ''}`}
+      style={{ borderLeftColor: borderColors[tipo], backgroundColor: bgColors[tipo] }}
+    >
+      {/* Person section */}
+      <button className="org-card-person-section" onClick={onClick} type="button">
         <Avatar className="org-card-avatar">
           {pessoaFoto && <AvatarImage src={pessoaFoto} alt={pessoaNome} />}
-          <AvatarFallback style={{ backgroundColor: bgColor, color: '#fff' }}>
-            {getInitials(pessoaNome)}
+          <AvatarFallback style={{ backgroundColor: isDono ? borderColors[tipo] : '#D0D0D8', color: '#fff' }}>
+            {isDono ? getInitials(pessoaNome) : '?'}
           </AvatarFallback>
         </Avatar>
-        <div className="org-card-info">
-          {/* Tipo badge */}
-          <div className="org-card-type-row">
-            <span className="org-card-type" style={{ color: bgColor }}>{artefatoCodigo || typeLabels[tipo]}</span>
-          </div>
-          {/* Nome da pessoa */}
-          <span className="org-card-name">{pessoaNome}</span>
-          {/* Cargo */}
-          {pessoaCargo && <span className="org-card-cargo">{pessoaCargo}</span>}
-          {/* Artefato com métricas */}
-          {artefatoNome && (
-            <span className="org-card-artefato">
-              {artefatoNome}
-              {metricsItems.length > 0 && (
-                <span className="org-card-metrics"> - {metricsItems.join(' - ')}</span>
-              )}
-            </span>
-          )}
+        <div className="org-card-person-info">
+          <span className={`org-card-name ${!isDono ? 'org-card-name--empty' : ''}`}>
+            {isDono ? pessoaNome : 'Sem dono definido'}
+          </span>
+          {pessoaCargo && isDono && <span className="org-card-cargo">{pessoaCargo}</span>}
         </div>
       </button>
-      {hasChildren && (
+
+      {/* Ownership pill - Figma "Domain Wrapper" */}
+      {tipo !== 'ceo' && (
+        <div className="org-card-pill" onClick={onClick} role="button" tabIndex={0}>
+          <div className="org-card-pill-left">
+            <div
+              className="org-card-pill-icon"
+              style={{ backgroundColor: isDono ? iconBgColors[tipo] : '#F0F0F2', color: isDono ? iconColors[tipo] : '#A8A8B3' }}
+            >
+              {ownershipIcons[tipo]}
+            </div>
+            <div className="org-card-pill-info">
+              <span className="org-card-pill-label">{ownerLabel}</span>
+              {artefatoNome && <span className="org-card-pill-artefato">{artefatoNome}</span>}
+            </div>
+          </div>
+          {hasChildren && (
+            <button
+              className={`org-card-pill-chevron ${isExpanded ? 'org-card-pill-chevron--open' : ''}`}
+              onClick={(e) => { e.stopPropagation(); onToggle?.(); }}
+              type="button"
+            >
+              <ChevronDown size={16} />
+            </button>
+          )}
+        </div>
+      )}
+
+      {/* CEO has no pill, just a simple toggle */}
+      {tipo === 'ceo' && hasChildren && (
+        <div className="org-card-pill" onClick={(e) => { e.stopPropagation(); onToggle?.(); }} role="button" tabIndex={0}>
+          <span className="org-card-pill-ceo-text">{artefatoNome}</span>
+          <button
+            className={`org-card-pill-chevron ${isExpanded ? 'org-card-pill-chevron--open' : ''}`}
+            onClick={(e) => { e.stopPropagation(); onToggle?.(); }}
+            type="button"
+          >
+            <ChevronDown size={16} />
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ========================================
+// TEAM MEMBER CARD - Colaborador (Figma variant)
+// ========================================
+interface TeamMemberCardProps {
+  pessoa: Responsavel;
+  onClick?: () => void;
+  layout: LayoutMode;
+}
+
+function TeamMemberCard({ pessoa, onClick, layout }: TeamMemberCardProps) {
+  return (
+    <div
+      className={`org-card org-card--team ${layout === 'vertical' ? 'org-card--vertical' : ''}`}
+    >
+      {/* Person section */}
+      <button className="org-card-person-section" onClick={onClick} type="button">
+        <Avatar className="org-card-avatar">
+          {pessoa.foto && <AvatarImage src={pessoa.foto} alt={pessoa.nome} />}
+          <AvatarFallback style={{ backgroundColor: '#C4C3D0', color: '#fff' }}>
+            {getInitials(pessoa.nome)}
+          </AvatarFallback>
+        </Avatar>
+        <div className="org-card-person-info">
+          <span className="org-card-name">{pessoa.nome}</span>
+          <span className="org-card-cargo">{pessoa.cargo || pessoa.area}</span>
+        </div>
+      </button>
+
+      {/* Colaborador pill */}
+      <div className="org-card-pill" onClick={onClick} role="button" tabIndex={0}>
+        <span className="org-card-pill-colab-text">Ver mais detalhes do colaborador</span>
         <button
-          className={`org-card-toggle ${isExpanded ? 'org-card-toggle--expanded' : ''}`}
-          onClick={(e) => { e.stopPropagation(); onToggle?.(); }}
+          className="org-card-pill-chevron"
+          onClick={(e) => { e.stopPropagation(); onClick?.(); }}
           type="button"
         >
-          {layout === 'vertical' ? (
-            isExpanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />
-          ) : (
-            <ChevronDown size={14} />
-          )}
+          <ChevronDown size={16} />
         </button>
-      )}
+      </div>
     </div>
   );
 }
@@ -504,7 +604,7 @@ interface JornadaNodeProps {
 
 function JornadaNode({ jornada, layout, expanded, onToggle, onOpenModal }: JornadaNodeProps) {
   const isExpanded = expanded[jornada.id] || false;
-  const hasChildren = jornada.macroprocessos && jornada.macroprocessos.length > 0;
+  const hasChildren = (jornada.macroprocessos && jornada.macroprocessos.length > 0) || (jornada.equipe && jornada.equipe.length > 0);
 
   return (
     <div className={`org-tree-node ${layout === 'vertical' ? 'org-tree-node--vertical' : ''}`}>
@@ -519,7 +619,7 @@ function JornadaNode({ jornada, layout, expanded, onToggle, onOpenModal }: Jorna
           artefatoNome={jornada.nome}
           totalMacros={jornada.totalMacroprocessos}
           totalProcessos={jornada.totalProcessos}
-          hasChildren={hasChildren}
+          hasChildren={!!hasChildren}
           isExpanded={isExpanded}
           onToggle={() => onToggle(jornada.id)}
           onClick={() => onOpenModal('jornada', jornada)}
@@ -536,6 +636,12 @@ function JornadaNode({ jornada, layout, expanded, onToggle, onOpenModal }: Jorna
                 onToggle={onToggle}
                 onOpenModal={onOpenModal}
               />
+            ))}
+            {jornada.equipe?.map(pessoa => (
+              <div key={pessoa.id} className={`org-tree-node ${layout === 'vertical' ? 'org-tree-node--vertical' : ''}`}>
+                <div className="org-tree-connector" />
+                <TeamMemberCard pessoa={pessoa} layout={layout} onClick={() => onOpenModal('jornada', pessoa)} />
+              </div>
             ))}
           </div>
         )}
@@ -555,7 +661,7 @@ interface DominioNodeProps {
 
 function DominioNode({ dominio, layout, expanded, onToggle, onOpenModal }: DominioNodeProps) {
   const isExpanded = expanded[dominio.id] || false;
-  const hasChildren = dominio.jornadas && dominio.jornadas.length > 0;
+  const hasChildren = (dominio.jornadas && dominio.jornadas.length > 0) || (dominio.equipe && dominio.equipe.length > 0);
 
   return (
     <div className={`org-tree-node ${layout === 'vertical' ? 'org-tree-node--vertical' : ''}`}>
@@ -571,7 +677,7 @@ function DominioNode({ dominio, layout, expanded, onToggle, onOpenModal }: Domin
           totalJornadas={dominio.totalJornadas}
           totalMacros={dominio.totalMacroprocessos}
           totalProcessos={dominio.totalProcessos}
-          hasChildren={hasChildren}
+          hasChildren={!!hasChildren}
           isExpanded={isExpanded}
           onToggle={() => onToggle(dominio.id)}
           onClick={() => onOpenModal('dominio', dominio)}
@@ -588,6 +694,12 @@ function DominioNode({ dominio, layout, expanded, onToggle, onOpenModal }: Domin
                 onToggle={onToggle}
                 onOpenModal={onOpenModal}
               />
+            ))}
+            {dominio.equipe?.map(pessoa => (
+              <div key={pessoa.id} className={`org-tree-node ${layout === 'vertical' ? 'org-tree-node--vertical' : ''}`}>
+                <div className="org-tree-connector" />
+                <TeamMemberCard pessoa={pessoa} layout={layout} onClick={() => onOpenModal('dominio', pessoa)} />
+              </div>
             ))}
           </div>
         )}
@@ -607,7 +719,7 @@ interface BUNodeProps {
 
 function BUNode({ bu, layout, expanded, onToggle, onOpenModal }: BUNodeProps) {
   const isExpanded = expanded[bu.id] || false;
-  const hasChildren = bu.dominios && bu.dominios.length > 0;
+  const hasChildren = (bu.dominios && bu.dominios.length > 0) || (bu.equipe && bu.equipe.length > 0);
 
   return (
     <div className={`org-tree-node ${layout === 'vertical' ? 'org-tree-node--vertical' : ''}`}>
@@ -624,7 +736,7 @@ function BUNode({ bu, layout, expanded, onToggle, onOpenModal }: BUNodeProps) {
           totalMacros={bu.totalMacroprocessos}
           totalProcessos={bu.totalProcessos}
           cor={bu.cor}
-          hasChildren={hasChildren}
+          hasChildren={!!hasChildren}
           isExpanded={isExpanded}
           onToggle={() => onToggle(bu.id)}
           onClick={() => onOpenModal('bu', bu)}
@@ -641,6 +753,12 @@ function BUNode({ bu, layout, expanded, onToggle, onOpenModal }: BUNodeProps) {
                 onToggle={onToggle}
                 onOpenModal={onOpenModal}
               />
+            ))}
+            {bu.equipe?.map(pessoa => (
+              <div key={pessoa.id} className={`org-tree-node ${layout === 'vertical' ? 'org-tree-node--vertical' : ''}`}>
+                <div className="org-tree-connector" />
+                <TeamMemberCard pessoa={pessoa} layout={layout} onClick={() => onOpenModal('bu', pessoa)} />
+              </div>
             ))}
           </div>
         )}
@@ -661,7 +779,7 @@ interface VPNodeProps {
 
 function VPNode({ vp, bus, layout, expanded, onToggle, onOpenModal }: VPNodeProps) {
   const isExpanded = expanded[vp.id] || false;
-  const hasChildren = bus.length > 0;
+  const hasChildren = bus.length > 0 || (vp.equipe && vp.equipe.length > 0);
 
   // Calcular totais
   const totalBUs = bus.length;
@@ -679,7 +797,7 @@ function VPNode({ vp, bus, layout, expanded, onToggle, onOpenModal }: VPNodeProp
           artefatoNome={`${totalBUs} Business Units`}
           totalProcessos={totalProcessos}
           cor={vp.cor}
-          hasChildren={hasChildren}
+          hasChildren={!!hasChildren}
           isExpanded={isExpanded}
           onToggle={() => onToggle(vp.id)}
           onClick={() => onOpenModal('vp', { ...vp, totalBUs, totalProcessos })}
@@ -697,6 +815,12 @@ function VPNode({ vp, bus, layout, expanded, onToggle, onOpenModal }: VPNodeProp
                 onOpenModal={onOpenModal}
               />
             ))}
+            {vp.equipe?.map(pessoa => (
+              <div key={pessoa.id} className={`org-tree-node ${layout === 'vertical' ? 'org-tree-node--vertical' : ''}`}>
+                <div className="org-tree-connector" />
+                <TeamMemberCard pessoa={pessoa} layout={layout} onClick={() => onOpenModal('vp', pessoa)} />
+              </div>
+            ))}
           </div>
         )}
       </div>
@@ -713,7 +837,11 @@ export function OrganogramView({
   onSelectDominio,
   onSelectJornada,
   onSelectMacro,
-  onSelectProcesso
+  onSelectProcesso,
+  onShowDetails,
+  asModal = false,
+  asInline = false,
+  onClose,
 }: OrganogramViewProps) {
   // Fullscreen state
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -728,7 +856,7 @@ export function OrganogramView({
   const [searchTerm, setSearchTerm] = useState('');
 
   // Zoom and pan
-  const [scale, setScale] = useState(0.7);
+  const [scale, setScale] = useState(asInline ? 0.6 : asModal ? 0.5 : 0.7);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
@@ -762,12 +890,64 @@ export function OrganogramView({
     setExpanded(prev => ({ ...prev, [id]: !prev[id] }));
   }, []);
 
-  // Open modal
+  // Find parent chain for breadcrumb building
+  const findParentChain = useCallback((type: string, data: any): { bu?: BusinessUnit; dominio?: DominioCompleto; jornada?: JornadaCompleta } => {
+    if (type === 'bu') return { bu: data };
+    for (const bu of businessUnits) {
+      for (const dom of bu.dominios) {
+        if (type === 'dominio' && dom.id === data.id) return { bu, dominio: dom };
+        for (const jor of dom.jornadas) {
+          if (type === 'jornada' && jor.id === data.id) return { bu, dominio: dom, jornada: jor };
+          for (const macro of jor.macroprocessos) {
+            if (type === 'macro' && macro.id === data.id) return { bu, dominio: dom, jornada: jor };
+            for (const proc of macro.processos) {
+              if (type === 'processo' && proc.id === data.id) return { bu, dominio: dom, jornada: jor };
+            }
+          }
+        }
+      }
+    }
+    return {};
+  }, [businessUnits]);
+
+  // Build breadcrumb from parent chain
+  const buildBreadcrumb = useCallback((type: string, data: any, parents: { bu?: BusinessUnit; dominio?: DominioCompleto; jornada?: JornadaCompleta }): { type: DetailType; nome: string }[] => {
+    const crumbs: { type: DetailType; nome: string }[] = [];
+    if (parents.bu) crumbs.push({ type: 'bu', nome: parents.bu.nome });
+    if (parents.dominio && type !== 'bu') crumbs.push({ type: 'dominio', nome: parents.dominio.nome });
+    if (parents.jornada && type !== 'bu' && type !== 'dominio') crumbs.push({ type: 'jornada', nome: parents.jornada.nome });
+    if ((type === 'macro' || type === 'processo') && data.nome) crumbs.push({ type: type as DetailType, nome: data.nome });
+    else if (type === 'dominio' || type === 'jornada') {
+      // Already added above
+    }
+    return crumbs;
+  }, []);
+
+  // Open modal or detail panel
   const handleOpenModal = useCallback((type: string, data: any) => {
+    const detailTypes: string[] = ['ceo', 'vp', 'bu', 'dominio', 'jornada', 'macro', 'processo'];
+    if (onShowDetails && detailTypes.includes(type)) {
+      // Exit fullscreen so the lateral panel is visible
+      if (isFullscreen) {
+        setIsFullscreen(false);
+      }
+      if (type === 'ceo') {
+        onShowDetails('ceo', data, [{ type: 'ceo', nome: data.nome || 'CEO' }]);
+        return;
+      }
+      if (type === 'vp') {
+        onShowDetails('vp', data, [{ type: 'vp', nome: data.nome }]);
+        return;
+      }
+      const parents = findParentChain(type, data);
+      const breadcrumb = buildBreadcrumb(type, data, parents);
+      onShowDetails(type as DetailType, data, breadcrumb, parents);
+      return;
+    }
     setModalType(type);
     setModalData(data);
     setModalOpen(true);
-  }, []);
+  }, [onShowDetails, findParentChain, buildBreadcrumb, isFullscreen]);
 
   // Close modal
   const handleCloseModal = useCallback(() => {
@@ -830,26 +1010,30 @@ export function OrganogramView({
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (canvas && isFullscreen) {
+    if (canvas && (isFullscreen || asModal || asInline)) {
       canvas.addEventListener('wheel', handleWheel, { passive: false });
       return () => canvas.removeEventListener('wheel', handleWheel);
     }
-  }, [handleWheel, isFullscreen]);
+  }, [handleWheel, isFullscreen, asModal, asInline]);
 
-  // ESC to close fullscreen
+  // ESC to close fullscreen or modal
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isFullscreen) {
-        setIsFullscreen(false);
+      if (e.key === 'Escape') {
+        if (isFullscreen) {
+          setIsFullscreen(false);
+        } else if (asModal) {
+          onClose?.();
+        }
       }
     };
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [isFullscreen]);
+  }, [isFullscreen, asModal, onClose]);
 
-  // Prevent body scroll when fullscreen
+  // Prevent body scroll when fullscreen or modal (not inline)
   useEffect(() => {
-    if (isFullscreen) {
+    if (isFullscreen || asModal) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -857,7 +1041,7 @@ export function OrganogramView({
     return () => {
       document.body.style.overflow = '';
     };
-  }, [isFullscreen]);
+  }, [isFullscreen, asModal]);
 
   // Open fullscreen on mount
   const handleOpenFullscreen = () => {
@@ -879,7 +1063,234 @@ export function OrganogramView({
     setExpanded(newExpanded);
   };
 
-  // Preview card for non-fullscreen mode
+  // Inline mode - embedded in content area (like cards/table views)
+  if (!isFullscreen && asInline) {
+    return (
+      <>
+        <div className="organogram-inline">
+          {/* Toolbar */}
+          <div className="organogram-inline-toolbar">
+            <div className="organogram-inline-toolbar-left">
+              <span className="organogram-inline-info">
+                {activeVPs.length} VPs · {businessUnits.length} BUs · {totalProcessos.toLocaleString('pt-BR')} Processos
+              </span>
+            </div>
+            <div className="organogram-inline-toolbar-right">
+              <button className="organogram-expand-btn" onClick={handleOpenFullscreen}>
+                <Maximize2 size={16} />
+                <span>Expandir visualização</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Canvas */}
+          <div
+            ref={canvasRef}
+            className={`organogram-inline-canvas ${isDragging ? 'organogram-canvas--dragging' : ''}`}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+          >
+            <div
+              className="organogram-inline-tree"
+              style={{
+                transform: `translate(calc(-50% + ${position.x}px), ${position.y}px) scale(${scale})`,
+              }}
+            >
+              <div className={`org-tree ${layout === 'vertical' ? 'org-tree--vertical' : ''}`}>
+                {/* CEO */}
+                <div className="org-tree-root">
+                  <OrgNodeCard
+                    tipo="ceo"
+                    pessoaNome={ceo.nome}
+                    pessoaCargo={ceo.area}
+                    pessoaFoto={ceo.foto}
+                    artefatoNome={`${activeVPs.length} Vice-Presidentes`}
+                    totalProcessos={totalProcessos}
+                    cor={ceo.cor}
+                    hasChildren={activeVPs.length > 0}
+                    isExpanded={expanded['ceo'] !== false}
+                    onToggle={() => handleToggle('ceo')}
+                    onClick={() => handleOpenModal('ceo', ceo)}
+                    layout={layout}
+                  />
+                </div>
+
+                {/* VPs */}
+                {expanded['ceo'] !== false && activeVPs.length > 0 && (
+                  <div className={`org-tree-children org-tree-children--root ${layout === 'vertical' ? 'org-tree-children--vertical' : ''}`}>
+                    {activeVPs.map(vp => (
+                      <VPNode
+                        key={vp.id}
+                        vp={vp}
+                        bus={busByVP[vp.id] || []}
+                        layout={layout}
+                        expanded={expanded}
+                        onToggle={handleToggle}
+                        onOpenModal={handleOpenModal}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {businessUnits.length === 0 && (
+                <div className="organogram-empty">
+                  <p>Nenhuma Business Unit encontrada</p>
+                </div>
+              )}
+            </div>
+
+            {/* Zoom controls */}
+            <div className="organogram-inline-zoom">
+              <button className="organogram-zoom-btn" onClick={handleZoomOut} title="Diminuir zoom"><ZoomOut size={16} /></button>
+              <span className="organogram-zoom-level">{Math.round(scale * 100)}%</span>
+              <button className="organogram-zoom-btn" onClick={handleZoomIn} title="Aumentar zoom"><ZoomIn size={16} /></button>
+            </div>
+          </div>
+        </div>
+
+        {/* Profile Modal */}
+        <ProfileModal
+          isOpen={modalOpen}
+          onClose={handleCloseModal}
+          type={modalType as any}
+          data={modalData}
+          onOpenFullPage={modalType && modalType !== 'ceo' && modalType !== 'vp' ? handleOpenFullPage : undefined}
+        />
+      </>
+    );
+  }
+
+  // Modal mode - overlay dialog with organogram tree
+  if (!isFullscreen && asModal) {
+    return (
+      <>
+        <div className="organogram-modal-overlay" onClick={onClose}>
+          <div className="organogram-modal" onClick={e => e.stopPropagation()}>
+            {/* Header */}
+            <header className="organogram-modal-header">
+              <div className="organogram-modal-header-left">
+                <div className="organogram-modal-icon-wrap">
+                  <GitBranch size={22} />
+                </div>
+                <div>
+                  <h2 className="organogram-modal-title">Hierarquia Organizacional</h2>
+                  <p className="organogram-modal-subtitle">
+                    {activeVPs.length} VPs · {businessUnits.length} BUs · {totalProcessos.toLocaleString('pt-BR')} Processos
+                  </p>
+                </div>
+              </div>
+              <div className="organogram-modal-header-right">
+                <button className="organogram-expand-btn" onClick={handleOpenFullscreen}>
+                  <Maximize2 size={16} />
+                  <span>Expandir visualização</span>
+                </button>
+              </div>
+            </header>
+
+            {/* Legend */}
+            <div className="organogram-legend-bar">
+              <div className="organogram-legend-items">
+                <span className="organogram-legend-item"><span className="organogram-legend-dot" style={{ background: '#7C3AED' }} />VP</span>
+                <span className="organogram-legend-item"><span className="organogram-legend-dot" style={{ background: '#9755FE' }} />BU</span>
+                <span className="organogram-legend-item"><span className="organogram-legend-dot" style={{ background: '#0EA5E9' }} />Domínio</span>
+                <span className="organogram-legend-item"><span className="organogram-legend-dot" style={{ background: '#22C55E' }} />Jornada</span>
+                <span className="organogram-legend-item"><span className="organogram-legend-dot" style={{ background: '#F59E0B' }} />Macro</span>
+                <span className="organogram-legend-item"><span className="organogram-legend-dot" style={{ background: '#EC4899' }} />Processo</span>
+              </div>
+            </div>
+
+            {/* Canvas */}
+            <div
+              ref={canvasRef}
+              className={`organogram-modal-canvas ${isDragging ? 'organogram-canvas--dragging' : ''}`}
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseUp}
+            >
+              <div
+                className="organogram-modal-tree"
+                style={{
+                  transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
+                  transformOrigin: 'top center',
+                }}
+              >
+                <div className={`org-tree ${layout === 'vertical' ? 'org-tree--vertical' : ''}`}>
+                  {/* CEO */}
+                  <div className="org-tree-root">
+                    <OrgNodeCard
+                      tipo="ceo"
+                      pessoaNome={ceo.nome}
+                      pessoaCargo={ceo.area}
+                      pessoaFoto={ceo.foto}
+                      artefatoNome={`${activeVPs.length} Vice-Presidentes`}
+                      totalProcessos={totalProcessos}
+                      cor={ceo.cor}
+                      hasChildren={activeVPs.length > 0}
+                      isExpanded={expanded['ceo'] !== false}
+                      onToggle={() => handleToggle('ceo')}
+                      onClick={() => handleOpenModal('ceo', ceo)}
+                      layout={layout}
+                    />
+                  </div>
+
+                  {/* VPs */}
+                  {expanded['ceo'] !== false && activeVPs.length > 0 && (
+                    <div className={`org-tree-children org-tree-children--root ${layout === 'vertical' ? 'org-tree-children--vertical' : ''}`}>
+                      {activeVPs.map(vp => (
+                        <VPNode
+                          key={vp.id}
+                          vp={vp}
+                          bus={busByVP[vp.id] || []}
+                          layout={layout}
+                          expanded={expanded}
+                          onToggle={handleToggle}
+                          onOpenModal={handleOpenModal}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {businessUnits.length === 0 && (
+                  <div className="organogram-empty">
+                    <p>Nenhuma Business Unit encontrada</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Zoom controls */}
+            <div className="organogram-modal-zoom">
+              <button className="organogram-zoom-btn" onClick={handleZoomOut} title="Diminuir zoom"><ZoomOut size={16} /></button>
+              <span className="organogram-zoom-level">{Math.round(scale * 100)}%</span>
+              <button className="organogram-zoom-btn" onClick={handleZoomIn} title="Aumentar zoom"><ZoomIn size={16} /></button>
+            </div>
+
+            {/* Footer CTA */}
+            <button className="organogram-modal-cta" onClick={handleOpenFullscreen}>
+              <Maximize2 size={16} />
+              <span>Clique para ter a visualização completa</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Profile Modal */}
+        <ProfileModal
+          isOpen={modalOpen}
+          onClose={handleCloseModal}
+          type={modalType as any}
+          data={modalData}
+          onOpenFullPage={modalType && modalType !== 'ceo' && modalType !== 'vp' ? handleOpenFullPage : undefined}
+        />
+      </>
+    );
+  }
+
+  // Preview card for non-fullscreen, non-modal mode
   if (!isFullscreen) {
     return (
       <div className="organogram-preview">
@@ -912,11 +1323,15 @@ export function OrganogramView({
       {/* Header */}
       <header className="organogram-header">
         <div className="organogram-header-left">
-          <button className="organogram-back-btn" onClick={() => setIsFullscreen(false)}>
-            <Home size={18} />
-            <span>Voltar</span>
-          </button>
-          <div className="organogram-header-divider" />
+          <svg width="32" height="32" viewBox="0 0 40 40" fill="none" style={{ flexShrink: 0 }}>
+            <path
+              d="M20 5C11.716 5 5 11.716 5 20c0 8.284 6.716 15 15 15 3.866 0 7.39-1.462 10.056-3.865"
+              stroke="#9755FE"
+              strokeWidth="3"
+              strokeLinecap="round"
+            />
+            <circle cx="28" cy="12" r="4" fill="#9755FE" />
+          </svg>
           <h1 className="organogram-title">Hierarquia Organizacional</h1>
         </div>
 
@@ -933,72 +1348,11 @@ export function OrganogramView({
         </div>
 
         <div className="organogram-header-right">
-          {/* Layout Toggle */}
-          <div className="organogram-layout-toggle">
-            <span className="organogram-layout-label">Layout</span>
-            <div className="organogram-layout-switch">
-              <button
-                className={`organogram-layout-btn ${layout === 'horizontal' ? 'organogram-layout-btn--active' : ''}`}
-                onClick={() => setLayout('horizontal')}
-              >
-                Horizontal
-              </button>
-              <button
-                className={`organogram-layout-btn ${layout === 'vertical' ? 'organogram-layout-btn--active' : ''}`}
-                onClick={() => setLayout('vertical')}
-              >
-                Vertical
-              </button>
-            </div>
-          </div>
-
-          <div className="organogram-header-divider" />
-
-          {/* Quick actions */}
-          <button className="organogram-action-btn" onClick={handleCollapseAll} title="Recolher tudo">
-            <Minimize2 size={18} />
-          </button>
-          <button className="organogram-action-btn" onClick={handleExpandFirstLevel} title="Expandir VPs">
-            <Maximize2 size={18} />
-          </button>
-
-          <div className="organogram-header-divider" />
-
           <button className="organogram-close-btn" onClick={() => setIsFullscreen(false)}>
             <X size={20} />
           </button>
         </div>
       </header>
-
-      {/* Legend */}
-      <div className="organogram-legend-bar">
-        <div className="organogram-legend-items">
-          <span className="organogram-legend-item">
-            <span className="organogram-legend-dot" style={{ background: '#7C3AED' }} />
-            VP
-          </span>
-          <span className="organogram-legend-item">
-            <span className="organogram-legend-dot" style={{ background: '#9755FE' }} />
-            BU
-          </span>
-          <span className="organogram-legend-item">
-            <span className="organogram-legend-dot" style={{ background: '#0EA5E9' }} />
-            Domínio
-          </span>
-          <span className="organogram-legend-item">
-            <span className="organogram-legend-dot" style={{ background: '#22C55E' }} />
-            Jornada
-          </span>
-          <span className="organogram-legend-item">
-            <span className="organogram-legend-dot" style={{ background: '#F59E0B' }} />
-            Macro
-          </span>
-          <span className="organogram-legend-item">
-            <span className="organogram-legend-dot" style={{ background: '#EC4899' }} />
-            Processo
-          </span>
-        </div>
-      </div>
 
       {/* Canvas */}
       <div

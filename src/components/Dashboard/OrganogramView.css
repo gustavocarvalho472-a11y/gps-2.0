@@ -162,7 +162,7 @@
   padding: 8px 16px;
   border: 1px solid #EEEEF0;
   background: #FFFFFF;
-  border-radius: 8px;
+  border-radius: 100px;
   font-family: 'Avenir LT Std', var(--font-body), sans-serif;
   font-size: 13px;
   font-weight: 600;
@@ -233,7 +233,7 @@
   border: 1px solid #EEEEF0;
   background: #FFFFFF;
   color: #5C5B6B;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
@@ -254,7 +254,7 @@
   border: none;
   background: #FEE2E2;
   color: #EF4444;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
@@ -280,7 +280,7 @@
   display: flex;
   align-items: center;
   background: #F0F0F2;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 3px;
 }
 
@@ -292,7 +292,7 @@
   font-size: 12px;
   color: #838199;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 10px;
   transition: all 0.2s ease;
 }
 
@@ -382,7 +382,7 @@
   gap: 4px;
   background: #FFFFFF;
   padding: 8px 12px;
-  border-radius: 12px;
+  border-radius: 999px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   z-index: 100;
 }
@@ -397,7 +397,7 @@
   border: none;
   background: #FFFFFF;
   color: #5C5B6B;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
@@ -458,6 +458,141 @@
   color: #838199;
   font-family: 'Avenir LT Std', var(--font-body), sans-serif;
   font-size: 16px;
+}
+
+/* ========================================
+   INLINE MODE (embedded in content area)
+   ======================================== */
+
+.organogram-inline {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #EEEEF0;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #FFFFFF;
+  margin-top: 4px;
+}
+
+.organogram-inline-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 1px solid #EEEEF0;
+  background: #FAFAFA;
+  flex-shrink: 0;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.organogram-inline-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.organogram-inline-info {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #5C5B6B;
+}
+
+.organogram-inline-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.organogram-inline-divider {
+  width: 1px;
+  height: 22px;
+  background: #DDDDE2;
+  margin: 0 4px;
+}
+
+.organogram-inline-layout-switch {
+  display: flex;
+  align-items: center;
+  background: #EEEEF0;
+  border-radius: 12px;
+  padding: 3px;
+}
+
+.organogram-inline-layout-btn {
+  padding: 5px 12px;
+  border: none;
+  background: transparent;
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #838199;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.15s ease;
+}
+
+.organogram-inline-layout-btn:hover {
+  color: #5C5B6B;
+}
+
+.organogram-inline-layout-btn--active {
+  background: #FFFFFF;
+  color: #3C3B4C;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.organogram-action-btn--primary {
+  background: #F8F4FF;
+  border-color: #E0D4F5;
+  color: #9755FE;
+}
+
+.organogram-action-btn--primary:hover {
+  background: #9755FE;
+  border-color: #9755FE;
+  color: #FFFFFF;
+}
+
+.organogram-inline-canvas {
+  position: relative;
+  height: 600px;
+  overflow: hidden;
+  cursor: grab;
+  background-color: #F7F6F9;
+  background-image:
+    radial-gradient(circle at 1px 1px, #E8E7EE 0.5px, transparent 0.5px);
+  background-size: 20px 20px;
+}
+
+.organogram-inline-canvas:active,
+.organogram-inline-canvas.organogram-canvas--dragging {
+  cursor: grabbing;
+}
+
+.organogram-inline-tree {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform-origin: top center;
+  padding: 24px 48px 48px;
+}
+
+.organogram-inline-zoom {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: white;
+  border: 1px solid #EFEFF2;
+  border-radius: 10px;
+  padding: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  z-index: 10;
 }
 
 /* ========================================
@@ -590,174 +725,216 @@
 }
 
 /* ========================================
-   ORG CARD - NOVO DESIGN
-   Cards com Nome, Cargo, Artefato e Métricas
+   ORG CARD - Figma Design
+   Gray bg card + person section + white pill
    ======================================== */
 
 .org-card {
   display: flex;
-  align-items: stretch;
+  flex-direction: column;
   background: #FFFFFF;
-  border: 1px solid #EEEEF0;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  overflow: hidden;
-  transition: all 0.2s ease;
-  min-width: 220px;
-  max-width: 280px;
+  border-left: 3px solid #9755FE;
+  border-radius: 16px;
+  padding: 12px;
+  width: 312px;
+  min-width: 280px;
+  max-width: 340px;
+  gap: 10px;
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+  cursor: default;
 }
 
 .org-card:hover {
-  border-color: #D0D0D8;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   transform: translateY(-1px);
 }
 
-.org-card--ceo {
-  border-left: 4px solid #7C3AED;
-  min-width: 240px;
+/* Team/Colaborador variant */
+.org-card--team {
+  border-left-color: #E1CDFE;
 }
 
-.org-card--vp {
-  border-left: 4px solid #7C3AED;
-}
-
-.org-card--bu {
-  border-left: 4px solid #9755FE;
-}
-
-.org-card--dominio {
-  border-left: 4px solid #0EA5E9;
-}
-
-.org-card--jornada {
-  border-left: 4px solid #22C55E;
-}
-
-.org-card--macro {
-  border-left: 4px solid #F59E0B;
-}
-
-.org-card--processo {
-  border-left: 4px solid #EC4899;
-}
-
-.org-card-content {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 12px 14px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  flex: 1;
-  text-align: left;
-  min-width: 0;
-}
-
-.org-card-content:hover {
-  background: #FAFAFA;
-}
-
-.org-card-avatar {
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.org-card-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-  flex: 1;
-}
-
-.org-card-type-row {
+/* Person section: avatar + info */
+.org-card-person-section {
   display: flex;
   align-items: center;
   gap: 8px;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  border-radius: 6px;
+  transition: background 0.15s ease;
 }
 
-.org-card-type {
-  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
-  font-size: 9px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+.org-card-person-section:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.org-card-avatar {
+  width: 41px;
+  height: 41px;
+  flex-shrink: 0;
+  border: 1px solid #FFFFFF;
+  border-radius: 200px;
+}
+
+.org-card-person-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
 }
 
 .org-card-name {
   font-family: 'Avenir LT Std', var(--font-body), sans-serif;
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 400;
   color: #3C3B4C;
-  line-height: 1.3;
+  line-height: 1.4;
+  letter-spacing: -0.8px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
+.org-card-name--empty {
+  color: #A8A8B3;
+  font-style: italic;
+}
+
 .org-card-cargo {
   font-family: 'Avenir LT Std', var(--font-body), sans-serif;
-  font-size: 11px;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: 400;
   color: #838199;
+  line-height: 16px;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.org-card-artefato {
-  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
-  font-size: 10px;
-  color: #5C5B6B;
-  line-height: 1.4;
-  margin-top: 2px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+/* Ownership pill - white rounded bar at bottom */
+.org-card-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #FFFFFF;
+  border-radius: 100px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background 0.15s ease;
 }
 
-.org-card-metrics {
-  color: #838199;
+.org-card-pill:hover {
+  background: #FAFAFF;
 }
 
-.org-card-toggle {
+.org-card-pill-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+
+/* Icon square inside pill */
+.org-card-pill-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  padding: 0;
-  border: none;
-  border-left: 1px solid #EEEEF0;
-  background: #FAFAFA;
+  flex-shrink: 0;
+}
+
+.org-card-pill-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  flex: 1;
+}
+
+.org-card-pill-label {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 12px;
+  font-weight: 400;
   color: #838199;
+  line-height: 1.4;
+  letter-spacing: -0.6px;
+  white-space: nowrap;
+}
+
+.org-card-pill-artefato {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #282733;
+  line-height: 1.4;
+  letter-spacing: -0.7px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* CEO pill text */
+.org-card-pill-ceo-text {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #282733;
+  letter-spacing: -0.7px;
+  line-height: 1.4;
+}
+
+/* Colaborador pill text */
+.org-card-pill-colab-text {
+  font-family: 'Avenir LT Std', var(--font-body), sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #282733;
+  letter-spacing: -0.7px;
+  line-height: 1.4;
+}
+
+/* Chevron button inside pill */
+.org-card-pill-chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid #EFEFF2;
+  background: #EBDDFF;
+  color: #64627F;
+  border-radius: 16px;
   cursor: pointer;
+  flex-shrink: 0;
   transition: all 0.15s ease;
 }
 
-.org-card-toggle:hover {
-  background: #F0F0F2;
+.org-card-pill-chevron:hover {
+  background: #E1CDFE;
   color: #9755FE;
 }
 
-.org-card-toggle--expanded {
-  background: #F8F4FF;
-  color: #9755FE;
-}
-
-.org-card-toggle svg {
+.org-card-pill-chevron svg {
   transition: transform 0.2s ease;
 }
 
-.org-card-toggle--expanded svg {
+.org-card-pill-chevron--open svg {
   transform: rotate(180deg);
+}
+
+.org-card-pill-chevron--open {
+  background: #E1CDFE;
+  color: #9755FE;
 }
 
 .org-tree--vertical .org-card-toggle--expanded svg {
@@ -879,7 +1056,7 @@
   border: none;
   background: transparent;
   color: #838199;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
@@ -1065,7 +1242,7 @@
   align-items: center;
   justify-content: center;
   background: #FFFFFF;
-  border-radius: 8px;
+  border-radius: 12px;
   color: #838199;
   flex-shrink: 0;
 }
@@ -1186,7 +1363,7 @@
   font-family: 'Avenir LT Std', var(--font-body), sans-serif;
   font-size: 14px;
   font-weight: 600;
-  border-radius: 8px;
+  border-radius: 100px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
@@ -1209,22 +1386,27 @@
   }
 
   .org-card {
-    min-width: 200px;
-    max-width: 240px;
+    min-width: 230px;
+    max-width: 280px;
   }
 
   .org-card-avatar {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
   }
 
   .org-card-name {
-    font-size: 12px;
+    font-size: 13px;
   }
 
   .org-card-content {
-    padding: 10px 12px;
-    gap: 10px;
+    padding: 12px 14px;
+    gap: 8px;
+  }
+
+  .org-card-ownership-icon {
+    width: 28px;
+    height: 28px;
   }
 }
 
@@ -1305,5 +1487,246 @@
   .profile-modal-avatar {
     width: 80px;
     height: 80px;
+  }
+}
+
+/* =========================================
+   ORGANOGRAM MODAL MODE
+   ========================================= */
+
+.organogram-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(40, 39, 51, 0.45);
+  backdrop-filter: blur(4px);
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: orgModalFadeIn 0.2s ease;
+}
+
+@keyframes orgModalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.organogram-modal {
+  width: 92vw;
+  max-width: 1400px;
+  height: 85vh;
+  background: #FFFFFF;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(40, 39, 51, 0.2), 0 4px 16px rgba(40, 39, 51, 0.08);
+  animation: orgModalSlideUp 0.3s ease;
+}
+
+@keyframes orgModalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Modal Header */
+.organogram-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid #EFEFF2;
+  flex-shrink: 0;
+}
+
+.organogram-modal-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.organogram-modal-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #F5EDFF 0%, #E8D5FF 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9755FE;
+  flex-shrink: 0;
+}
+
+.organogram-modal-title {
+  font-family: var(--font-family-primary, 'Axiforma'), sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #282733;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.organogram-modal-subtitle {
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 13px;
+  color: #838199;
+  margin: 2px 0 0;
+}
+
+.organogram-modal-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.organogram-modal-close {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #EFEFF2;
+  background: white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #838199;
+  transition: all 0.15s ease;
+  padding: 0;
+}
+
+.organogram-modal-close:hover {
+  background: #F5F5F7;
+  color: #282733;
+}
+
+/* Expand Button */
+.organogram-expand-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  border: 1px solid #EFEFF2;
+  background: white;
+  border-radius: 999px;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #64627F;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.organogram-expand-btn:hover {
+  background: #F8F7FC;
+  border-color: #D4D3E0;
+  color: #9755FE;
+}
+
+/* Modal Canvas */
+.organogram-modal-canvas {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  cursor: grab;
+  background:
+    radial-gradient(circle at 1px 1px, #E8E7EE 0.5px, transparent 0.5px);
+  background-size: 20px 20px;
+}
+
+.organogram-modal-canvas:active,
+.organogram-modal-canvas.organogram-canvas--dragging {
+  cursor: grabbing;
+}
+
+.organogram-modal-tree {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform-origin: top center;
+  padding: 24px 48px 48px;
+}
+
+/* Modal Zoom Controls */
+.organogram-modal-zoom {
+  position: absolute;
+  bottom: 70px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: white;
+  border: 1px solid #EFEFF2;
+  border-radius: 10px;
+  padding: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  z-index: 10;
+}
+
+/* Modal Footer CTA */
+.organogram-modal-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #F8F7FC 0%, #F5EDFF 100%);
+  border: none;
+  border-top: 1px solid #EFEFF2;
+  cursor: pointer;
+  font-family: 'Avenir LT Std', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #9755FE;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.organogram-modal-cta:hover {
+  background: linear-gradient(135deg, #F5EDFF 0%, #E8D5FF 100%);
+  color: #7F3FE0;
+}
+
+.organogram-modal-cta svg {
+  transition: transform 0.2s ease;
+}
+
+.organogram-modal-cta:hover svg {
+  transform: scale(1.1);
+}
+
+/* Modal responsive */
+@media (max-width: 768px) {
+  .organogram-modal {
+    width: 98vw;
+    height: 92vh;
+    border-radius: 16px;
+  }
+
+  .organogram-modal-header {
+    padding: 12px 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .organogram-modal-header-right {
+    flex-wrap: wrap;
+  }
+
+  .organogram-modal-icon-wrap {
+    width: 36px;
+    height: 36px;
+  }
+
+  .organogram-modal-title {
+    font-size: 15px;
   }
 }
